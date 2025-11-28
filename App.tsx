@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo } from 'react';
 import { HARDWARE_PARTS } from './constants';
 import { Part, PartCategory, PCBuild, AppMode, SimulationPhase } from './types';
@@ -224,7 +223,7 @@ export default function App() {
     };
   }, [build, mode]);
 
-  // Determine active components for visualization
+  // Determine active categories for visualization
   const getActiveCategories = (): PartCategory[] => {
     switch (simPhase) {
       case SimulationPhase.BOOTING:
@@ -305,7 +304,7 @@ export default function App() {
 
       <main className="flex-1 max-w-[1600px] mx-auto w-full p-4 lg:p-6 grid lg:grid-cols-12 gap-6 items-start">
         
-        {/* Left Column: Parts Inventory (4/12 columns - Widened) */}
+        {/* Left Column: Parts Inventory (Widened to 4 cols) */}
         <div className="lg:col-span-4 flex flex-col sticky top-24">
           <div className="bg-white rounded-xl shadow-sm border border-slate-200 flex flex-col overflow-hidden max-h-[calc(100vh-140px)]">
             <div className="p-3 border-b border-slate-100 bg-slate-50/50">
@@ -353,8 +352,8 @@ export default function App() {
           </div>
         </div>
 
-        {/* Middle Column: Workbench (4/12 columns - Adjusted) */}
-        <div className="lg:col-span-4 flex flex-col gap-4">
+        {/* Middle Column: Workbench (Reduced to 5 cols from 4 in code, wait... actually Left 4, Mid 5, Right 3 = 12) */}
+        <div className="lg:col-span-5 flex flex-col gap-4">
           
           {/* Internal Parts Section */}
           <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4 relative overflow-hidden">
@@ -494,8 +493,8 @@ export default function App() {
           </div>
         </div>
 
-        {/* Right Column: Info & Results (4/12 columns) */}
-        <div className="lg:col-span-4 space-y-4 flex flex-col">
+        {/* Right Column: Info & Results (3/12 columns - Balanced) */}
+        <div className="lg:col-span-3 space-y-4 flex flex-col">
           <div className="w-full">
              <InfoPanel selectedPart={focusedPart} selectedCategory={focusedCategory} />
           </div>

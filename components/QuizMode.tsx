@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { generateQuizScenario } from '../services/geminiService';
 import { Target, Wallet, Minus, Maximize2, Briefcase, Gamepad2, MonitorPlay, Send, AlertTriangle, PlayCircle, Edit3 } from 'lucide-react';
@@ -65,7 +64,8 @@ export const QuizMode: React.FC<QuizModeProps> = ({ onScenarioSet, onResetBuild,
       setIsMinimized(false);
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = (e: React.MouseEvent) => {
+    e.preventDefault();
     try {
         // 0. Check Benchmark Status
         if (!isBenchmarked) {

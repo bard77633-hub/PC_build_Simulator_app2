@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { SimulationResult, PCBuild, AppMode } from '../types';
 import { getAIPCAnalysis } from '../services/geminiService';

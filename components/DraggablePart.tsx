@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Part, PartCategory } from '../types';
 import { GripVertical, Cpu, Database, HardDrive, Monitor, Box, Keyboard, Plus, AppWindow, Check, Wrench } from 'lucide-react';
@@ -99,7 +98,7 @@ export const DraggablePart: React.FC<DraggablePartProps> = ({ part, onDragStart,
           <p className="text-[10px] text-slate-500 truncate">{part.description.substring(0, 20)}...</p>
       </div>
       
-      <div className="text-right shrink-0 min-w-[80px]">
+      <div className="text-right shrink-0 min-w-[70px]">
         <span className="text-xs font-bold text-slate-700">¥{part.price.toLocaleString()}</span>
       </div>
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { PartCategory, PCBuild, SimulationPhase } from '../types';
-import { Play, CheckCircle2, AlertTriangle, Cpu, HardDrive, Database, Monitor, X, Activity } from 'lucide-react';
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { CheckCircle2, Cpu, HardDrive, Database, Monitor, X, Activity } from 'lucide-react';
+import { AreaChart, Area, ResponsiveContainer } from 'recharts';
 
 interface BenchmarkModalProps {
   build: PCBuild;
@@ -19,9 +19,53 @@ interface SystemMetrics {
   gpu: number;
 }
 
+interface MetricCardProps {
+  title: string;
+  value: number;
+  color: string;
+  dataKey: string;
+  icon: any;
+  unit?: string;
+  data: SystemMetrics[];
+}
+
+const MetricCard: React.FC<MetricCardProps> = ({ title, value, color, dataKey, icon: Icon, unit = "%", data }) => (
+  <div className="bg-white rounded-lg border border-slate-200 p-3 shadow-sm flex flex-col h-32 relative overflow-hidden">
+    <div className="flex justify-between items-start z-10">
+      <div className="flex items-center gap-1.5 text-slate-500 font-bold text-xs uppercase tracking-wider">
+        <Icon size={14} /> {title}
+      </div>
+      <div className={`text-xl font-bold font-mono`} style={{ color }}>
+        {Math.round(value)}{unit}
+      </div>
+    </div>
+    
+    <div className="flex-1 -mx-3 -mb-3 mt-2 absolute bottom-0 left-0 right-0 h-20 opacity-80">
+      <ResponsiveContainer width="100%" height="100%">
+        <AreaChart data={data}>
+          <defs>
+            <linearGradient id={`color${dataKey}`} x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor={color} stopOpacity={0.3}/>
+              <stop offset="95%" stopColor={color} stopOpacity={0}/>
+            </linearGradient>
+          </defs>
+          <Area 
+              type="monotone" 
+              dataKey={dataKey} 
+              stroke={color} 
+              strokeWidth={2}
+              fillOpacity={1} 
+              fill={`url(#color${dataKey})`} 
+              isAnimationActive={false}
+          />
+        </AreaChart>
+      </ResponsiveContainer>
+    </div>
+  </div>
+);
+
 export const BenchmarkModal: React.FC<BenchmarkModalProps> = ({ build, phase, onClose, onPhaseChange }) => {
   const [metrics, setMetrics] = useState<SystemMetrics[]>([]);
-  const [currentTick, setCurrentTick] = useState(0);
   const [log, setLog] = useState<string[]>([]);
   const [fps, setFps] = useState(0);
   
@@ -83,7 +127,6 @@ export const BenchmarkModal: React.FC<BenchmarkModalProps> = ({ build, phase, on
         }];
         return newData;
       });
-      setCurrentTick(t => t + 1);
       tickCount++;
     };
 
@@ -96,9 +139,6 @@ export const BenchmarkModal: React.FC<BenchmarkModalProps> = ({ build, phase, on
         const diskLoad = isHDD ? 100 : (isNVMe ? 40 : 70);
         const bootSpeed = isHDD ? 0.5 : (isNVMe ? 5 : 2); // progress per tick
         
-        // Use local variable for progress to determine phase switch, 
-        // since we aren't tracking a single 0-100 state anymore.
-        // We'll estimate based on ticks.
         const bootDuration = 100 / bootSpeed;
 
         if (tickCount < bootDuration) {
@@ -189,43 +229,6 @@ export const BenchmarkModal: React.FC<BenchmarkModalProps> = ({ build, phase, on
     return () => clearInterval(interval);
   }, [phase, cpu, ram, storage, gpu, app, onPhaseChange]);
 
-
-  // Helper for Chart Component
-  const MetricCard = ({ title, value, color, dataKey, icon: Icon, unit = "%" }: any) => (
-    <div className="bg-white rounded-lg border border-slate-200 p-3 shadow-sm flex flex-col h-32 relative overflow-hidden">
-      <div className="flex justify-between items-start z-10">
-        <div className="flex items-center gap-1.5 text-slate-500 font-bold text-xs uppercase tracking-wider">
-          <Icon size={14} /> {title}
-        </div>
-        <div className={`text-xl font-bold font-mono`} style={{ color }}>
-          {Math.round(value)}{unit}
-        </div>
-      </div>
-      
-      <div className="flex-1 -mx-3 -mb-3 mt-2 absolute bottom-0 left-0 right-0 h-20 opacity-80">
-        <ResponsiveContainer width="100%" height="100%">
-          <AreaChart data={metrics}>
-            <defs>
-              <linearGradient id={`color${dataKey}`} x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor={color} stopOpacity={0.3}/>
-                <stop offset="95%" stopColor={color} stopOpacity={0}/>
-              </linearGradient>
-            </defs>
-            <Area 
-                type="monotone" 
-                dataKey={dataKey} 
-                stroke={color} 
-                strokeWidth={2}
-                fillOpacity={1} 
-                fill={`url(#color${dataKey})`} 
-                isAnimationActive={false}
-            />
-          </AreaChart>
-        </ResponsiveContainer>
-      </div>
-    </div>
-  );
-
   return (
     <div className="absolute inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4 animate-in fade-in duration-200">
       <div className="bg-slate-100 rounded-xl shadow-2xl w-full max-w-4xl overflow-hidden flex flex-col max-h-[90vh] border border-slate-300">
@@ -259,28 +262,32 @@ export const BenchmarkModal: React.FC<BenchmarkModalProps> = ({ build, phase, on
                 value={metrics[metrics.length-1]?.cpu || 0} 
                 color="#3b82f6" 
                 dataKey="cpu" 
-                icon={Cpu} 
+                icon={Cpu}
+                data={metrics}
             />
             <MetricCard 
                 title="メモリ" 
                 value={metrics[metrics.length-1]?.ram || 0} 
                 color="#8b5cf6" 
                 dataKey="ram" 
-                icon={Database} 
+                icon={Database}
+                data={metrics}
             />
             <MetricCard 
                 title="ディスク" 
                 value={metrics[metrics.length-1]?.disk || 0} 
                 color="#10b981" 
                 dataKey="disk" 
-                icon={HardDrive} 
+                icon={HardDrive}
+                data={metrics}
             />
             <MetricCard 
                 title="GPU" 
                 value={metrics[metrics.length-1]?.gpu || 0} 
                 color="#f43f5e" 
                 dataKey="gpu" 
-                icon={Monitor} 
+                icon={Monitor}
+                data={metrics}
             />
         </div>
 
