@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
 
 body {
@@ -39,4 +40,18 @@ body {
 /* Glassmorphism for panels */
 .backdrop-blur {
     backdrop-filter: blur(8px);
+}
+
+/* RGB Animation */
+@keyframes rainbow-border {
+    0% { border-color: #ff0000; box-shadow: 0 0 10px #ff0000; }
+    20% { border-color: #ff8800; box-shadow: 0 0 10px #ff8800; }
+    40% { border-color: #ffff00; box-shadow: 0 0 10px #ffff00; }
+    60% { border-color: #00ff00; box-shadow: 0 0 10px #00ff00; }
+    80% { border-color: #0088ff; box-shadow: 0 0 10px #0088ff; }
+    100% { border-color: #ff00ff; box-shadow: 0 0 10px #ff00ff; }
+}
+
+.animate-rgb {
+    animation: rainbow-border 3s linear infinite;
 }

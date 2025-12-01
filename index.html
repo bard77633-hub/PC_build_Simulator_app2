@@ -34,7 +34,8 @@
                     },
                     animation: {
                         'boot-screen': 'fade-in 2s ease-out forwards',
-                        'spin-slow': 'spin 3s linear infinite',
+                        'spin-slow': 'spin 3s linear infinite', // For fans
+                        'spin-fast': 'spin 0.5s linear infinite', // For HDD
                         'pulse-fast': 'pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                         'slide-in': 'slide-in 0.3s ease-out forwards',
                     },
@@ -68,8 +69,8 @@
             parts: [
                 // Motherboards (Hidden)
                 { id: "mb_1", type: "motherboard", name: "Standard B660", price: 12000, socket: "LGA1700", memoryType: "DDR4", desc: "Intel用標準基盤" },
-                { id: "mb_2", type: "motherboard", name: "High-End Z790", price: 35000, socket: "LGA1700", memoryType: "DDR5", desc: "Intel用高性能基盤" },
-                { id: "mb_3", type: "motherboard", name: "Ryzen X670", price: 40000, socket: "AM5", memoryType: "DDR5", desc: "AMD用基盤" },
+                { id: "mb_2", type: "motherboard", name: "High-End Z790", price: 35000, socket: "LGA1700", memoryType: "DDR5", desc: "Intel用高性能基盤", isRgb: true },
+                { id: "mb_3", type: "motherboard", name: "Ryzen X670", price: 40000, socket: "AM5", memoryType: "DDR5", desc: "AMD用基盤", isRgb: true },
         
                 // CPU
                 { id: "cpu_1", type: "cpu", name: "Core i3-12100", price: 15000, watt: 60, scoreWork: 40, scoreGame: 25, socket: "LGA1700", defaultMb: "mb_1", desc: "4コア。事務作業やネットサーフィンには十分な性能です。" },
@@ -79,13 +80,13 @@
                 // Memory
                 { id: "mem_1", type: "memory", name: "DDR4-3200 8GB", price: 4000, watt: 5, memoryType: "DDR4", scoreWork: 10, scoreGame: 10, desc: "8GB。事務用としては最低限ですが、ゲームや編集には不足気味です。" },
                 { id: "mem_2", type: "memory", name: "DDR5-5600 16GB", price: 13000, watt: 8, memoryType: "DDR5", scoreWork: 30, scoreGame: 30, desc: "16GB。現代のPCの標準的な容量です。多くの用途で快適です。" },
-                { id: "mem_3", type: "memory", name: "DDR5-6000 32GB", price: 26000, watt: 10, memoryType: "DDR5", scoreWork: 60, scoreGame: 50, desc: "32GB。動画編集や重いゲームの配信など、クリエイティブ用途向けです。" },
+                { id: "mem_3", type: "memory", name: "DDR5-6000 32GB", price: 26000, watt: 10, memoryType: "DDR5", scoreWork: 60, scoreGame: 50, desc: "32GB。動画編集や重いゲームの配信など、クリエイティブ用途向けです。", isRgb: true },
         
                 // GPU
                 { id: "gpu_0", type: "gpu", name: "CPU内蔵 (なし)", price: 0, watt: 0, scoreGame: 5, scoreWork: 10, desc: "CPUに内蔵された機能で映像を出力します。3Dゲームは動きません。" },
                 { id: "gpu_1", type: "gpu", name: "GeForce GTX 1650", price: 22000, watt: 75, scoreGame: 40, scoreWork: 30, desc: "エントリー向けグラボ。軽いゲームなら設定を下げて動かせます。" },
                 { id: "gpu_2", type: "gpu", name: "GeForce RTX 4060", price: 46000, watt: 115, scoreGame: 70, scoreWork: 60, desc: "ミドルレンジ。多くの最新ゲームがフルHD画質で快適に動作します。" },
-                { id: "gpu_3", type: "gpu", name: "GeForce RTX 4090", price: 280000, watt: 450, scoreGame: 100, scoreWork: 100, desc: "現行最強のグラボ。4KゲームもAI生成も爆速ですが、非常に高価です。" },
+                { id: "gpu_3", type: "gpu", name: "GeForce RTX 4090", price: 280000, watt: 450, scoreGame: 100, scoreWork: 100, desc: "現行最強のグラボ。4KゲームもAI生成も爆速ですが、非常に高価です。", isRgb: true },
         
                 // Storage
                 { id: "str_1", type: "storage", name: "SATA SSD 500GB", price: 6000, watt: 3, scoreWork: 20, desc: "HDDより高速ですが、NVMeほどではありません。容量は控えめ。" },
@@ -109,7 +110,7 @@
                 // Input Devices
                 { id: "in_1", type: "input", name: "標準マウス＆キーボード", price: 2000, desc: "PC付属品レベル。とりあえず入力できれば良いという人向け。", scoreGame: 0, scoreWork: 20 },
                 { id: "in_2", type: "input", name: "無線静音セット", price: 6000, desc: "ケーブルがなく机がスッキリ。カチカチ音がしないのでオフィスに最適。", scoreGame: 10, scoreWork: 50 },
-                { id: "in_3", type: "input", name: "ゲーミングデバイスセット", price: 18000, desc: "反応速度が速く、耐久性が高い。LEDが光り、ゲームの操作性が向上します。", scoreGame: 50, scoreWork: 40 }
+                { id: "in_3", type: "input", name: "ゲーミングデバイスセット", price: 18000, desc: "反応速度が速く、耐久性が高い。LEDが光り、ゲームの操作性が向上します。", scoreGame: 50, scoreWork: 40, isRgb: true }
             ],
             quizzes: [
                 {
@@ -178,8 +179,16 @@
             Plus: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" /></svg>,
             Help: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>,
             Print: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" /></svg>,
-            Home: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
+            Home: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>,
+            Fan: () => <svg className="w-full h-full text-slate-600" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z"/></svg> // Simple placeholder
         };
+
+        // Improved Fan Icon for animation
+        const FanIcon = () => (
+            <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full">
+                <path d="M12,11A1,1 0 0,0 11,12A1,1 0 0,0 12,13A1,1 0 0,0 13,12A1,1 0 0,0 12,11M12.5,2C12.5,2 12.18,4.14 13.56,5.5C14.16,6.1 14.77,6.4 15.34,6.4C16.5,6.4 17.53,5.34 17.53,5.34C17.53,5.34 17.38,7.5 15.65,9.25C15.05,9.85 14.28,10.25 13.5,10.43C13.57,10.94 13.57,11.5 13.5,12C14.28,12.18 15.05,12.6 15.65,13.2C17.38,15 17.53,17.1 17.53,17.1C17.53,17.1 16.5,16.05 15.34,16.05C14.77,16.05 14.16,16.35 13.56,16.95C12.18,18.3 12.5,20.5 12.5,20.5C12.5,20.5 11.8,18.3 10.4,16.95C9.8,16.35 9.2,16.05 8.6,16.05C7.5,16.05 6.4,17.1 6.4,17.1C6.4,17.1 6.6,15 8.3,13.2C8.9,12.6 9.7,12.18 10.5,12C10.4,11.5 10.4,10.94 10.5,10.43C9.7,10.25 8.9,9.85 8.3,9.25C6.6,7.5 6.4,5.34 6.4,5.34C6.4,5.34 7.5,6.4 8.6,6.4C9.2,6.4 9.8,6.1 10.4,5.5C11.8,4.14 12.5,2 12.5,2Z" />
+            </svg>
+        );
 
         const pcData = window.PC_DATA;
 
@@ -236,7 +245,7 @@
         };
 
         // --- Independent & Draggable Quiz Window ---
-        const QuizWindow = ({ quiz, submissionResult, onSubmit, hasBooted, onViewSpecs }) => {
+        const QuizWindow = ({ quiz, submissionResult, onSubmit, hasBooted, onViewSpecs, failedAttempts }) => {
             const [minimized, setMinimized] = useState(false);
             const [position, setPosition] = useState({ x: 20, y: 20 });
             const [isDragging, setIsDragging] = useState(false);
@@ -342,6 +351,19 @@
                                 </div>
                             )}
 
+                            {/* Hints for multiple failures */}
+                            {!submissionResult?.success && failedAttempts >= 3 && (
+                                <div className="mb-4 p-3 bg-blue-900/30 border border-blue-500/30 rounded text-xs text-blue-200 animate-slide-in">
+                                    <div className="font-bold mb-1 flex items-center gap-1"><Icons.Help /> ヒント</div>
+                                    <p>何度も失敗していますね。以下の点を確認しましょう：</p>
+                                    <ul className="list-disc list-inside mt-1 text-blue-300">
+                                        {quiz.conditions.maxPrice < 150000 && <li>予算内で収めるにはCPUやGPUのランクを下げてみましょう。</li>}
+                                        {quiz.conditions.requiresDedicatedGpu && <li>「CPU内蔵」ではない、独立したグラフィックボードを選んでいますか？</li>}
+                                        {quiz.conditions.minGameScore && <li>ゲーム性能を上げるには、GPUとCPUのバランスが重要です。</li>}
+                                    </ul>
+                                </div>
+                            )}
+
                             {/* Actions */}
                             {submissionResult?.success ? (
                                 <button 
@@ -412,9 +434,7 @@
                                 </thead>
                                 <tbody>
                                     {Object.entries(pcData.categories).map(([key, cat]) => {
-                                        // Skip if not strictly a part category or if part is missing (though success implies filled)
-                                        const part = parts[key] || parts[key === 'mb' ? 'motherboard' : '']; // mapping fix
-                                        // Simple map for display order
+                                        const part = parts[key] || parts[key === 'mb' ? 'motherboard' : '']; 
                                         const displayPart = parts[key === 'input' ? 'input' : key];
                                         if(!displayPart) return null;
 
@@ -568,13 +588,17 @@
             );
         };
 
-        const DropZone = ({ type, part, onDrop, onRemove, isTarget, isValid, label, className }) => {
+        const DropZone = ({ type, part, onDrop, onRemove, isTarget, isValid, label, className, hasBooted }) => {
             const cat = pcData.categories[type];
             if (!cat) return null;
 
             let borderClass = "border-slate-600/50 border-dashed";
             let bgClass = "bg-slate-900/30";
             
+            // RGB Logic
+            const isRgb = hasBooted && part?.isRgb;
+            const rgbStyle = isRgb ? 'animate-rgb border-transparent' : '';
+
             if (part) {
                 borderClass = isValid ? "border-green-500/50 border-solid" : "border-red-500/50 border-solid";
                 bgClass = "bg-slate-800 shadow-md";
@@ -587,7 +611,7 @@
                 <div 
                     onDragOver={(e) => e.preventDefault()}
                     onDrop={() => onDrop(type)}
-                    className={`relative w-full h-full rounded-lg border-2 ${borderClass} ${bgClass} transition-all duration-300 flex flex-col items-center justify-center p-2 group ${className || ''}`}
+                    className={`relative w-full h-full rounded-lg border-2 ${borderClass} ${bgClass} ${rgbStyle} transition-all duration-300 flex flex-col items-center justify-center p-2 group ${className || ''}`}
                 >
                     {label && !part && (
                         <div className="absolute top-1 left-2 text-[10px] text-slate-500 uppercase tracking-wider pointer-events-none">{label}</div>
@@ -665,13 +689,43 @@
             const [submissionResult, setSubmissionResult] = useState(null);
             const [hoveredPart, setHoveredPart] = useState(null);
             const [hasBooted, setHasBooted] = useState(false);
+            const [failedAttempts, setFailedAttempts] = useState(0);
+
+            // LocalStorage Auto-Save & Load
+            useEffect(() => {
+                const savedData = localStorage.getItem('pcSimData');
+                if (savedData) {
+                    try {
+                        const parsed = JSON.parse(savedData);
+                        if (parsed.selectedParts) setSelectedParts(parsed.selectedParts);
+                        if (parsed.quizMode) {
+                            setQuizMode(parsed.quizMode);
+                            setView('build');
+                        }
+                    } catch (e) {
+                        console.error("Failed to load save data", e);
+                    }
+                }
+            }, []);
+
+            useEffect(() => {
+                if (view === 'build' || view === 'benchmark') {
+                    const dataToSave = {
+                        selectedParts,
+                        quizMode
+                    };
+                    localStorage.setItem('pcSimData', JSON.stringify(dataToSave));
+                }
+            }, [selectedParts, quizMode, view]);
 
             const goHome = () => {
                 setSelectedParts({});
                 setSubmissionResult(null);
                 setQuizMode(null);
                 setHasBooted(false);
+                setFailedAttempts(0);
                 setView('menu');
+                localStorage.removeItem('pcSimData');
             };
 
             const startMode = (quiz) => {
@@ -679,6 +733,7 @@
                 setSelectedParts({});
                 setSubmissionResult(null);
                 setHasBooted(false);
+                setFailedAttempts(0);
                 setView('build');
             };
             
@@ -689,8 +744,10 @@
             const validation = useMemo(() => {
                 const p = selectedParts;
                 const errs = [];
+                const warnings = [];
                 const checks = { cpu: true, memory: true, gpu: true, storage: true, psu: true, motherboard: true, os: true, app: true, input: true };
                 
+                // Compatibility Checks
                 if (p.memory && p.motherboard) {
                     if (p.memory.memoryType !== p.motherboard.memoryType) {
                         errs.push(`メモリ規格不一致: ${p.memory.memoryType} != ${p.motherboard.memoryType}`);
@@ -698,11 +755,11 @@
                     }
                 }
 
+                // Power Check
                 let totalWatt = 0;
                 Object.values(p).forEach(part => {
                     if (part) totalWatt += (part.watt || 0);
                 });
-                
                 if (p.psu) {
                     if (totalWatt > p.psu.maxWatt) {
                         errs.push(`電力不足: 消費${totalWatt}W > 供給${p.psu.maxWatt}W`);
@@ -710,12 +767,27 @@
                     }
                 }
 
+                // Bottleneck Logic
+                if (p.cpu && p.gpu && p.gpu.name !== "CPU内蔵 (なし)") {
+                    const cpuScore = p.cpu.scoreGame || 0;
+                    const gpuScore = p.gpu.scoreGame || 0;
+                    
+                    // High-end GPU with Low-end CPU
+                    if (gpuScore > 70 && cpuScore < 50) {
+                        warnings.push("ボトルネック警告: GPU性能に対してCPUが非力です。GPUの力を発揮できません。");
+                    }
+                    // High-end CPU with Low-end GPU (for Gaming)
+                    if (quizMode?.conditions?.requiredAppType === 'game' && cpuScore > 80 && gpuScore < 40) {
+                        warnings.push("ボトルネック警告: ゲーム用途としてはGPUが弱すぎます。");
+                    }
+                }
+
                 const essentials = ['cpu', 'memory', 'storage', 'psu', 'input'];
                 const missing = essentials.filter(t => !p[t]);
                 const canBoot = missing.length === 0 && errs.length === 0 && p.os;
 
-                return { errors: errs, checks, totalWatt, canBoot };
-            }, [selectedParts]);
+                return { errors: errs, warnings, checks, totalWatt, canBoot };
+            }, [selectedParts, quizMode]);
 
             const handlePartSelect = (part) => {
                 setHasBooted(false);
@@ -763,6 +835,10 @@
                 if (cond.minGameScore && gameScore < cond.minGameScore) errors.push("ゲーム性能が目標に達していません");
                 if (cond.minWorkScore && workScore < cond.minWorkScore) errors.push("作業性能が目標に達していません");
 
+                if (errors.length > 0) {
+                    setFailedAttempts(prev => prev + 1);
+                }
+
                 setSubmissionResult({ success: errors.length === 0, message: "課題クリア！完璧な構成です。", errors });
             };
 
@@ -785,6 +861,7 @@
                         onSubmit={handleSubmitAssignment}
                         hasBooted={hasBooted}
                         onViewSpecs={handleViewSpecs}
+                        failedAttempts={failedAttempts}
                     />
 
                     {/* LEFT SIDEBAR */}
@@ -868,25 +945,33 @@
                         <div className="flex-1 overflow-y-auto p-4 flex justify-center items-center">
                             <div className="w-full max-w-7xl grid grid-cols-12 gap-6 h-[650px]">
                                 <div className="col-span-8 bg-slate-900 rounded-2xl border-2 border-slate-700 p-2 relative shadow-2xl flex flex-col">
-                                    <div className="absolute top-0 left-8 -mt-3 bg-slate-700 text-slate-300 px-4 py-0.5 text-xs font-bold rounded shadow">CASE INTERIOR</div>
-                                    <div className="flex-1 bg-pc-pcb rounded-xl relative overflow-hidden border border-slate-600 m-2 p-6">
+                                    <div className="absolute top-0 left-8 -mt-3 bg-slate-700 text-slate-300 px-4 py-0.5 text-xs font-bold rounded shadow z-10">CASE INTERIOR</div>
+                                    
+                                    {/* Visual Fan */}
+                                    <div className="absolute top-8 right-8 w-24 h-24 text-slate-700 z-0 opacity-50">
+                                        <div className={hasBooted ? 'animate-spin-slow' : ''}>
+                                            <FanIcon />
+                                        </div>
+                                    </div>
+
+                                    <div className="flex-1 bg-pc-pcb rounded-xl relative overflow-hidden border border-slate-600 m-2 p-6 z-10">
                                         <div className="absolute inset-0 opacity-10 pointer-events-none" style={{backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`, backgroundSize: '40px 40px'}}></div>
                                         <div className="grid grid-cols-2 grid-rows-3 gap-6 h-full relative z-10">
                                             <div className="flex flex-col">
-                                                <DropZone type="cpu" label="LGA/AM5 SOCKET" part={selectedParts.cpu} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'cpu'} isValid={validation.checks.cpu} className="h-full" />
+                                                <DropZone type="cpu" label="LGA/AM5 SOCKET" part={selectedParts.cpu} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'cpu'} isValid={validation.checks.cpu} className="h-full" hasBooted={hasBooted} />
                                                 {selectedParts.motherboard && (<div className="text-center text-[10px] text-green-400/50 mt-1">Auto-Matched: {selectedParts.motherboard.name}</div>)}
                                             </div>
                                             <div className="flex flex-col">
-                                                <DropZone type="memory" label="DIMM SLOTS" part={selectedParts.memory} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'memory'} isValid={validation.checks.memory} className="h-full" />
+                                                <DropZone type="memory" label="DIMM SLOTS" part={selectedParts.memory} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'memory'} isValid={validation.checks.memory} className="h-full" hasBooted={hasBooted} />
                                             </div>
                                             <div className="col-span-2 row-span-1">
-                                                 <DropZone type="gpu" label="PCIe x16 GRAPHICS" part={selectedParts.gpu} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'gpu'} isValid={validation.checks.gpu} className="h-full border-blue-500/20" />
+                                                 <DropZone type="gpu" label="PCIe x16 GRAPHICS" part={selectedParts.gpu} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'gpu'} isValid={validation.checks.gpu} className="h-full border-blue-500/20" hasBooted={hasBooted} />
                                             </div>
                                             <div className="grid grid-cols-2 gap-2">
-                                                <DropZone type="storage" label="DRIVE BAY" part={selectedParts.storage} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'storage'} isValid={validation.checks.storage} />
+                                                <DropZone type="storage" label="DRIVE BAY" part={selectedParts.storage} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'storage'} isValid={validation.checks.storage} hasBooted={hasBooted} />
                                             </div>
                                             <div>
-                                                <DropZone type="psu" label="POWER SUPPLY" part={selectedParts.psu} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'psu'} isValid={validation.checks.psu} />
+                                                <DropZone type="psu" label="POWER SUPPLY" part={selectedParts.psu} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'psu'} isValid={validation.checks.psu} hasBooted={hasBooted} />
                                             </div>
                                         </div>
                                     </div>
@@ -899,7 +984,7 @@
                                             <DropZone type="app" label="APP" part={selectedParts.app} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'app'} isValid={true} />
                                         </div>
                                         <div className="h-16">
-                                            <DropZone type="input" label="KEYBOARD & MOUSE" part={selectedParts.input} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'input'} isValid={true} />
+                                            <DropZone type="input" label="KEYBOARD & MOUSE" part={selectedParts.input} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'input'} isValid={true} hasBooted={hasBooted} />
                                         </div>
                                     </div>
                                     <div className="bg-slate-800 rounded-xl border border-slate-700 p-4 flex-1 flex flex-col overflow-hidden relative">
@@ -923,9 +1008,20 @@
                                             )}
                                             <div className="space-y-1">
                                                 <div className="text-[10px] font-bold text-slate-500 uppercase">SYSTEM ALERTS</div>
-                                                {validation.errors.length > 0 ? (
-                                                    validation.errors.map((e, i) => (<div key={`err-${i}`} className="flex gap-2 text-xs text-red-300 bg-red-900/20 p-2 rounded items-start"><Icons.Alert /> <span>{e}</span></div>))
-                                                ) : (<div className="text-xs text-green-500 flex items-center gap-2"><Icons.Check /> システムは正常です</div>)}
+                                                
+                                                {/* Errors */}
+                                                {validation.errors.map((e, i) => (
+                                                    <div key={`err-${i}`} className="flex gap-2 text-xs text-red-300 bg-red-900/20 p-2 rounded items-start"><Icons.Alert /> <span>{e}</span></div>
+                                                ))}
+
+                                                {/* Warnings (Bottlenecks) */}
+                                                {validation.warnings.map((w, i) => (
+                                                    <div key={`warn-${i}`} className="flex gap-2 text-xs text-yellow-200 bg-yellow-900/20 p-2 rounded items-start"><Icons.Alert className="text-yellow-400" /> <span>{w}</span></div>
+                                                ))}
+
+                                                {validation.errors.length === 0 && validation.warnings.length === 0 && (
+                                                    <div className="text-xs text-green-500 flex items-center gap-2"><Icons.Check /> システムは正常です</div>
+                                                )}
                                             </div>
                                         </div>
                                     </div>
