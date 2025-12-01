@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -46,26 +47,26 @@
     <!-- Application Data (Inlined to prevent loading errors) -->
     <script>
         window.PC_DATA = {
+            // "motherboard" category is hidden from UI but used for logic
             categories: {
-                motherboard: { label: "マザーボード (基盤)", icon: "Motherboard", color: "text-slate-600" },
-                cpu: { label: "CPU (演算装置)", icon: "Cpu", color: "text-blue-600" },
-                memory: { label: "メモリ (主記憶)", icon: "Memory", color: "text-green-600" },
-                gpu: { label: "GPU (描画装置)", icon: "Gpu", color: "text-purple-600" },
-                storage: { label: "ストレージ (補助記憶)", icon: "Storage", color: "text-yellow-600" },
-                psu: { label: "電源ユニット", icon: "Psu", color: "text-red-600" },
-                os: { label: "OS (基本ソフト)", icon: "Os", color: "text-indigo-600" },
-                app: { label: "アプリケーション", icon: "App", color: "text-pink-600" }
+                cpu: { label: "CPU (演算)", icon: "Cpu", color: "text-blue-400" },
+                memory: { label: "メモリ (記憶)", icon: "Memory", color: "text-green-400" },
+                gpu: { label: "GPU (描画)", icon: "Gpu", color: "text-purple-400" },
+                storage: { label: "ストレージ", icon: "Storage", color: "text-yellow-400" },
+                psu: { label: "電源ユニット", icon: "Psu", color: "text-red-400" },
+                os: { label: "OS (基本ソフト)", icon: "Os", color: "text-indigo-400" },
+                app: { label: "アプリ", icon: "App", color: "text-pink-400" }
             },
             parts: [
-                // Motherboards
-                { id: "mb_1", type: "motherboard", name: "Entry B660", price: 12000, socket: "LGA1700", memoryType: "DDR4", desc: "基本的な機能を持つIntel用基盤。" },
-                { id: "mb_2", type: "motherboard", name: "Pro Z790", price: 35000, socket: "LGA1700", memoryType: "DDR5", desc: "拡張性が高いIntel用基盤。" },
-                { id: "mb_3", type: "motherboard", name: "Ryzen X670", price: 40000, socket: "AM5", memoryType: "DDR5", desc: "AMD Ryzen用ハイエンド基盤。" },
+                // Motherboards (Hidden from user, auto-selected)
+                { id: "mb_1", type: "motherboard", name: "Standard B660", price: 12000, socket: "LGA1700", memoryType: "DDR4", desc: "Intel用標準基盤" },
+                { id: "mb_2", type: "motherboard", name: "High-End Z790", price: 35000, socket: "LGA1700", memoryType: "DDR5", desc: "Intel用高性能基盤" },
+                { id: "mb_3", type: "motherboard", name: "Ryzen X670", price: 40000, socket: "AM5", memoryType: "DDR5", desc: "AMD用基盤" },
         
                 // CPU
-                { id: "cpu_1", type: "cpu", name: "Core i3-12100", price: 15000, watt: 60, scoreWork: 40, scoreGame: 30, socket: "LGA1700", desc: "4コア。事務作業には十分な性能。" },
-                { id: "cpu_2", type: "cpu", name: "Core i5-13600K", price: 45000, watt: 125, scoreWork: 80, scoreGame: 70, socket: "LGA1700", desc: "14コア。ゲームも動画編集もこなす。" },
-                { id: "cpu_3", type: "cpu", name: "Ryzen 7 7800X3D", price: 60000, watt: 120, scoreWork: 70, scoreGame: 100, socket: "AM5", desc: "8コア。ゲーム性能最強クラス。" },
+                { id: "cpu_1", type: "cpu", name: "Core i3-12100", price: 15000, watt: 60, scoreWork: 40, scoreGame: 30, socket: "LGA1700", defaultMb: "mb_1", desc: "4コア。事務作業には十分な性能。" },
+                { id: "cpu_2", type: "cpu", name: "Core i5-13600K", price: 45000, watt: 125, scoreWork: 80, scoreGame: 70, socket: "LGA1700", defaultMb: "mb_2", desc: "14コア。ゲームも動画編集もこなす。" },
+                { id: "cpu_3", type: "cpu", name: "Ryzen 7 7800X3D", price: 60000, watt: 120, scoreWork: 70, scoreGame: 100, socket: "AM5", defaultMb: "mb_3", desc: "8コア。ゲーム性能最強クラス。" },
         
                 // Memory
                 { id: "mem_1", type: "memory", name: "DDR4-3200 8GB", price: 4000, watt: 5, memoryType: "DDR4", desc: "最低限の容量。" },
@@ -143,16 +144,17 @@
 
         // --- Components ---
 
-        const PartCard = ({ part, onDragStart, detailed }) => {
+        const PartCard = ({ part, onDragStart, onDoubleClick, detailed }) => {
             const cat = pcData.categories[part.type];
-            if (!cat) return null; // Safety check
+            if (!cat) return null; 
             return (
                 <div 
                     draggable 
                     onDragStart={() => onDragStart(part)}
-                    className="group bg-slate-800 border border-slate-700 p-3 rounded-lg cursor-grab hover:bg-slate-700 hover:border-blue-500 transition-all shadow-sm flex items-start gap-3 relative"
+                    onDoubleClick={() => onDoubleClick(part)}
+                    className="group bg-slate-800 border border-slate-700 p-3 rounded-lg cursor-pointer hover:bg-slate-700 hover:border-blue-500 transition-all shadow-sm flex items-start gap-3 relative"
                 >
-                    <div className={`p-2 rounded bg-opacity-20 ${cat.color.replace('text-', 'bg-').replace('600', '500')} ${cat.color}`}>
+                    <div className={`p-2 rounded bg-opacity-20 ${cat.color.replace('text-', 'bg-').replace('400', '500')} ${cat.color}`}>
                         {Icons[cat.icon] && React.createElement(Icons[cat.icon])}
                     </div>
                     <div className="flex-1 min-w-0">
@@ -161,25 +163,25 @@
                         {detailed && <div className="text-xs text-slate-500 mt-1 line-clamp-2">{part.desc}</div>}
                     </div>
                     <div className="absolute opacity-0 group-hover:opacity-100 right-2 top-2 transition-opacity">
-                        <span className="text-blue-400 text-xs font-bold">配置</span>
+                        <span className="text-blue-400 text-[10px] border border-blue-500/50 px-1 rounded">Wクリックで配置</span>
                     </div>
                 </div>
             );
         };
 
-        const DropZone = ({ type, part, onDrop, onRemove, isTarget, isValid }) => {
+        const DropZone = ({ type, part, onDrop, onRemove, isTarget, isValid, label, className }) => {
             const cat = pcData.categories[type];
-            if (!cat) return <div className="text-red-500 text-xs">Error: {type}</div>; // Safety check
+            if (!cat) return null;
 
             // Visual style based on state
-            let borderClass = "border-slate-700 border-dashed";
-            let bgClass = "bg-slate-800/50";
+            let borderClass = "border-slate-600/50 border-dashed";
+            let bgClass = "bg-slate-900/30";
             
             if (part) {
                 borderClass = isValid ? "border-green-500/50 border-solid" : "border-red-500/50 border-solid";
                 bgClass = "bg-slate-800 shadow-md";
             } else if (isTarget) {
-                borderClass = "border-blue-400 border-dashed scale-105";
+                borderClass = "border-blue-400 border-dashed scale-[1.02]";
                 bgClass = "bg-blue-900/20";
             }
 
@@ -187,31 +189,35 @@
                 <div 
                     onDragOver={(e) => e.preventDefault()}
                     onDrop={() => onDrop(type)}
-                    className={`relative w-full h-full min-h-[100px] rounded-lg border-2 ${borderClass} ${bgClass} transition-all duration-300 flex flex-col items-center justify-center p-2 group`}
+                    className={`relative w-full h-full rounded-lg border-2 ${borderClass} ${bgClass} transition-all duration-300 flex flex-col items-center justify-center p-2 group ${className || ''}`}
                 >
+                    {label && !part && (
+                        <div className="absolute top-1 left-2 text-[10px] text-slate-500 uppercase tracking-wider">{label}</div>
+                    )}
+                    
                     {part ? (
                         <>
-                            <div className={`p-2 rounded-full mb-1 ${cat.color.replace('text-', 'bg-').replace('600', '900')} bg-opacity-30`}>
+                            <div className={`p-2 rounded-full mb-1 ${cat.color.replace('text-', 'bg-').replace('400', '900')} bg-opacity-30`}>
                                 {React.createElement(Icons[cat.icon])}
                             </div>
-                            <div className="text-center w-full">
+                            <div className="text-center w-full overflow-hidden">
                                 <div className="text-xs font-bold text-slate-200 truncate px-1">{part.name}</div>
                                 {isValid ? 
-                                    <div className="text-[10px] text-green-400">OK</div> : 
+                                    <div className="text-[10px] text-green-400">配置OK</div> : 
                                     <div className="text-[10px] text-red-400">互換性エラー</div>
                                 }
                             </div>
                             <button 
                                 onClick={(e) => { e.stopPropagation(); onRemove(type); }}
-                                className="absolute top-1 right-1 p-1.5 text-slate-500 hover:text-red-400 hover:bg-slate-700/50 rounded-full transition-colors opacity-0 group-hover:opacity-100"
+                                className="absolute top-1 right-1 p-1 text-slate-500 hover:text-red-400 hover:bg-slate-700/50 rounded-full transition-colors opacity-0 group-hover:opacity-100"
                             >
                                 <Icons.Trash />
                             </button>
                         </>
                     ) : (
-                        <div className="text-center opacity-40 pointer-events-none">
-                            <div className="flex justify-center mb-1">{React.createElement(Icons[cat.icon])}</div>
-                            <span className="text-xs font-mono">{cat.label}</span>
+                        <div className="text-center opacity-40 pointer-events-none flex flex-col items-center justify-center h-full">
+                            <div className="mb-1 transform scale-90">{React.createElement(Icons[cat.icon])}</div>
+                            <span className="text-[10px] font-mono leading-tight">{cat.label}</span>
                         </div>
                     )}
                 </div>
@@ -220,7 +226,7 @@
 
         const BootScreen = ({ osName, onComplete }) => {
             useEffect(() => {
-                const timer = setTimeout(onComplete, 4000);
+                const timer = setTimeout(onComplete, 3500);
                 return () => clearTimeout(timer);
             }, [onComplete]);
 
@@ -231,10 +237,11 @@
                     </div>
                     <div className="text-2xl mb-4 font-bold tracking-widest">BIOS INITIALIZED</div>
                     <div className="space-y-2 text-sm text-slate-400">
-                        <p>Checking Memory... OK</p>
-                        <p>Checking CPU... OK</p>
-                        <p>Detecting Storage... OK</p>
-                        <p className="text-blue-400 mt-4">Booting {osName}...</p>
+                        <p>CPU Check... PASS</p>
+                        <p>RAM Check... PASS</p>
+                        <p>GPU Initializing... PASS</p>
+                        <p>Storage Mount... PASS</p>
+                        <p className="text-blue-400 mt-4">Loading {osName}...</p>
                     </div>
                     <div className="mt-8 w-64 h-1 bg-slate-800 rounded overflow-hidden">
                         <div className="h-full bg-blue-500 animate-pulse w-full origin-left transform duration-[3000ms] transition-all"></div>
@@ -246,7 +253,6 @@
         const DesktopScreen = ({ parts, onShutDown }) => {
             return (
                 <div className="absolute inset-0 z-40 bg-slate-900 flex flex-col">
-                    {/* Desktop Toolbar */}
                     <div className="bg-slate-800 p-2 flex justify-between items-center border-b border-slate-700">
                         <div className="flex items-center gap-2">
                             <div className="w-4 h-4 rounded-full bg-blue-500"></div>
@@ -256,38 +262,33 @@
                             シャットダウン
                         </button>
                     </div>
-
-                    {/* Desktop Area */}
                     <div 
                         className="flex-1 p-8 bg-cover bg-center relative" 
                         style={{ backgroundImage: 'linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url("https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=1920&q=80")' }}
                     >
-                        {/* Installed Apps */}
                         <div className="grid grid-cols-6 gap-4">
                             {parts.app && (
                                 <div className="flex flex-col items-center gap-2 group cursor-pointer p-4 rounded hover:bg-white/10 transition">
                                     <div className="p-3 bg-white rounded-xl shadow-lg group-hover:scale-110 transition">
                                         <div className="text-pink-500"><Icons.App /></div>
                                     </div>
-                                    <span className="text-white text-xs drop-shadow-md">{parts.app.name}</span>
+                                    <span className="text-white text-xs drop-shadow-md text-center">{parts.app.name}</span>
                                 </div>
                             )}
                             <div className="flex flex-col items-center gap-2 cursor-pointer p-4 rounded hover:bg-white/10 transition">
                                 <div className="p-3 bg-blue-500 rounded-xl shadow-lg">
                                     <div className="text-white"><Icons.Storage /></div>
                                 </div>
-                                <span className="text-white text-xs drop-shadow-md">マイコンピュータ</span>
+                                <span className="text-white text-xs drop-shadow-md">マイPC</span>
                             </div>
                         </div>
-
-                        {/* Specs Overlay */}
                         <div className="absolute bottom-8 right-8 bg-slate-900/90 p-4 rounded-lg backdrop-blur border border-slate-700 max-w-sm">
                             <h3 className="text-sm font-bold text-green-400 mb-2">システム稼働中</h3>
                             <div className="text-xs text-slate-300 space-y-1">
                                 <p>CPU: {parts.cpu?.name}</p>
                                 <p>RAM: {parts.memory?.name}</p>
                                 <p>GPU: {parts.gpu?.name}</p>
-                                <p>Power Draw: <span className="text-yellow-400">{parts.stats?.watt}W</span></p>
+                                <p>Power: <span className="text-yellow-400">{parts.stats?.watt}W</span></p>
                             </div>
                         </div>
                     </div>
@@ -295,44 +296,31 @@
             );
         };
 
-        // --- Main App ---
-
         const App = () => {
             const [selectedParts, setSelectedParts] = useState({});
             const [draggedPart, setDraggedPart] = useState(null);
             const [activeTab, setActiveTab] = useState('cpu');
-            const [bootState, setBootState] = useState('off'); // off, booting, on
+            const [bootState, setBootState] = useState('off');
             const [messages, setMessages] = useState([]);
             const [quizMode, setQuizMode] = useState(null);
 
-            // Calculations
+            // Validation & Auto-Motherboard Logic
             const validation = useMemo(() => {
                 const p = selectedParts;
                 const errs = [];
-                const checks = { cpu: true, memory: true, gpu: true, storage: true, psu: true, motherboard: true, os: true, app: true };
+                const checks = { cpu: true, memory: true, gpu: true, storage: true, psu: true, motherboard: true };
                 
-                // 1. Socket Check
-                if (p.cpu && p.motherboard) {
-                    if (p.cpu.socket !== p.motherboard.socket) {
-                        errs.push(`互換性エラー: CPUソケット(${p.cpu.socket})とマザーボード(${p.motherboard.socket})が不一致`);
-                        checks.cpu = false;
-                        checks.motherboard = false;
-                    }
-                }
-                
-                // 2. Memory Check
+                // Memory Check
                 if (p.memory && p.motherboard) {
                     if (p.memory.memoryType !== p.motherboard.memoryType) {
-                        errs.push(`互換性エラー: メモリ規格(${p.memory.memoryType})がマザーボード(${p.motherboard.memoryType})に非対応`);
+                        errs.push(`メモリ規格不一致: ${p.memory.memoryType} != ${p.motherboard.memoryType}`);
                         checks.memory = false;
-                        checks.motherboard = false;
                     }
                 }
 
-                // 3. Power Check
+                // Power Check
                 let totalWatt = 0;
                 Object.values(p).forEach(part => totalWatt += (part.watt || 0));
-                
                 if (p.psu) {
                     if (totalWatt > p.psu.maxWatt) {
                         errs.push(`電力不足: 消費${totalWatt}W > 供給${p.psu.maxWatt}W`);
@@ -340,15 +328,14 @@
                     }
                 }
 
-                // 4. Missing Parts for Boot
-                const essentials = ['cpu', 'motherboard', 'memory', 'storage', 'psu'];
+                const essentials = ['cpu', 'memory', 'storage', 'psu'];
                 const missing = essentials.filter(t => !p[t]);
                 const canBoot = missing.length === 0 && errs.length === 0;
 
                 return { errors: errs, checks, totalWatt, canBoot };
             }, [selectedParts]);
 
-            // Quiz Check
+            // Quiz Logic
             useEffect(() => {
                 if (!quizMode) return;
                 
@@ -377,10 +364,17 @@
 
             }, [selectedParts, quizMode, validation]);
 
-            const handleDrop = (type) => {
-                if (!draggedPart) return;
-                if (draggedPart.type === type) {
-                    setSelectedParts(prev => ({ ...prev, [type]: draggedPart }));
+            const handlePartSelect = (part) => {
+                // Auto-mount Motherboard when CPU is selected
+                if (part.type === 'cpu') {
+                    const compatibleMb = pcData.parts.find(p => p.id === part.defaultMb);
+                    setSelectedParts(prev => ({
+                        ...prev,
+                        [part.type]: part,
+                        motherboard: compatibleMb || prev.motherboard
+                    }));
+                } else {
+                    setSelectedParts(prev => ({ ...prev, [part.type]: part }));
                 }
                 setDraggedPart(null);
             };
@@ -395,46 +389,45 @@
 
             return (
                 <div className="flex h-screen bg-slate-900 text-slate-200 font-sans">
-                    {/* Boot Overlays */}
                     {bootState === 'booting' && <BootScreen osName={selectedParts.os?.name} onComplete={() => setBootState('on')} />}
                     {bootState === 'on' && <DesktopScreen parts={{...selectedParts, stats: validation}} onShutDown={() => setBootState('off')} />}
 
-                    {/* LEFT: Part Picker */}
-                    <div className="w-80 flex flex-col border-r border-slate-700 bg-slate-800">
-                        <div className="p-4 border-b border-slate-700 flex items-center gap-2">
-                            <div className="bg-blue-600 p-1.5 rounded text-white"><Icons.Motherboard /></div>
-                            <h1 className="font-bold text-lg">PC Builder</h1>
+                    {/* LEFT SIDEBAR: Part Picker */}
+                    <div className="w-80 flex flex-col border-r border-slate-700 bg-slate-800 z-10 shadow-xl">
+                        <div className="p-4 border-b border-slate-700 bg-slate-800">
+                            <h1 className="font-bold text-lg flex items-center gap-2 text-white">
+                                <div className="bg-blue-600 p-1 rounded"><Icons.Motherboard /></div>
+                                PC Simulator
+                            </h1>
+                            <div className="mt-4 grid grid-cols-4 gap-2">
+                                {Object.keys(pcData.categories).map(key => (
+                                    <button 
+                                        key={key}
+                                        onClick={() => setActiveTab(key)}
+                                        className={`flex flex-col items-center justify-center p-2 rounded transition-all ${
+                                            activeTab === key ? 'bg-blue-600 text-white shadow-lg scale-105' : 'bg-slate-700 text-slate-400 hover:bg-slate-600'
+                                        }`}
+                                    >
+                                        <div className="scale-75 mb-1">{React.createElement(Icons[pcData.categories[key].icon])}</div>
+                                        <span className="text-[10px] font-bold leading-none">{pcData.categories[key].label.split(' ')[0]}</span>
+                                    </button>
+                                ))}
+                            </div>
                         </div>
                         
-                        {/* Tabs */}
-                        <div className="flex overflow-x-auto p-2 gap-2 border-b border-slate-700 scrollbar-hide">
-                            {Object.keys(pcData.categories).map(key => (
-                                <button 
-                                    key={key}
-                                    onClick={() => setActiveTab(key)}
-                                    className={`px-3 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition-colors ${
-                                        activeTab === key ? 'bg-blue-600 text-white' : 'bg-slate-700 text-slate-400 hover:bg-slate-600'
-                                    }`}
-                                >
-                                    {pcData.categories[key].label.split(' ')[0]}
-                                </button>
-                            ))}
-                        </div>
-
-                        {/* List */}
-                        <div className="flex-1 overflow-y-auto p-3 space-y-2">
+                        <div className="flex-1 overflow-y-auto p-3 space-y-2 bg-slate-900/50">
                             {pcData.parts.filter(p => p.type === activeTab).map(part => (
                                 <PartCard 
                                     key={part.id} 
                                     part={part} 
-                                    onDragStart={setDraggedPart} 
+                                    onDragStart={setDraggedPart}
+                                    onDoubleClick={handlePartSelect}
                                     detailed={true}
                                 />
                             ))}
                         </div>
 
-                        {/* Quiz Selector (Bottom of Left) */}
-                        <div className="p-4 border-t border-slate-700 bg-slate-900/50">
+                        <div className="p-4 border-t border-slate-700 bg-slate-800">
                             <select 
                                 className="w-full bg-slate-700 border border-slate-600 rounded p-2 text-sm text-slate-200"
                                 onChange={(e) => {
@@ -452,23 +445,22 @@
                         </div>
                     </div>
 
-                    {/* CENTER: Workspace */}
-                    <div className="flex-1 flex flex-col relative overflow-hidden bg-slate-900">
+                    {/* MAIN AREA */}
+                    <div className="flex-1 flex flex-col relative overflow-hidden bg-slate-950">
                         {/* Status Bar */}
-                        <div className="h-14 border-b border-slate-700 bg-slate-800/80 backdrop-blur flex items-center justify-between px-6 z-10">
-                            <div className="flex items-center gap-4 text-sm">
-                                <div className="flex items-center gap-2">
-                                    <span className="text-slate-400">消費電力:</span>
-                                    <span className={`font-mono font-bold ${validation.checks.psu ? 'text-blue-400' : 'text-red-400'}`}>
-                                        {validation.totalWatt}W
-                                    </span>
-                                    <span className="text-slate-500">/ {selectedParts.psu?.maxWatt || 0}W</span>
+                        <div className="h-16 border-b border-slate-800 bg-slate-900/90 backdrop-blur flex items-center justify-between px-8 z-20">
+                            <div className="flex items-center gap-8">
+                                <div>
+                                    <div className="text-[10px] text-slate-500 uppercase font-bold">Total Wattage</div>
+                                    <div className={`text-xl font-mono font-bold ${validation.checks.psu ? 'text-blue-400' : 'text-red-500'}`}>
+                                        {validation.totalWatt}W <span className="text-sm text-slate-600">/ {selectedParts.psu?.maxWatt || 0}W</span>
+                                    </div>
                                 </div>
-                                <div className="flex items-center gap-2">
-                                    <span className="text-slate-400">合計金額:</span>
-                                    <span className="font-mono font-bold text-yellow-400">
+                                <div>
+                                    <div className="text-[10px] text-slate-500 uppercase font-bold">Total Cost</div>
+                                    <div className="text-xl font-mono font-bold text-yellow-400">
                                         ¥{Object.values(selectedParts).reduce((a, b) => a + b.price, 0).toLocaleString()}
-                                    </span>
+                                    </div>
                                 </div>
                             </div>
 
@@ -476,129 +468,119 @@
                                 onClick={toggleBoot}
                                 disabled={!validation.canBoot}
                                 className={`
-                                    flex items-center gap-2 px-6 py-2 rounded-full font-bold transition-all shadow-lg
+                                    flex items-center gap-3 px-8 py-3 rounded-full font-bold transition-all shadow-lg text-lg
                                     ${validation.canBoot 
-                                        ? 'bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-400 hover:to-emerald-500 text-white cursor-pointer shadow-green-500/20' 
-                                        : 'bg-slate-700 text-slate-500 cursor-not-allowed opacity-50'
+                                        ? 'bg-blue-600 hover:bg-blue-500 text-white shadow-blue-500/30 transform hover:-translate-y-1' 
+                                        : 'bg-slate-800 text-slate-600 cursor-not-allowed border border-slate-700'
                                     }
                                 `}
                             >
                                 <Icons.Power />
-                                {validation.canBoot ? "POWER ON" : "システム未完成"}
+                                {validation.canBoot ? "POWER ON" : "BUILD INCOMPLETE"}
                             </button>
                         </div>
 
-                        {/* Builder Canvas */}
-                        <div className="flex-1 overflow-y-auto p-8 flex justify-center items-start">
-                            <div className="w-full max-w-5xl grid grid-cols-12 gap-8">
+                        {/* WORKSPACE */}
+                        <div className="flex-1 overflow-y-auto p-8 flex justify-center items-center">
+                            <div className="w-full max-w-6xl grid grid-cols-12 gap-8 h-[600px]">
                                 
-                                {/* Case / Motherboard Area */}
-                                <div className="col-span-8 bg-slate-800 rounded-xl border-4 border-slate-700 p-1 relative shadow-2xl">
-                                    <div className="absolute top-0 left-1/2 -translate-x-1/2 -mt-3 bg-slate-700 text-slate-300 px-3 text-xs rounded-b">PCケース内部</div>
+                                {/* PC CASE (Main Canvas) */}
+                                <div className="col-span-8 bg-slate-900 rounded-2xl border-2 border-slate-700 p-2 relative shadow-2xl flex flex-col">
+                                    <div className="absolute top-0 left-8 -mt-3 bg-slate-700 text-slate-300 px-4 py-0.5 text-xs font-bold rounded shadow">CASE INTERIOR</div>
                                     
-                                    {/* PCB Visual */}
-                                    <div className="bg-pc-pcb rounded-lg p-6 grid grid-cols-6 gap-4 min-h-[500px] border border-slate-600 relative overflow-hidden">
-                                        {/* Circuit Lines Decoration */}
-                                        <div className="absolute inset-0 opacity-10 pointer-events-none" style={{backgroundImage: 'radial-gradient(circle, #fff 1px, transparent 1px)', backgroundSize: '20px 20px'}}></div>
-
-                                        {/* Motherboard Slot (Base) */}
-                                        <div className="col-span-6 row-span-1">
-                                            <DropZone type="motherboard" part={selectedParts.motherboard} onDrop={handleDrop} onRemove={() => setSelectedParts(p => ({...p, motherboard: null}))} isTarget={draggedPart?.type === 'motherboard'} isValid={validation.checks.motherboard} />
+                                    {/* Motherboard Visual Area */}
+                                    <div className="flex-1 bg-pc-pcb rounded-xl relative overflow-hidden border border-slate-600 m-2 p-6">
+                                        {/* Circuit Patterns */}
+                                        <div className="absolute inset-0 opacity-10 pointer-events-none" 
+                                             style={{
+                                                 backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
+                                                 backgroundSize: '40px 40px'
+                                             }}>
                                         </div>
 
-                                        {/* CPU Socket */}
-                                        <div className="col-span-2 row-span-2 bg-black/20 rounded border border-white/10 p-2">
-                                            <div className="text-[10px] text-white/40 mb-1 text-center">LGA/AM5 SOCKET</div>
-                                            <DropZone type="cpu" part={selectedParts.cpu} onDrop={handleDrop} onRemove={() => setSelectedParts(p => ({...p, cpu: null}))} isTarget={draggedPart?.type === 'cpu'} isValid={validation.checks.cpu} />
-                                        </div>
+                                        {/* Organized Layout: Grid */}
+                                        <div className="grid grid-cols-2 grid-rows-3 gap-6 h-full relative z-10">
+                                            
+                                            {/* Row 1: CPU & RAM */}
+                                            <div className="flex flex-col">
+                                                <DropZone type="cpu" label="LGA/AM5 SOCKET" part={selectedParts.cpu} onDrop={() => handlePartSelect(draggedPart)} onRemove={() => setSelectedParts(p => ({...p, cpu: null}))} isTarget={draggedPart?.type === 'cpu'} isValid={validation.checks.cpu} className="h-full" />
+                                                {selectedParts.motherboard && (
+                                                    <div className="text-center text-[10px] text-green-400/50 mt-1">
+                                                        Auto-Matched: {selectedParts.motherboard.name}
+                                                    </div>
+                                                )}
+                                            </div>
+                                            <div className="flex flex-col">
+                                                <DropZone type="memory" label="DIMM SLOTS (DDR4/5)" part={selectedParts.memory} onDrop={() => handlePartSelect(draggedPart)} onRemove={() => setSelectedParts(p => ({...p, memory: null}))} isTarget={draggedPart?.type === 'memory'} isValid={validation.checks.memory} className="h-full" />
+                                            </div>
 
-                                        {/* RAM Slots */}
-                                        <div className="col-span-1 row-span-2 bg-black/20 rounded border border-white/10 p-2 flex flex-col justify-center">
-                                            <div className="text-[10px] text-white/40 mb-1 text-center rotate-90 whitespace-nowrap">DIMM SLOTS</div>
-                                            <DropZone type="memory" part={selectedParts.memory} onDrop={handleDrop} onRemove={() => setSelectedParts(p => ({...p, memory: null}))} isTarget={draggedPart?.type === 'memory'} isValid={validation.checks.memory} />
-                                        </div>
+                                            {/* Row 2: GPU (Spans 2 cols visually but logically handled differently if needed, here split for storage) */}
+                                            <div className="col-span-2 row-span-1">
+                                                 <DropZone type="gpu" label="PCIe x16 GRAPHICS" part={selectedParts.gpu} onDrop={() => handlePartSelect(draggedPart)} onRemove={() => setSelectedParts(p => ({...p, gpu: null}))} isTarget={draggedPart?.type === 'gpu'} isValid={validation.checks.gpu} className="h-full border-blue-500/20" />
+                                            </div>
 
-                                        {/* Space */}
-                                        <div className="col-span-3 row-span-2"></div>
-
-                                        {/* GPU Slot (PCIe) */}
-                                        <div className="col-span-6 row-span-2 bg-black/20 rounded border border-white/10 p-2">
-                                            <div className="text-[10px] text-white/40 mb-1">PCIe x16 SLOT</div>
-                                            <DropZone type="gpu" part={selectedParts.gpu} onDrop={handleDrop} onRemove={() => setSelectedParts(p => ({...p, gpu: null}))} isTarget={draggedPart?.type === 'gpu'} isValid={validation.checks.gpu} />
-                                        </div>
-
-                                        {/* Storage Bays */}
-                                        <div className="col-span-2 bg-black/20 rounded border border-white/10 p-2">
-                                             <div className="text-[10px] text-white/40 mb-1">M.2 / SATA</div>
-                                            <DropZone type="storage" part={selectedParts.storage} onDrop={handleDrop} onRemove={() => setSelectedParts(p => ({...p, storage: null}))} isTarget={draggedPart?.type === 'storage'} isValid={validation.checks.storage} />
-                                        </div>
-
-                                        {/* PSU Bay */}
-                                        <div className="col-span-4 bg-black/20 rounded border border-white/10 p-2">
-                                            <div className="text-[10px] text-white/40 mb-1">POWER SUPPLY UNIT BAY</div>
-                                            <DropZone type="psu" part={selectedParts.psu} onDrop={handleDrop} onRemove={() => setSelectedParts(p => ({...p, psu: null}))} isTarget={draggedPart?.type === 'psu'} isValid={validation.checks.psu} />
+                                            {/* Row 3: Storage & PSU */}
+                                            <div className="grid grid-cols-2 gap-2">
+                                                <DropZone type="storage" label="M.2 / SATA SSD" part={selectedParts.storage} onDrop={() => handlePartSelect(draggedPart)} onRemove={() => setSelectedParts(p => ({...p, storage: null}))} isTarget={draggedPart?.type === 'storage'} isValid={validation.checks.storage} />
+                                            </div>
+                                            <div>
+                                                <DropZone type="psu" label="POWER SUPPLY UNIT" part={selectedParts.psu} onDrop={() => handlePartSelect(draggedPart)} onRemove={() => setSelectedParts(p => ({...p, psu: null}))} isTarget={draggedPart?.type === 'psu'} isValid={validation.checks.psu} />
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                {/* Software & Messages */}
-                                <div className="col-span-4 space-y-6">
-                                    {/* Quiz Prompt */}
-                                    {quizMode && (
-                                        <div className="bg-yellow-900/30 border border-yellow-600/50 p-4 rounded-lg">
-                                            <h3 className="font-bold text-yellow-500 mb-1 flex items-center gap-2"><Icons.Alert /> 課題: {quizMode.title}</h3>
-                                            <p className="text-sm text-yellow-200/80 mb-2">{quizMode.desc}</p>
-                                            <div className="space-y-1">
-                                                {messages.map((m, i) => (
-                                                    <div key={i} className={`text-xs p-1.5 rounded flex gap-2 items-center ${m.type === 'success' ? 'bg-green-900/50 text-green-300' : 'bg-red-900/50 text-red-300'}`}>
-                                                        {m.type === 'success' ? <Icons.Check /> : <Icons.Alert />}
-                                                        {m.text}
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        </div>
-                                    )}
-
-                                    {/* OS / Apps */}
-                                    <div className="bg-slate-800 rounded-xl border border-slate-700 p-4 shadow-lg">
-                                        <h3 className="text-xs font-bold text-slate-400 uppercase mb-4 border-b border-slate-700 pb-2">ソフトウェアインストール</h3>
-                                        <div className="grid grid-cols-1 gap-4">
+                                {/* RIGHT: Software & Status */}
+                                <div className="col-span-4 flex flex-col gap-4">
+                                    {/* OS/App Rack */}
+                                    <div className="bg-slate-800 rounded-xl border border-slate-700 p-4 shadow-lg flex-1 flex flex-col">
+                                        <h3 className="text-xs font-bold text-slate-400 uppercase mb-4 pb-2 border-b border-slate-700 flex justify-between">
+                                            <span>Software</span>
+                                            <span>OS & Apps</span>
+                                        </h3>
+                                        <div className="flex-1 space-y-4">
                                             <div className="h-24">
-                                                <DropZone type="os" part={selectedParts.os} onDrop={handleDrop} onRemove={() => setSelectedParts(p => ({...p, os: null}))} isTarget={draggedPart?.type === 'os'} isValid={true} />
+                                                <DropZone type="os" label="OPERATING SYSTEM" part={selectedParts.os} onDrop={() => handlePartSelect(draggedPart)} onRemove={() => setSelectedParts(p => ({...p, os: null}))} isTarget={draggedPart?.type === 'os'} isValid={true} />
                                             </div>
                                             <div className="h-24">
-                                                <DropZone type="app" part={selectedParts.app} onDrop={handleDrop} onRemove={() => setSelectedParts(p => ({...p, app: null}))} isTarget={draggedPart?.type === 'app'} isValid={true} />
+                                                <DropZone type="app" label="APPLICATION" part={selectedParts.app} onDrop={() => handlePartSelect(draggedPart)} onRemove={() => setSelectedParts(p => ({...p, app: null}))} isTarget={draggedPart?.type === 'app'} isValid={true} />
                                             </div>
                                         </div>
                                     </div>
 
-                                    {/* Warnings */}
-                                    {validation.errors.length > 0 && (
-                                        <div className="bg-red-900/20 border border-red-500/50 p-4 rounded-xl animate-pulse">
-                                            <h3 className="font-bold text-red-400 mb-2 flex items-center gap-2"><Icons.Alert /> システムエラー</h3>
-                                            <ul className="list-disc list-inside text-xs text-red-200 space-y-1">
-                                                {validation.errors.map((e, i) => <li key={i}>{e}</li>)}
-                                            </ul>
-                                        </div>
-                                    )}
-
-                                    {/* Missing Parts Guide */}
-                                    {!validation.canBoot && validation.errors.length === 0 && (
-                                        <div className="bg-blue-900/20 border border-blue-500/30 p-4 rounded-xl">
-                                            <h3 className="font-bold text-blue-400 mb-2 text-sm">起動に必要なパーツ</h3>
-                                            <div className="flex flex-wrap gap-2">
-                                                {['motherboard', 'cpu', 'memory', 'gpu', 'storage', 'psu'].map(t => {
-                                                    const cat = pcData.categories[t];
-                                                    if (!cat) return null; // Safe guard
-                                                    return (
-                                                        <span key={t} className={`px-2 py-1 rounded text-xs ${selectedParts[t] ? 'bg-green-900/50 text-green-400 line-through opacity-50' : 'bg-slate-700 text-slate-300'}`}>
-                                                            {cat.label}
-                                                        </span>
-                                                    );
-                                                })}
+                                    {/* Messages / Alerts */}
+                                    <div className="bg-slate-800 rounded-xl border border-slate-700 p-4 h-1/3 overflow-y-auto">
+                                        <h3 className="text-xs font-bold text-slate-400 uppercase mb-2">System Status</h3>
+                                        
+                                        {/* Quiz Info */}
+                                        {quizMode && (
+                                            <div className="mb-3 p-2 bg-yellow-900/20 border border-yellow-700/50 rounded text-xs">
+                                                <div className="font-bold text-yellow-500 mb-1">{quizMode.title}</div>
+                                                <div className="text-yellow-200/70">{quizMode.desc}</div>
                                             </div>
-                                        </div>
-                                    )}
+                                        )}
+
+                                        {validation.errors.length > 0 ? (
+                                            <div className="space-y-2">
+                                                {validation.errors.map((e, i) => (
+                                                    <div key={i} className="flex gap-2 text-xs text-red-300 bg-red-900/20 p-2 rounded items-start">
+                                                        <Icons.Alert /> <span>{e}</span>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        ) : messages.length > 0 ? (
+                                            <div className="space-y-2">
+                                                {messages.map((m, i) => (
+                                                    <div key={i} className={`flex gap-2 text-xs p-2 rounded items-start ${m.type === 'success' ? 'bg-green-900/20 text-green-300' : 'bg-yellow-900/20 text-yellow-300'}`}>
+                                                        {m.type === 'success' ? <Icons.Check /> : <Icons.Alert />}
+                                                        <span>{m.text}</span>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        ) : (
+                                            <div className="text-xs text-slate-500 text-center py-4">システム正常・待機中</div>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
                         </div>
