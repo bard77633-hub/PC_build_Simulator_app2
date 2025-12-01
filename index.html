@@ -67,14 +67,14 @@
     <script>
         window.PC_DATA = {
             categories: {
-                cpu: { label: "CPU (演算)", icon: "Cpu", color: "text-blue-400", desc: "【中央演算処理装置】人間で言うと「脳」。プログラムの命令を実行・処理します。コア数が多いほど同時に多くの作業ができます。" },
-                memory: { label: "メモリ (記憶)", icon: "Memory", color: "text-green-400", desc: "【主記憶装置】人間で言うと「机の広さ」。データの一時保管場所です。電源を切るとデータは消えます（揮発性）。" },
-                gpu: { label: "GPU (描画)", icon: "Gpu", color: "text-purple-400", desc: "【画像処理装置】映像の計算を専門に行います。3Dゲームや動画編集には高性能なGPUが必須です。" },
-                storage: { label: "ストレージ", icon: "Storage", color: "text-yellow-400", desc: "【補助記憶装置】人間で言うと「本棚」。データを長期保存します。HDDは大容量で安価、SSDは高速です。" },
-                psu: { label: "電源ユニット", icon: "Psu", color: "text-red-400", desc: "【電力供給】コンセントからの交流(AC)を直流(DC)に変換し、各パーツに電力を送ります。" },
-                os: { label: "OS (基本ソフト)", icon: "Os", color: "text-indigo-400", desc: "【オペレーティングシステム】ハードウェアとアプリを仲介する土台となるソフトウェアです。" },
-                app: { label: "アプリ", icon: "App", color: "text-pink-400", desc: "【アプリケーション】特定の目的（文書作成、ゲームなど）のために作られたソフトウェアです。" },
-                input: { label: "入力デバイス", icon: "Input", color: "text-cyan-400", desc: "【入力装置】人間がコンピュータに指示を送るための機器です。用途に合わせて選びます。" }
+                cpu: { label: "CPU (演算)", academic: "演算・制御装置", icon: "Cpu", color: "text-blue-400", desc: "【中央演算処理装置】人間で言うと「脳」。プログラムの命令を実行・処理します。コア数が多いほど同時に多くの作業ができます。" },
+                memory: { label: "メモリ (記憶)", academic: "主記憶装置", icon: "Memory", color: "text-green-400", desc: "【主記憶装置】人間で言うと「机の広さ」。データの一時保管場所です。電源を切るとデータは消えます（揮発性）。" },
+                gpu: { label: "GPU (描画)", academic: "演算装置(画像)", icon: "Gpu", color: "text-purple-400", desc: "【画像処理装置】映像の計算を専門に行います。3Dゲームや動画編集には高性能なGPUが必須です。" },
+                storage: { label: "ストレージ", academic: "補助記憶装置", icon: "Storage", color: "text-yellow-400", desc: "【補助記憶装置】人間で言うと「本棚」。データを長期保存します。HDDは大容量で安価、SSDは高速です。" },
+                psu: { label: "電源ユニット", academic: "電力供給", icon: "Psu", color: "text-red-400", desc: "【電力供給】コンセントからの交流(AC)を直流(DC)に変換し、各パーツに電力を送ります。" },
+                os: { label: "OS (基本ソフト)", academic: "基本ソフトウェア", icon: "Os", color: "text-indigo-400", desc: "【オペレーティングシステム】ハードウェアとアプリを仲介する土台となるソフトウェアです。" },
+                app: { label: "アプリ", academic: "応用ソフトウェア", icon: "App", color: "text-pink-400", desc: "【アプリケーション】特定の目的（文書作成、ゲームなど）のために作られたソフトウェアです。" },
+                input: { label: "入力デバイス", academic: "入力装置", icon: "Input", color: "text-cyan-400", desc: "【入力装置】人間がコンピュータに指示を送るための機器です。用途に合わせて選びます。" }
             },
             parts: [
                 // Motherboards (Hidden)
@@ -232,7 +232,8 @@
             Fan: () => <svg className="w-full h-full text-slate-600" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z"/></svg>,
             ArrowLeft: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>,
             Refresh: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>,
-            Bulb: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
+            Bulb: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>,
+            Label: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" /></svg>
         };
 
         // Improved Fan Icon for animation
@@ -263,7 +264,7 @@
         };
 
         // --- Monitor Frame Component (New!) ---
-        const MonitorFrame = ({ children, turnOff }) => (
+        const MonitorFrame = ({ children, turnOff, showLabels }) => (
             <div className="fixed inset-0 z-50 bg-slate-950 flex flex-col items-center justify-center p-4 animate-fade-in">
                 {/* Monitor Bezel */}
                 <div className="relative w-full max-w-6xl aspect-video bg-gray-900 rounded-xl p-4 shadow-[0_0_50px_rgba(0,0,0,0.8)] border-t border-gray-700 flex flex-col">
@@ -273,6 +274,13 @@
                         <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-bl from-white/5 to-transparent pointer-events-none z-20"></div>
                         {/* Scanlines effect */}
                         <div className="absolute inset-0 bg-[url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAADCAYAAABS3WWCAAAAE0lEQVQIW2NkYGD4zwABjFAQAQAMsQEEyxv1dAAAAABJRU5ErkJggg==')] opacity-10 pointer-events-none z-10"></div>
+                        
+                        {/* Educational Label Overlay for Output Device */}
+                        {showLabels && (
+                            <div className="absolute top-4 left-4 z-40 bg-blue-600/90 text-white text-sm font-bold px-3 py-1 rounded shadow-lg border border-blue-400">
+                                出力装置 (Output)
+                            </div>
+                        )}
                         
                         {/* Actual Content */}
                         <div className="relative z-0 w-full h-full flex flex-col">
@@ -630,6 +638,26 @@
             const costPerf = specs.totalCost > 0 
                 ? Math.min(100, Math.round((performanceSum / (specs.totalCost / 5000)) * 10))
                 : 0;
+            
+            // Calculate Storage Capacity Hint
+            const getStorageCapacity = () => {
+                if (!parts.storage) return null;
+                const name = parts.storage.name;
+                let capacityGB = 0;
+                if (name.includes('500GB')) capacityGB = 500;
+                if (name.includes('1TB')) capacityGB = 1000;
+                if (name.includes('2TB')) capacityGB = 2000;
+                if (name.includes('4TB')) capacityGB = 4000;
+
+                if (capacityGB === 0) return null;
+
+                // Assumptions: Photo 10MB, FHD Video 1.5GB/h (approx)
+                const photos = Math.floor((capacityGB * 1000) / 10);
+                const videos = Math.floor(capacityGB / 1.5);
+
+                return { photos, videos };
+            };
+            const capacityHint = getStorageCapacity();
 
             return (
                 <div className="absolute inset-0 z-50 bg-slate-900 flex items-center justify-center p-8 animate-fade-in overflow-y-auto">
@@ -666,8 +694,19 @@
 
                                         return (
                                             <tr key={key}>
-                                                <td className="border border-slate-300 p-2 font-bold text-slate-800">{cat.label}</td>
-                                                <td className="border border-slate-300 p-2 text-slate-900">{displayPart.name}</td>
+                                                <td className="border border-slate-300 p-2 font-bold text-slate-800">
+                                                    {cat.label}
+                                                </td>
+                                                <td className="border border-slate-300 p-2 text-slate-900">
+                                                    {displayPart.name}
+                                                    {/* Storage Capacity Hint */}
+                                                    {key === 'storage' && capacityHint && (
+                                                        <div className="mt-1 text-xs text-slate-500 bg-slate-100 p-1 rounded inline-block">
+                                                            デジタル化の目安: 写真(10MB)なら約{capacityHint.photos.toLocaleString()}枚、
+                                                            FHD動画なら約{capacityHint.videos.toLocaleString()}時間分
+                                                        </div>
+                                                    )}
+                                                </td>
                                                 <td className="border border-slate-300 p-2 text-right text-slate-900">¥{displayPart.price.toLocaleString()}</td>
                                             </tr>
                                         );
@@ -750,7 +789,7 @@
             );
         };
 
-        const BenchmarkScreen = ({ parts, onBack }) => {
+        const BenchmarkScreen = ({ parts, onBack, showLabels }) => {
             const specs = calculateSpecs(parts);
             const performanceSum = specs.workPerformance + specs.gamePerformance;
             const costPerf = Math.min(100, Math.round((performanceSum / (specs.totalCost / 5000)) * 10));
@@ -761,7 +800,7 @@
             else if (specs.gamePerformance > 50 || specs.workPerformance > 50) rank = "B";
 
             return (
-                <MonitorFrame turnOff={onBack}>
+                <MonitorFrame turnOff={onBack} showLabels={showLabels}>
                     <div className="flex-1 bg-slate-900 w-full h-full flex flex-col md:flex-row overflow-hidden">
                         <div className="md:w-1/3 bg-gradient-to-br from-blue-900 to-slate-900 p-8 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-slate-700 relative overflow-hidden">
                             <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-blue-400 via-transparent to-transparent"></div>
@@ -859,7 +898,7 @@
             );
         };
 
-        const DropZone = ({ type, part, onDrop, onRemove, isTarget, isValid, label, className, hasBooted, isActiveTab }) => {
+        const DropZone = ({ type, part, onDrop, onRemove, isTarget, isValid, label, className, hasBooted, isActiveTab, showLabels }) => {
             const cat = pcData.categories[type];
             if (!cat) return null;
 
@@ -889,6 +928,15 @@
                 >
                     {label && !part && (
                         <div className="absolute top-1 left-2 text-[10px] text-slate-500 uppercase tracking-wider pointer-events-none">{label}</div>
+                    )}
+
+                    {/* Educational Label Overlay */}
+                    {showLabels && (
+                        <div className="absolute inset-0 z-30 pointer-events-none flex items-center justify-center bg-black/40 rounded-lg">
+                            <span className="bg-yellow-500/90 text-slate-900 text-xs font-bold px-2 py-0.5 rounded shadow-lg border border-yellow-300 transform scale-90 md:scale-100">
+                                {cat.academic}
+                            </span>
+                        </div>
                     )}
                     
                     {part ? (
@@ -930,6 +978,7 @@
             const [hoveredPart, setHoveredPart] = useState(null);
             const [hasBooted, setHasBooted] = useState(false);
             const [failedAttempts, setFailedAttempts] = useState(0);
+            const [showEducationalLabels, setShowEducationalLabels] = useState(false);
 
             // LocalStorage Auto-Save & Load
             useEffect(() => {
@@ -1015,6 +1064,11 @@
                     }
                 }
 
+                // Educational OS Check
+                if (!p.os) {
+                    errs.push("【重要】OS未搭載: 基本ソフトウェアがないため、ハードウェアを制御できません。");
+                }
+
                 // Bottleneck Logic
                 if (p.cpu && p.gpu && p.gpu.name !== "CPU内蔵 (なし)") {
                     const cpuScore = p.cpu.scoreGame || 0;
@@ -1032,6 +1086,8 @@
 
                 const essentials = ['cpu', 'memory', 'storage', 'psu', 'input'];
                 const missing = essentials.filter(t => !p[t]);
+                // Removed explicit missing check for boot flag since errs check covers OS and other critical errors if added
+                // However, we still need to ensure essentials are present for "missing" logic visual feedback
                 const canBoot = missing.length === 0 && errs.length === 0 && p.os;
 
                 return { errors: errs, warnings, checks, totalWatt, canBoot };
@@ -1109,7 +1165,7 @@
 
             if (view === 'menu') return <StartScreen onSelectMode={startMode} />;
             if (view === 'booting') return <BootScreen osName={selectedParts.os?.name} isHdd={selectedParts.storage?.name.includes('HDD')} onComplete={onBootComplete} />;
-            if (view === 'benchmark') return <BenchmarkScreen parts={selectedParts} onBack={() => setView('build')} />;
+            if (view === 'benchmark') return <BenchmarkScreen parts={selectedParts} onBack={() => setView('build')} showLabels={showEducationalLabels} />;
             if (view === 'specSheet') return <SpecSheetScreen parts={selectedParts} quizTitle={quizMode?.title || '自由制作'} onGoHome={goHome} />;
 
             return (
@@ -1150,6 +1206,20 @@
                                     <Icons.Refresh /> Reset
                                 </button>
                             </div>
+                            
+                            {/* Educational Label Toggle */}
+                            <button 
+                                onClick={() => setShowEducationalLabels(!showEducationalLabels)}
+                                className={`w-full py-1.5 px-3 mb-4 rounded text-xs font-bold flex items-center justify-center gap-2 transition-all ${
+                                    showEducationalLabels 
+                                    ? 'bg-yellow-600 text-white shadow shadow-yellow-500/50' 
+                                    : 'bg-slate-700 text-slate-400 hover:bg-slate-600'
+                                }`}
+                            >
+                                <Icons.Label /> 
+                                {showEducationalLabels ? "学習ラベル: ON (五大装置)" : "学習ラベル: OFF"}
+                            </button>
+
                             <div className="grid grid-cols-4 gap-2">
                                 {Object.keys(pcData.categories).map(key => (
                                     <button 
@@ -1245,20 +1315,20 @@
                                         <div className="absolute inset-0 opacity-10 pointer-events-none" style={{backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`, backgroundSize: '40px 40px'}}></div>
                                         <div className="grid grid-cols-2 grid-rows-3 gap-6 h-full relative z-10">
                                             <div className="flex flex-col">
-                                                <DropZone type="cpu" label="LGA/AM5 SOCKET" part={selectedParts.cpu} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'cpu'} isValid={validation.checks.cpu} className="h-full" hasBooted={hasBooted} isActiveTab={activeTab === 'cpu'} />
+                                                <DropZone type="cpu" label="LGA/AM5 SOCKET" part={selectedParts.cpu} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'cpu'} isValid={validation.checks.cpu} className="h-full" hasBooted={hasBooted} isActiveTab={activeTab === 'cpu'} showLabels={showEducationalLabels} />
                                                 {selectedParts.motherboard && (<div className="text-center text-[10px] text-green-400/50 mt-1">Auto-Matched: {selectedParts.motherboard.name}</div>)}
                                             </div>
                                             <div className="flex flex-col">
-                                                <DropZone type="memory" label="DIMM SLOTS" part={selectedParts.memory} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'memory'} isValid={validation.checks.memory} className="h-full" hasBooted={hasBooted} isActiveTab={activeTab === 'memory'} />
+                                                <DropZone type="memory" label="DIMM SLOTS" part={selectedParts.memory} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'memory'} isValid={validation.checks.memory} className="h-full" hasBooted={hasBooted} isActiveTab={activeTab === 'memory'} showLabels={showEducationalLabels} />
                                             </div>
                                             <div className="col-span-2 row-span-1">
-                                                 <DropZone type="gpu" label="PCIe x16 GRAPHICS" part={selectedParts.gpu} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'gpu'} isValid={validation.checks.gpu} className="h-full border-blue-500/20" hasBooted={hasBooted} isActiveTab={activeTab === 'gpu'} />
+                                                 <DropZone type="gpu" label="PCIe x16 GRAPHICS" part={selectedParts.gpu} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'gpu'} isValid={validation.checks.gpu} className="h-full border-blue-500/20" hasBooted={hasBooted} isActiveTab={activeTab === 'gpu'} showLabels={showEducationalLabels} />
                                             </div>
                                             <div className="grid grid-cols-2 gap-2">
-                                                <DropZone type="storage" label="DRIVE BAY" part={selectedParts.storage} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'storage'} isValid={validation.checks.storage} hasBooted={hasBooted} isActiveTab={activeTab === 'storage'} />
+                                                <DropZone type="storage" label="DRIVE BAY" part={selectedParts.storage} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'storage'} isValid={validation.checks.storage} hasBooted={hasBooted} isActiveTab={activeTab === 'storage'} showLabels={showEducationalLabels} />
                                             </div>
                                             <div>
-                                                <DropZone type="psu" label="POWER SUPPLY" part={selectedParts.psu} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'psu'} isValid={validation.checks.psu} hasBooted={hasBooted} isActiveTab={activeTab === 'psu'} />
+                                                <DropZone type="psu" label="POWER SUPPLY" part={selectedParts.psu} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'psu'} isValid={validation.checks.psu} hasBooted={hasBooted} isActiveTab={activeTab === 'psu'} showLabels={showEducationalLabels} />
                                             </div>
                                         </div>
                                     </div>
@@ -1267,11 +1337,11 @@
                                     <div className="bg-slate-800 rounded-xl border border-slate-700 p-4 shadow-lg flex flex-col gap-2 h-1/3">
                                         <h3 className="text-xs font-bold text-slate-400 uppercase border-b border-slate-700 pb-1">Software & Peripherals</h3>
                                         <div className="grid grid-cols-2 gap-2 flex-1">
-                                            <DropZone type="os" label="OS" part={selectedParts.os} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'os'} isValid={true} isActiveTab={activeTab === 'os'} />
-                                            <DropZone type="app" label="APP" part={selectedParts.app} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'app'} isValid={true} isActiveTab={activeTab === 'app'} />
+                                            <DropZone type="os" label="OS" part={selectedParts.os} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'os'} isValid={true} isActiveTab={activeTab === 'os'} showLabels={showEducationalLabels} />
+                                            <DropZone type="app" label="APP" part={selectedParts.app} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'app'} isValid={true} isActiveTab={activeTab === 'app'} showLabels={showEducationalLabels} />
                                         </div>
                                         <div className="h-16">
-                                            <DropZone type="input" label="KEYBOARD & MOUSE" part={selectedParts.input} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'input'} isValid={true} hasBooted={hasBooted} isActiveTab={activeTab === 'input'} />
+                                            <DropZone type="input" label="KEYBOARD & MOUSE" part={selectedParts.input} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'input'} isValid={true} hasBooted={hasBooted} isActiveTab={activeTab === 'input'} showLabels={showEducationalLabels} />
                                         </div>
                                     </div>
                                     <div className="bg-slate-800 rounded-xl border border-slate-700 p-4 flex-1 flex flex-col overflow-hidden relative">
