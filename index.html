@@ -141,13 +141,13 @@
                 {
                     id: 3,
                     level: "★★★",
-                    title: "究極のクリエイターPC",
-                    desc: "予算無制限。動画編集もゲームも最高設定で動く最強のマシンを構築せよ。",
+                    title: "ハイエンド編集PC",
+                    desc: "予算45万円以内。動画編集もゲームも最高設定で動く、コスパも意識した最強マシンを構築せよ。",
                     conditions: { 
-                        maxPrice: 1000000, 
+                        maxPrice: 450000, 
                         requiredAppType: "creative",
-                        minGameScore: 90, 
-                        minWorkScore: 90
+                        minGameScore: 85, 
+                        minWorkScore: 85
                     }
                 }
             ]
@@ -176,7 +176,9 @@
             Power: () => <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>,
             Minus: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" /></svg>,
             Plus: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" /></svg>,
-            Help: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            Help: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>,
+            Print: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" /></svg>,
+            Home: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
         };
 
         const pcData = window.PC_DATA;
@@ -234,7 +236,7 @@
         };
 
         // --- Independent & Draggable Quiz Window ---
-        const QuizWindow = ({ quiz, submissionResult, onSubmit, hasBooted }) => {
+        const QuizWindow = ({ quiz, submissionResult, onSubmit, hasBooted, onViewSpecs }) => {
             const [minimized, setMinimized] = useState(false);
             const [position, setPosition] = useState({ x: 20, y: 20 });
             const [isDragging, setIsDragging] = useState(false);
@@ -266,7 +268,6 @@
             }, [isDragging]);
 
             const handleMouseDown = (e) => {
-                // Only allow dragging from the header area
                 setIsDragging(true);
                 dragOffset.current = {
                     x: e.clientX - position.x,
@@ -283,7 +284,7 @@
                         minimized ? 'w-64 h-12' : 'w-80'
                     } ${isDragging ? 'cursor-grabbing select-none' : ''}`}
                 >
-                    {/* Header (Draggable) */}
+                    {/* Header */}
                     <div 
                         className="h-12 bg-yellow-700/20 flex items-center justify-between px-4 cursor-grab active:cursor-grabbing hover:bg-yellow-700/30 transition rounded-t-xl"
                         onMouseDown={handleMouseDown}
@@ -294,7 +295,7 @@
                         </div>
                         <button 
                             className="text-yellow-500 hover:text-white p-1"
-                            onMouseDown={(e) => e.stopPropagation()} // Prevent dragging when clicking button
+                            onMouseDown={(e) => e.stopPropagation()} 
                             onClick={() => setMinimized(!minimized)}
                         >
                             {minimized ? <Icons.Plus /> : <Icons.Minus />}
@@ -341,55 +342,125 @@
                                 </div>
                             )}
 
-                            {/* Submit Button */}
-                            <div className="relative group">
+                            {/* Actions */}
+                            {submissionResult?.success ? (
                                 <button 
-                                    onClick={onSubmit}
-                                    disabled={!hasBooted}
-                                    className={`w-full py-3 font-bold rounded shadow-lg transition-all flex justify-center items-center gap-2
-                                        ${hasBooted 
-                                            ? 'bg-yellow-600 hover:bg-yellow-500 text-white active:scale-95' 
-                                            : 'bg-slate-700 text-slate-500 cursor-not-allowed'
-                                        }`}
+                                    onClick={onViewSpecs}
+                                    className="w-full py-3 bg-green-600 hover:bg-green-500 text-white font-bold rounded shadow-lg transition-all flex justify-center items-center gap-2 animate-pulse"
                                 >
-                                    課題を提出する
-                                    {!hasBooted && <Icons.Alert />}
+                                    <Icons.Print /> スペック表を表示して終了
                                 </button>
-                                
-                                {/* Tooltip for disabled state */}
-                                {!hasBooted && (
-                                    <div className="absolute bottom-full left-0 w-full mb-2 p-2 bg-black text-white text-xs rounded opacity-0 group-hover:opacity-100 transition pointer-events-none text-center z-50">
-                                        POWER ONして起動確認を行ってください
-                                    </div>
-                                )}
-                            </div>
+                            ) : (
+                                <div className="relative group">
+                                    <button 
+                                        onClick={onSubmit}
+                                        disabled={!hasBooted}
+                                        className={`w-full py-3 font-bold rounded shadow-lg transition-all flex justify-center items-center gap-2
+                                            ${hasBooted 
+                                                ? 'bg-yellow-600 hover:bg-yellow-500 text-white active:scale-95' 
+                                                : 'bg-slate-700 text-slate-500 cursor-not-allowed'
+                                            }`}
+                                    >
+                                        課題を提出する
+                                        {!hasBooted && <Icons.Alert />}
+                                    </button>
+                                    
+                                    {!hasBooted && (
+                                        <div className="absolute bottom-full left-0 w-full mb-2 p-2 bg-black text-white text-xs rounded opacity-0 group-hover:opacity-100 transition pointer-events-none text-center z-50">
+                                            POWER ONして起動確認を行ってください
+                                        </div>
+                                    )}
+                                </div>
+                            )}
                         </div>
                     )}
                 </div>
             );
         };
 
+        // --- Spec Sheet Screen (Final Report) ---
+        const SpecSheetScreen = ({ parts, quizTitle, onGoHome }) => {
+            const totalPrice = Object.values(parts).reduce((a, b) => a + (b?.price || 0), 0);
+            const date = new Date().toLocaleDateString('ja-JP');
+
+            return (
+                <div className="absolute inset-0 z-50 bg-slate-900 flex items-center justify-center p-8 animate-fade-in overflow-y-auto">
+                    <div className="bg-white text-slate-900 w-full max-w-3xl rounded shadow-2xl overflow-hidden print:w-full print:absolute print:top-0 print:left-0 print:m-0">
+                        {/* Header */}
+                        <div className="bg-slate-800 text-white p-6 border-b-4 border-yellow-500 flex justify-between items-center">
+                            <div>
+                                <h2 className="text-2xl font-bold">PC構成レポート</h2>
+                                <div className="text-slate-400 text-sm mt-1">課題: {quizTitle}</div>
+                            </div>
+                            <div className="text-right">
+                                <div className="text-3xl font-bold text-yellow-400">合格</div>
+                                <div className="text-xs text-slate-400">{date}</div>
+                            </div>
+                        </div>
+
+                        {/* Specs Table */}
+                        <div className="p-8">
+                            <p className="mb-4 text-sm text-slate-600">※この画面の内容をワークシートに転記してください。</p>
+                            
+                            <table className="w-full border-collapse border border-slate-300 text-sm">
+                                <thead>
+                                    <tr className="bg-slate-100">
+                                        <th className="border border-slate-300 p-2 text-left w-1/4">カテゴリ</th>
+                                        <th className="border border-slate-300 p-2 text-left w-1/2">選択したパーツ</th>
+                                        <th className="border border-slate-300 p-2 text-right w-1/4">価格</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {Object.entries(pcData.categories).map(([key, cat]) => {
+                                        // Skip if not strictly a part category or if part is missing (though success implies filled)
+                                        const part = parts[key] || parts[key === 'mb' ? 'motherboard' : '']; // mapping fix
+                                        // Simple map for display order
+                                        const displayPart = parts[key === 'input' ? 'input' : key];
+                                        if(!displayPart) return null;
+
+                                        return (
+                                            <tr key={key}>
+                                                <td className="border border-slate-300 p-2 font-bold text-slate-700">{cat.label}</td>
+                                                <td className="border border-slate-300 p-2">{displayPart.name}</td>
+                                                <td className="border border-slate-300 p-2 text-right">¥{displayPart.price.toLocaleString()}</td>
+                                            </tr>
+                                        );
+                                    })}
+                                    <tr className="bg-slate-50 font-bold">
+                                        <td className="border border-slate-300 p-2 text-right" colSpan="2">合計金額</td>
+                                        <td className="border border-slate-300 p-2 text-right text-lg text-blue-600">¥{totalPrice.toLocaleString()}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div className="mt-8 flex justify-center print:hidden">
+                                <button 
+                                    onClick={onGoHome}
+                                    className="flex items-center gap-2 px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded shadow-lg transition-transform hover:-translate-y-1"
+                                >
+                                    <Icons.Home /> トップ画面に戻る
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
         // --- Benchmark Screen ---
         const BenchmarkScreen = ({ parts, onBack }) => {
-            // Re-calculate validation here for display logic or pass state
             const totalCost = Object.values(parts).reduce((a, b) => a + (b?.price || 0), 0);
-            
-            // Base scores
             let cpuScoreW = parts.cpu?.scoreWork || 0;
             let cpuScoreG = parts.cpu?.scoreGame || 0;
             let gpuScoreW = parts.gpu?.scoreWork || 0;
             let gpuScoreG = parts.gpu?.scoreGame || 0;
             let memScore = parts.memory?.scoreWork || 0; 
-            
-            // Storage impact
             const isNvme = parts.storage?.name.includes('NVMe');
             const isHdd = parts.storage?.name.includes('HDD');
             const storageBonus = isNvme ? 1.2 : (isHdd ? 0.7 : 1.0);
             
-            // Final Calculation
             const workPerformance = Math.min(100, Math.round((cpuScoreW * 0.6 + gpuScoreW * 0.2 + memScore * 0.2) * storageBonus));
             const gamePerformance = Math.min(100, Math.round((gpuScoreG * 0.7 + cpuScoreG * 0.2 + memScore * 0.1)));
-            
             const performanceSum = workPerformance + gamePerformance;
             const costPerf = Math.min(100, Math.round((performanceSum / (totalCost / 5000)) * 10));
 
@@ -401,7 +472,6 @@
             return (
                 <div className="absolute inset-0 z-50 bg-slate-900/95 backdrop-blur flex items-center justify-center animate-fade-in">
                     <div className="bg-slate-800 w-full max-w-4xl rounded-2xl border border-slate-700 shadow-2xl overflow-hidden flex flex-col md:flex-row">
-                        {/* Left: Overall Rank */}
                         <div className="md:w-1/3 bg-gradient-to-br from-blue-900 to-slate-900 p-8 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-slate-700 relative overflow-hidden">
                             <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-blue-400 via-transparent to-transparent"></div>
                             <h2 className="text-slate-400 uppercase tracking-widest text-sm mb-2 font-bold z-10">総合評価ランク</h2>
@@ -414,12 +484,10 @@
                             </div>
                         </div>
 
-                        {/* Right: Details */}
                         <div className="flex-1 p-8">
                             <h3 className="text-2xl font-bold mb-6 flex items-center gap-2">
                                 <Icons.App /> ベンチマーク結果
                             </h3>
-                            
                             <div className="space-y-6">
                                 <div>
                                     <div className="flex justify-between text-sm mb-1">
@@ -434,7 +502,6 @@
                                          gamePerformance > 50 ? "設定を調整すれば多くのゲームが遊べます。" : "3Dゲームは厳しいかもしれません。"}
                                     </p>
                                 </div>
-
                                 <div>
                                     <div className="flex justify-between text-sm mb-1">
                                         <span className="font-bold text-blue-300">作業効率 (Office/編集)</span>
@@ -445,7 +512,6 @@
                                     </div>
                                     {isHdd && <p className="text-xs text-red-400 mt-1">HDDが搭載されているため、起動やロードが遅くなります。</p>}
                                 </div>
-
                                 <div>
                                     <div className="flex justify-between text-sm mb-1">
                                         <span className="font-bold text-green-300">コストパフォーマンス</span>
@@ -456,7 +522,6 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div className="mt-8 pt-6 border-t border-slate-700 flex justify-end">
                                 <button onClick={onBack} className="px-6 py-2 bg-slate-700 hover:bg-slate-600 rounded text-white font-bold transition">
                                     構成画面に戻る（提出可能）
@@ -559,7 +624,6 @@
 
         const BootScreen = ({ osName, isHdd, onComplete }) => {
             useEffect(() => {
-                // If HDD, boot takes longer (e.g. 6s vs 3.5s)
                 const duration = isHdd ? 6000 : 3500;
                 const timer = setTimeout(onComplete, duration);
                 return () => clearTimeout(timer);
@@ -617,6 +681,10 @@
                 setHasBooted(false);
                 setView('build');
             };
+            
+            const handleViewSpecs = () => {
+                setView('specSheet');
+            };
 
             const validation = useMemo(() => {
                 const p = selectedParts;
@@ -650,7 +718,7 @@
             }, [selectedParts]);
 
             const handlePartSelect = (part) => {
-                setHasBooted(false); // Reset boot state on change
+                setHasBooted(false);
                 if (part.type === 'cpu') {
                     const compatibleMb = pcData.parts.find(p => p.id === part.defaultMb);
                     setSelectedParts(prev => ({
@@ -706,6 +774,7 @@
             if (view === 'menu') return <StartScreen onSelectMode={startMode} />;
             if (view === 'booting') return <BootScreen osName={selectedParts.os?.name} isHdd={selectedParts.storage?.name.includes('HDD')} onComplete={onBootComplete} />;
             if (view === 'benchmark') return <BenchmarkScreen parts={selectedParts} onBack={() => setView('build')} />;
+            if (view === 'specSheet') return <SpecSheetScreen parts={selectedParts} quizTitle={quizMode?.title || '自由制作'} onGoHome={goHome} />;
 
             return (
                 <div className="flex h-screen bg-slate-900 text-slate-200 font-sans relative">
@@ -715,9 +784,10 @@
                         submissionResult={submissionResult} 
                         onSubmit={handleSubmitAssignment}
                         hasBooted={hasBooted}
+                        onViewSpecs={handleViewSpecs}
                     />
 
-                    {/* LEFT SIDEBAR: Part Picker */}
+                    {/* LEFT SIDEBAR */}
                     <div className="w-80 flex flex-col border-r border-slate-700 bg-slate-800 z-10 shadow-xl">
                         <div className="p-4 border-b border-slate-700 bg-slate-800">
                             <button onClick={goHome} className="mb-4 text-xs flex items-center gap-1 text-slate-400 hover:text-white">
@@ -797,42 +867,21 @@
                         {/* WORKSPACE */}
                         <div className="flex-1 overflow-y-auto p-4 flex justify-center items-center">
                             <div className="w-full max-w-7xl grid grid-cols-12 gap-6 h-[650px]">
-                                
-                                {/* PC CASE (Main Canvas) */}
                                 <div className="col-span-8 bg-slate-900 rounded-2xl border-2 border-slate-700 p-2 relative shadow-2xl flex flex-col">
                                     <div className="absolute top-0 left-8 -mt-3 bg-slate-700 text-slate-300 px-4 py-0.5 text-xs font-bold rounded shadow">CASE INTERIOR</div>
-                                    
-                                    {/* Motherboard Visual Area */}
                                     <div className="flex-1 bg-pc-pcb rounded-xl relative overflow-hidden border border-slate-600 m-2 p-6">
-                                        {/* Circuit Patterns */}
-                                        <div className="absolute inset-0 opacity-10 pointer-events-none" 
-                                             style={{
-                                                 backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
-                                                 backgroundSize: '40px 40px'
-                                             }}>
-                                        </div>
-
+                                        <div className="absolute inset-0 opacity-10 pointer-events-none" style={{backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`, backgroundSize: '40px 40px'}}></div>
                                         <div className="grid grid-cols-2 grid-rows-3 gap-6 h-full relative z-10">
-                                            
-                                            {/* Row 1: CPU & RAM */}
                                             <div className="flex flex-col">
                                                 <DropZone type="cpu" label="LGA/AM5 SOCKET" part={selectedParts.cpu} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'cpu'} isValid={validation.checks.cpu} className="h-full" />
-                                                {selectedParts.motherboard && (
-                                                    <div className="text-center text-[10px] text-green-400/50 mt-1">
-                                                        Auto-Matched: {selectedParts.motherboard.name}
-                                                    </div>
-                                                )}
+                                                {selectedParts.motherboard && (<div className="text-center text-[10px] text-green-400/50 mt-1">Auto-Matched: {selectedParts.motherboard.name}</div>)}
                                             </div>
                                             <div className="flex flex-col">
                                                 <DropZone type="memory" label="DIMM SLOTS" part={selectedParts.memory} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'memory'} isValid={validation.checks.memory} className="h-full" />
                                             </div>
-
-                                            {/* Row 2: GPU */}
                                             <div className="col-span-2 row-span-1">
                                                  <DropZone type="gpu" label="PCIe x16 GRAPHICS" part={selectedParts.gpu} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'gpu'} isValid={validation.checks.gpu} className="h-full border-blue-500/20" />
                                             </div>
-
-                                            {/* Row 3: Storage & PSU */}
                                             <div className="grid grid-cols-2 gap-2">
                                                 <DropZone type="storage" label="DRIVE BAY" part={selectedParts.storage} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'storage'} isValid={validation.checks.storage} />
                                             </div>
@@ -842,14 +891,9 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                {/* RIGHT: Software & Status */}
                                 <div className="col-span-4 flex flex-col gap-4 h-full">
-                                    {/* OS/App Rack */}
                                     <div className="bg-slate-800 rounded-xl border border-slate-700 p-4 shadow-lg flex flex-col gap-2 h-1/3">
-                                        <h3 className="text-xs font-bold text-slate-400 uppercase border-b border-slate-700 pb-1">
-                                            Software & Peripherals
-                                        </h3>
+                                        <h3 className="text-xs font-bold text-slate-400 uppercase border-b border-slate-700 pb-1">Software & Peripherals</h3>
                                         <div className="grid grid-cols-2 gap-2 flex-1">
                                             <DropZone type="os" label="OS" part={selectedParts.os} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'os'} isValid={true} />
                                             <DropZone type="app" label="APP" part={selectedParts.app} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'app'} isValid={true} />
@@ -858,26 +902,16 @@
                                             <DropZone type="input" label="KEYBOARD & MOUSE" part={selectedParts.input} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'input'} isValid={true} />
                                         </div>
                                     </div>
-
-                                    {/* Info Panel (Dynamic) */}
                                     <div className="bg-slate-800 rounded-xl border border-slate-700 p-4 flex-1 flex flex-col overflow-hidden relative">
-                                        <h3 className="text-xs font-bold text-slate-400 uppercase mb-2 flex justify-between items-center">
-                                            <span className="flex items-center gap-2"><Icons.Help /> Information</span>
-                                        </h3>
-                                        
+                                        <h3 className="text-xs font-bold text-slate-400 uppercase mb-2 flex justify-between items-center"><span className="flex items-center gap-2"><Icons.Help /> Information</span></h3>
                                         <div className="flex-1 overflow-y-auto pr-1">
-                                            {/* Priority 1: Always Show Category Description */}
                                             <div className="animate-fade-in mb-4 border-b border-slate-700 pb-2">
                                                 <div className="font-bold text-white mb-1 flex items-center gap-2">
                                                     {React.createElement(Icons[pcData.categories[activeTab]?.icon] || Icons.Help, { className: "w-4 h-4 text-blue-400" })}
                                                     {pcData.categories[activeTab]?.label}
                                                 </div>
-                                                <div className="text-slate-400 text-xs leading-relaxed">
-                                                    {pcData.categories[activeTab]?.desc}
-                                                </div>
+                                                <div className="text-slate-400 text-xs leading-relaxed">{pcData.categories[activeTab]?.desc}</div>
                                             </div>
-
-                                            {/* Priority 2: Hovered Part Description (Appends below) */}
                                             {hoveredPart && (
                                                 <div className="animate-slide-in mb-4 bg-slate-700/50 p-2 rounded border border-slate-600">
                                                     <div className="font-bold text-blue-300 mb-1 flex justify-between items-center border-b border-slate-600/50 pb-1">
@@ -887,21 +921,11 @@
                                                     <div className="text-slate-300 text-xs leading-relaxed mt-1">{hoveredPart.desc}</div>
                                                 </div>
                                             )}
-
-                                            {/* Priority 3: System Status / Errors */}
                                             <div className="space-y-1">
                                                 <div className="text-[10px] font-bold text-slate-500 uppercase">SYSTEM ALERTS</div>
                                                 {validation.errors.length > 0 ? (
-                                                    validation.errors.map((e, i) => (
-                                                        <div key={`err-${i}`} className="flex gap-2 text-xs text-red-300 bg-red-900/20 p-2 rounded items-start">
-                                                            <Icons.Alert /> <span>{e}</span>
-                                                        </div>
-                                                    ))
-                                                ) : (
-                                                    <div className="text-xs text-green-500 flex items-center gap-2">
-                                                        <Icons.Check /> システムは正常です
-                                                    </div>
-                                                )}
+                                                    validation.errors.map((e, i) => (<div key={`err-${i}`} className="flex gap-2 text-xs text-red-300 bg-red-900/20 p-2 rounded items-start"><Icons.Alert /> <span>{e}</span></div>))
+                                                ) : (<div className="text-xs text-green-500 flex items-center gap-2"><Icons.Check /> システムは正常です</div>)}
                                             </div>
                                         </div>
                                     </div>
