@@ -1,0 +1,5 @@
+{
+  "name": "PC Master Build: Info I Simulator",
+  "description": "A hardware and software configuration simulator for Information I classes. Features drag-and-drop assembly, compatibility checking, power calculation, and learning quizzes.",
+  "requestFramePermissions": []
+}
