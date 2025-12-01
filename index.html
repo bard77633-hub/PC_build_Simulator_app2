@@ -72,30 +72,40 @@
                 { id: "mb_2", type: "motherboard", name: "High-End Z790", price: 35000, socket: "LGA1700", memoryType: "DDR5", desc: "Intel用高性能基盤", isRgb: true },
                 { id: "mb_3", type: "motherboard", name: "Ryzen X670", price: 40000, socket: "AM5", memoryType: "DDR5", desc: "AMD用基盤", isRgb: true },
         
-                // CPU
+                // CPU (5 types)
                 { id: "cpu_1", type: "cpu", name: "Core i3-12100", price: 15000, watt: 60, scoreWork: 40, scoreGame: 25, socket: "LGA1700", defaultMb: "mb_1", desc: "4コア。事務作業やネットサーフィンには十分な性能です。" },
+                { id: "cpu_4", type: "cpu", name: "Ryzen 5 7600", price: 32000, watt: 65, scoreWork: 60, scoreGame: 65, socket: "AM5", defaultMb: "mb_3", desc: "6コア。価格と性能のバランスが良く、ゲーミングPC入門に最適。" },
                 { id: "cpu_2", type: "cpu", name: "Core i5-13600K", price: 48000, watt: 125, scoreWork: 85, scoreGame: 75, socket: "LGA1700", defaultMb: "mb_2", desc: "14コア。ゲームも動画編集も快適にこなせる高性能CPUです。" },
+                { id: "cpu_5", type: "cpu", name: "Core i7-13700", price: 60000, watt: 150, scoreWork: 95, scoreGame: 80, socket: "LGA1700", defaultMb: "mb_2", desc: "16コア。重い処理も難なくこなすパワーを持っています。" },
                 { id: "cpu_3", type: "cpu", name: "Ryzen 7 7800X3D", price: 62000, watt: 120, scoreWork: 70, scoreGame: 100, socket: "AM5", defaultMb: "mb_3", desc: "8コア。3Dキャッシュ技術により、最強クラスのゲーム性能を誇ります。" },
         
-                // Memory
+                // Memory (5 types)
                 { id: "mem_1", type: "memory", name: "DDR4-3200 8GB", price: 4000, watt: 5, memoryType: "DDR4", scoreWork: 10, scoreGame: 10, desc: "8GB。事務用としては最低限ですが、ゲームや編集には不足気味です。" },
-                { id: "mem_2", type: "memory", name: "DDR5-5600 16GB", price: 13000, watt: 8, memoryType: "DDR5", scoreWork: 30, scoreGame: 30, desc: "16GB。現代のPCの標準的な容量です。多くの用途で快適です。" },
+                { id: "mem_4", type: "memory", name: "DDR4-3200 16GB", price: 8000, watt: 6, memoryType: "DDR4", scoreWork: 25, scoreGame: 25, desc: "16GB(DDR4)。一世代前ですが、コスパ良く容量を確保できます。" },
+                { id: "mem_2", type: "memory", name: "DDR5-5600 16GB", price: 13000, watt: 8, memoryType: "DDR5", scoreWork: 30, scoreGame: 30, desc: "16GB(DDR5)。現代のPCの標準的な容量です。多くの用途で快適です。" },
                 { id: "mem_3", type: "memory", name: "DDR5-6000 32GB", price: 26000, watt: 10, memoryType: "DDR5", scoreWork: 60, scoreGame: 50, desc: "32GB。動画編集や重いゲームの配信など、クリエイティブ用途向けです。", isRgb: true },
+                { id: "mem_5", type: "memory", name: "DDR5-6000 64GB", price: 50000, watt: 12, memoryType: "DDR5", scoreWork: 90, scoreGame: 60, desc: "64GB。プロ仕様。サーバー構築や大規模なCG制作に使われます。", isRgb: true },
         
-                // GPU
+                // GPU (6 types)
                 { id: "gpu_0", type: "gpu", name: "CPU内蔵 (なし)", price: 0, watt: 0, scoreGame: 5, scoreWork: 10, desc: "CPUに内蔵された機能で映像を出力します。3Dゲームは動きません。" },
                 { id: "gpu_1", type: "gpu", name: "GeForce GTX 1650", price: 22000, watt: 75, scoreGame: 40, scoreWork: 30, desc: "エントリー向けグラボ。軽いゲームなら設定を下げて動かせます。" },
+                { id: "gpu_4", type: "gpu", name: "Radeon RX 7600", price: 39000, watt: 165, scoreGame: 65, scoreWork: 50, desc: "AMD製のミドルレンジ。フルHDゲームが快適に動く高コスパモデル。" },
                 { id: "gpu_2", type: "gpu", name: "GeForce RTX 4060", price: 46000, watt: 115, scoreGame: 70, scoreWork: 60, desc: "ミドルレンジ。多くの最新ゲームがフルHD画質で快適に動作します。" },
+                { id: "gpu_5", type: "gpu", name: "GeForce RTX 4070 Ti", price: 120000, watt: 285, scoreGame: 90, scoreWork: 85, desc: "ハイエンド。WQHDや4K画質でのゲームプレイが可能です。", isRgb: true },
                 { id: "gpu_3", type: "gpu", name: "GeForce RTX 4090", price: 280000, watt: 450, scoreGame: 100, scoreWork: 100, desc: "現行最強のグラボ。4KゲームもAI生成も爆速ですが、非常に高価です。", isRgb: true },
         
-                // Storage
+                // Storage (5 types)
                 { id: "str_1", type: "storage", name: "SATA SSD 500GB", price: 6000, watt: 3, scoreWork: 20, desc: "HDDより高速ですが、NVMeほどではありません。容量は控えめ。" },
+                { id: "str_4", type: "storage", name: "SATA SSD 1TB", price: 9000, watt: 3, scoreWork: 25, desc: "1TBの大容量SATA SSD。データ保存用に適しています。" },
                 { id: "str_2", type: "storage", name: "NVMe SSD 1TB", price: 12000, watt: 6, scoreWork: 50, desc: "基盤に直接挿す超高速SSD。OSの起動やゲームのロードが一瞬で終わります。" },
+                { id: "str_5", type: "storage", name: "NVMe SSD 2TB", price: 22000, watt: 7, scoreWork: 60, desc: "2TBの超高速SSD。たくさんのゲームや動画を保存できます。" },
                 { id: "str_3", type: "storage", name: "3.5インチ HDD 4TB", price: 8500, watt: 15, scoreWork: 10, desc: "【注意】非常に安価で大容量ですが、物理的なディスクが回転するため遅く、OS起動に時間がかかります。" },
                 
-                // PSU
+                // PSU (5 types)
                 { id: "psu_1", type: "psu", name: "Standard 450W", price: 5000, maxWatt: 450, desc: "事務用PC向け。高性能なグラボを積むと電力が足りなくなります。" },
+                { id: "psu_4", type: "psu", name: "Bronze 650W", price: 9000, maxWatt: 650, desc: "ミドルレンジ向け。コストパフォーマンスが良いモデルです。" },
                 { id: "psu_2", type: "psu", name: "Gold 750W", price: 16000, maxWatt: 750, desc: "ゲーミングPCの標準。電力変換効率が良く（Gold）、発熱も少なめです。" },
+                { id: "psu_5", type: "psu", name: "Gold 850W", price: 20000, maxWatt: 850, desc: "余裕のある容量。将来的なパーツ増設にも対応できます。" },
                 { id: "psu_3", type: "psu", name: "Platinum 1000W", price: 32000, maxWatt: 1000, desc: "ハイエンド構成用。最高ランクの変換効率（Platinum）を持ちます。" },
         
                 // OS
@@ -106,6 +116,7 @@
                 { id: "app_1", type: "app", name: "Office 2024", price: 35000, desc: "Word, Excelなど。レポート作成や事務仕事には欠かせないソフトです。", typeTag: "work" },
                 { id: "app_2", type: "app", name: "FPS Game Title", price: 8000, desc: "人気の対戦シューティングゲーム。高い反射神経とPC性能が求められます。", typeTag: "game" },
                 { id: "app_3", type: "app", name: "Video Studio Pro", price: 45000, desc: "プロ向けの動画編集ソフト。メモリとCPU/GPUの性能をフルに使います。", typeTag: "creative" },
+                { id: "app_4", type: "app", name: "VS Code & Python", price: 0, desc: "プログラミング開発環境。コードを書くためのツールです。", typeTag: "dev" },
 
                 // Input Devices
                 { id: "in_1", type: "input", name: "標準マウス＆キーボード", price: 2000, desc: "PC付属品レベル。とりあえず入力できれば良いという人向け。", scoreGame: 0, scoreWork: 20 },
@@ -116,7 +127,7 @@
                 {
                     id: 1,
                     level: "★☆☆",
-                    title: "事務用レポートPC",
+                    title: "1. 事務用レポートPC",
                     desc: "予算10万円以内で、Officeソフトが動き、快適に文字入力ができる構成を作れ。",
                     conditions: { 
                         maxPrice: 100000, 
@@ -128,7 +139,7 @@
                 {
                     id: 2,
                     level: "★★☆",
-                    title: "ゲーミングPC入門",
+                    title: "2. ゲーミングPC入門",
                     desc: "予算22万円以内で、最新の3Dゲームが快適に動く構成。もちろんゲーミングデバイスも必須だ。",
                     conditions: { 
                         maxPrice: 220000, 
@@ -142,13 +153,37 @@
                 {
                     id: 3,
                     level: "★★★",
-                    title: "ハイエンド編集PC",
+                    title: "3. ハイエンド編集PC",
                     desc: "予算45万円以内。動画編集もゲームも最高設定で動く、コスパも意識した最強マシンを構築せよ。",
                     conditions: { 
                         maxPrice: 450000, 
                         requiredAppType: "creative",
                         minGameScore: 85, 
                         minWorkScore: 85
+                    }
+                },
+                {
+                    id: 4,
+                    level: "★★☆",
+                    title: "4. サーバーエンジニア入門",
+                    desc: "予算15万円以内。OS代を節約し、プログラミング環境を整えよ。メモリは多め(32GB以上)が良い。",
+                    conditions: {
+                        maxPrice: 150000,
+                        requiredOs: "Linux (Ubuntu)",
+                        requiredAppType: "dev",
+                        minMemoryGb: 32 // Logic needs to handle this
+                    }
+                },
+                {
+                    id: 5,
+                    level: "★☆☆",
+                    title: "5. 学生予算ゲーミング",
+                    desc: "予算13万円という厳しい条件で、なんとか3Dゲームが動く構成(スコア45以上)を作れ。",
+                    conditions: {
+                        maxPrice: 130000,
+                        requiredAppType: "game",
+                        minGameScore: 45,
+                        requiresDedicatedGpu: true
                     }
                 }
             ]
@@ -180,7 +215,8 @@
             Help: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>,
             Print: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" /></svg>,
             Home: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>,
-            Fan: () => <svg className="w-full h-full text-slate-600" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z"/></svg> // Simple placeholder
+            Fan: () => <svg className="w-full h-full text-slate-600" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z"/></svg>,
+            ArrowLeft: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
         };
 
         // Improved Fan Icon for animation
@@ -191,6 +227,24 @@
         );
 
         const pcData = window.PC_DATA;
+
+        // --- Helper to calculate specs ---
+        const calculateSpecs = (parts) => {
+            const totalCost = Object.values(parts).reduce((a, b) => a + (b?.price || 0), 0);
+            let cpuScoreW = parts.cpu?.scoreWork || 0;
+            let cpuScoreG = parts.cpu?.scoreGame || 0;
+            let gpuScoreW = parts.gpu?.scoreWork || 0;
+            let gpuScoreG = parts.gpu?.scoreGame || 0;
+            let memScore = parts.memory?.scoreWork || 0; 
+            const isNvme = parts.storage?.name.includes('NVMe');
+            const isHdd = parts.storage?.name.includes('HDD');
+            const storageBonus = isNvme ? 1.2 : (isHdd ? 0.7 : 1.0);
+            
+            const workPerformance = Math.min(100, Math.round((cpuScoreW * 0.6 + gpuScoreW * 0.2 + memScore * 0.2) * storageBonus));
+            const gamePerformance = Math.min(100, Math.round((gpuScoreG * 0.7 + cpuScoreG * 0.2 + memScore * 0.1)));
+            
+            return { totalCost, workPerformance, gamePerformance };
+        };
 
         // --- Start Screen ---
         const StartScreen = ({ onSelectMode }) => {
@@ -218,11 +272,11 @@
                                 <p className="text-sm text-slate-400">予算や条件を気にせず、好きなパーツを組み合わせてPCを作成します。</p>
                             </button>
 
-                            <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-6 backdrop-blur">
+                            <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-6 backdrop-blur flex flex-col h-80">
                                 <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
                                     <span className="text-yellow-400">★</span> クイズに挑戦
                                 </h3>
-                                <div className="space-y-3">
+                                <div className="space-y-2 overflow-y-auto pr-1 flex-1 scrollbar-hide">
                                     {pcData.quizzes.map(q => (
                                         <button 
                                             key={q.id} 
@@ -233,7 +287,7 @@
                                                 <div className="text-sm font-bold text-slate-200">{q.title}</div>
                                                 <div className="text-xs text-slate-400 line-clamp-1">{q.desc}</div>
                                             </div>
-                                            <span className="text-xs font-mono text-yellow-500 bg-yellow-900/30 px-2 py-1 rounded">{q.level}</span>
+                                            <span className="text-xs font-mono text-yellow-500 bg-yellow-900/30 px-2 py-1 rounded min-w-[3em] text-center">{q.level}</span>
                                         </button>
                                     ))}
                                 </div>
@@ -245,7 +299,7 @@
         };
 
         // --- Independent & Draggable Quiz Window ---
-        const QuizWindow = ({ quiz, submissionResult, onSubmit, hasBooted, onViewSpecs, failedAttempts }) => {
+        const QuizWindow = ({ quiz, submissionResult, onSubmit, hasBooted, onViewSpecs, failedAttempts, currentCost }) => {
             const [minimized, setMinimized] = useState(false);
             const [position, setPosition] = useState({ x: 20, y: 20 });
             const [isDragging, setIsDragging] = useState(false);
@@ -286,6 +340,13 @@
 
             if (!quiz) return null;
 
+            // Budget Calculation for Progress Bar
+            const maxPrice = quiz.conditions.maxPrice;
+            const priceRatio = Math.min(100, (currentCost / maxPrice) * 100);
+            let barColor = 'bg-green-500';
+            if (priceRatio > 80) barColor = 'bg-yellow-500';
+            if (priceRatio > 100) barColor = 'bg-red-500';
+
             return (
                 <div 
                     style={{ left: `${position.x}px`, top: `${position.y}px` }}
@@ -300,7 +361,7 @@
                     >
                         <div className="flex items-center gap-2 font-bold text-yellow-500 pointer-events-none">
                             <span className="text-lg">★</span>
-                            <span className="truncate">{quiz.title}</span>
+                            <span className="truncate max-w-[180px]">{quiz.title}</span>
                         </div>
                         <button 
                             className="text-yellow-500 hover:text-white p-1"
@@ -318,19 +379,28 @@
                                 {quiz.desc}
                             </div>
                             
-                            <div className="space-y-2 mb-4 cursor-default">
-                                <div className="text-xs font-bold text-slate-500 uppercase">条件</div>
-                                <div className="text-xs text-slate-400 grid grid-cols-1 gap-1">
-                                    <div className="flex justify-between">
-                                        <span>予算:</span>
-                                        <span className="text-white font-mono">¥{quiz.conditions.maxPrice.toLocaleString()}以内</span>
+                            <div className="space-y-3 mb-4 cursor-default">
+                                {/* Budget Bar */}
+                                <div>
+                                    <div className="flex justify-between text-xs font-bold text-slate-400 mb-1">
+                                        <span>予算消費状況</span>
+                                        <span className={priceRatio > 100 ? "text-red-400" : "text-white"}>
+                                            ¥{currentCost.toLocaleString()} / ¥{maxPrice.toLocaleString()}
+                                        </span>
                                     </div>
+                                    <div className="h-2 bg-slate-700 rounded-full overflow-hidden">
+                                        <div style={{width: `${priceRatio}%`}} className={`h-full transition-all duration-500 ${barColor}`}></div>
+                                    </div>
+                                </div>
+
+                                <div className="text-xs text-slate-400 grid grid-cols-1 gap-1">
                                     <div className="flex justify-between">
                                         <span>必須OS:</span>
                                         <span className="text-white">{quiz.conditions.requiredOs || "なし"}</span>
                                     </div>
                                     {quiz.conditions.requiresDedicatedGpu && <div className="text-yellow-300">• 独立GPU必須</div>}
                                     {quiz.conditions.requiresGamingInput && <div className="text-yellow-300">• ゲーミングデバイス必須</div>}
+                                    {quiz.conditions.minMemoryGb && <div className="text-yellow-300">• メモリ{quiz.conditions.minMemoryGb}GB以上</div>}
                                 </div>
                             </div>
 
@@ -357,9 +427,10 @@
                                     <div className="font-bold mb-1 flex items-center gap-1"><Icons.Help /> ヒント</div>
                                     <p>何度も失敗していますね。以下の点を確認しましょう：</p>
                                     <ul className="list-disc list-inside mt-1 text-blue-300">
-                                        {quiz.conditions.maxPrice < 150000 && <li>予算内で収めるにはCPUやGPUのランクを下げてみましょう。</li>}
+                                        {currentCost > maxPrice && <li>予算オーバーです。CPUやGPUのランクを少し下げてみましょう。</li>}
                                         {quiz.conditions.requiresDedicatedGpu && <li>「CPU内蔵」ではない、独立したグラフィックボードを選んでいますか？</li>}
                                         {quiz.conditions.minGameScore && <li>ゲーム性能を上げるには、GPUとCPUのバランスが重要です。</li>}
+                                        {quiz.conditions.minMemoryGb && <li>メモリの容量（GB）が条件を満たしているか確認しましょう。</li>}
                                     </ul>
                                 </div>
                             )}
@@ -402,7 +473,7 @@
 
         // --- Spec Sheet Screen (Final Report) ---
         const SpecSheetScreen = ({ parts, quizTitle, onGoHome }) => {
-            const totalPrice = Object.values(parts).reduce((a, b) => a + (b?.price || 0), 0);
+            const specs = calculateSpecs(parts);
             const date = new Date().toLocaleDateString('ja-JP');
 
             return (
@@ -422,14 +493,14 @@
 
                         {/* Specs Table */}
                         <div className="p-8">
-                            <p className="mb-4 text-sm text-slate-600">※この画面の内容をワークシートに転記してください。</p>
+                            <p className="mb-4 text-sm text-black">※この画面の内容をワークシートに転記してください。</p>
                             
-                            <table className="w-full border-collapse border border-slate-300 text-sm">
+                            <table className="w-full border-collapse border border-slate-300 text-sm mb-6">
                                 <thead>
-                                    <tr className="bg-slate-100">
-                                        <th className="border border-slate-300 p-2 text-left w-1/4">カテゴリ</th>
-                                        <th className="border border-slate-300 p-2 text-left w-1/2">選択したパーツ</th>
-                                        <th className="border border-slate-300 p-2 text-right w-1/4">価格</th>
+                                    <tr className="bg-slate-200 text-black">
+                                        <th className="border border-slate-400 p-2 text-left w-1/4">カテゴリ</th>
+                                        <th className="border border-slate-400 p-2 text-left w-1/2">選択したパーツ</th>
+                                        <th className="border border-slate-400 p-2 text-right w-1/4">価格</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -440,18 +511,33 @@
 
                                         return (
                                             <tr key={key}>
-                                                <td className="border border-slate-300 p-2 font-bold text-slate-700">{cat.label}</td>
-                                                <td className="border border-slate-300 p-2">{displayPart.name}</td>
-                                                <td className="border border-slate-300 p-2 text-right">¥{displayPart.price.toLocaleString()}</td>
+                                                <td className="border border-slate-300 p-2 font-bold text-slate-800">{cat.label}</td>
+                                                <td className="border border-slate-300 p-2 text-slate-900">{displayPart.name}</td>
+                                                <td className="border border-slate-300 p-2 text-right text-slate-900">¥{displayPart.price.toLocaleString()}</td>
                                             </tr>
                                         );
                                     })}
-                                    <tr className="bg-slate-50 font-bold">
+                                    <tr className="bg-slate-100 font-bold text-slate-900">
                                         <td className="border border-slate-300 p-2 text-right" colSpan="2">合計金額</td>
-                                        <td className="border border-slate-300 p-2 text-right text-lg text-blue-600">¥{totalPrice.toLocaleString()}</td>
+                                        <td className="border border-slate-300 p-2 text-right text-lg text-blue-700">¥{specs.totalCost.toLocaleString()}</td>
                                     </tr>
                                 </tbody>
                             </table>
+
+                            {/* Performance Summary for Report */}
+                            <div className="mb-6 border border-slate-300 rounded p-4 bg-slate-50">
+                                <h3 className="font-bold text-slate-800 border-b border-slate-300 pb-2 mb-2">性能評価スコア</h3>
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div className="flex justify-between items-center">
+                                        <span className="text-sm font-bold text-purple-700">ゲーム性能</span>
+                                        <span className="text-lg font-mono font-bold text-slate-900">{specs.gamePerformance}/100</span>
+                                    </div>
+                                    <div className="flex justify-between items-center">
+                                        <span className="text-sm font-bold text-blue-700">作業効率</span>
+                                        <span className="text-lg font-mono font-bold text-slate-900">{specs.workPerformance}/100</span>
+                                    </div>
+                                </div>
+                            </div>
 
                             <div className="mt-8 flex justify-center print:hidden">
                                 <button 
@@ -469,25 +555,14 @@
 
         // --- Benchmark Screen ---
         const BenchmarkScreen = ({ parts, onBack }) => {
-            const totalCost = Object.values(parts).reduce((a, b) => a + (b?.price || 0), 0);
-            let cpuScoreW = parts.cpu?.scoreWork || 0;
-            let cpuScoreG = parts.cpu?.scoreGame || 0;
-            let gpuScoreW = parts.gpu?.scoreWork || 0;
-            let gpuScoreG = parts.gpu?.scoreGame || 0;
-            let memScore = parts.memory?.scoreWork || 0; 
-            const isNvme = parts.storage?.name.includes('NVMe');
-            const isHdd = parts.storage?.name.includes('HDD');
-            const storageBonus = isNvme ? 1.2 : (isHdd ? 0.7 : 1.0);
-            
-            const workPerformance = Math.min(100, Math.round((cpuScoreW * 0.6 + gpuScoreW * 0.2 + memScore * 0.2) * storageBonus));
-            const gamePerformance = Math.min(100, Math.round((gpuScoreG * 0.7 + cpuScoreG * 0.2 + memScore * 0.1)));
-            const performanceSum = workPerformance + gamePerformance;
-            const costPerf = Math.min(100, Math.round((performanceSum / (totalCost / 5000)) * 10));
+            const specs = calculateSpecs(parts);
+            const performanceSum = specs.workPerformance + specs.gamePerformance;
+            const costPerf = Math.min(100, Math.round((performanceSum / (specs.totalCost / 5000)) * 10));
 
             let rank = "C";
-            if (gamePerformance > 90 || workPerformance > 90) rank = "S";
-            else if (gamePerformance > 70 || workPerformance > 70) rank = "A";
-            else if (gamePerformance > 50 || workPerformance > 50) rank = "B";
+            if (specs.gamePerformance > 90 || specs.workPerformance > 90) rank = "S";
+            else if (specs.gamePerformance > 70 || specs.workPerformance > 70) rank = "A";
+            else if (specs.gamePerformance > 50 || specs.workPerformance > 50) rank = "B";
 
             return (
                 <div className="absolute inset-0 z-50 bg-slate-900/95 backdrop-blur flex items-center justify-center animate-fade-in">
@@ -500,7 +575,7 @@
                             </div>
                             <div className="mt-6 z-10 text-center">
                                 <div className="text-xs text-slate-400">TOTAL COST</div>
-                                <div className="text-2xl font-bold text-yellow-400">¥{totalCost.toLocaleString()}</div>
+                                <div className="text-2xl font-bold text-yellow-400">¥{specs.totalCost.toLocaleString()}</div>
                             </div>
                         </div>
 
@@ -512,25 +587,25 @@
                                 <div>
                                     <div className="flex justify-between text-sm mb-1">
                                         <span className="font-bold text-purple-300">ゲーム性能</span>
-                                        <span className="font-mono">{gamePerformance}/100</span>
+                                        <span className="font-mono">{specs.gamePerformance}/100</span>
                                     </div>
                                     <div className="h-3 bg-slate-700 rounded-full overflow-hidden">
-                                        <div style={{width: `${gamePerformance}%`}} className="h-full bg-purple-500 transition-all duration-1000"></div>
+                                        <div style={{width: `${specs.gamePerformance}%`}} className="h-full bg-purple-500 transition-all duration-1000"></div>
                                     </div>
                                     <p className="text-xs text-slate-500 mt-1">
-                                        {gamePerformance > 80 ? "最新の3Dゲームも最高設定で快適です。" : 
-                                         gamePerformance > 50 ? "設定を調整すれば多くのゲームが遊べます。" : "3Dゲームは厳しいかもしれません。"}
+                                        {specs.gamePerformance > 80 ? "最新の3Dゲームも最高設定で快適です。" : 
+                                         specs.gamePerformance > 50 ? "設定を調整すれば多くのゲームが遊べます。" : "3Dゲームは厳しいかもしれません。"}
                                     </p>
                                 </div>
                                 <div>
                                     <div className="flex justify-between text-sm mb-1">
                                         <span className="font-bold text-blue-300">作業効率 (Office/編集)</span>
-                                        <span className="font-mono">{workPerformance}/100</span>
+                                        <span className="font-mono">{specs.workPerformance}/100</span>
                                     </div>
                                     <div className="h-3 bg-slate-700 rounded-full overflow-hidden">
-                                        <div style={{width: `${workPerformance}%`}} className="h-full bg-blue-500 transition-all duration-1000"></div>
+                                        <div style={{width: `${specs.workPerformance}%`}} className="h-full bg-blue-500 transition-all duration-1000"></div>
                                     </div>
-                                    {isHdd && <p className="text-xs text-red-400 mt-1">HDDが搭載されているため、起動やロードが遅くなります。</p>}
+                                    {parts.storage?.name.includes('HDD') && <p className="text-xs text-red-400 mt-1">HDDが搭載されているため、起動やロードが遅くなります。</p>}
                                 </div>
                                 <div>
                                     <div className="flex justify-between text-sm mb-1">
@@ -789,6 +864,8 @@
                 return { errors: errs, warnings, checks, totalWatt, canBoot };
             }, [selectedParts, quizMode]);
 
+            const currentTotalCost = useMemo(() => Object.values(selectedParts).reduce((a, b) => a + (b?.price || 0), 0), [selectedParts]);
+
             const handlePartSelect = (part) => {
                 setHasBooted(false);
                 if (part.type === 'cpu') {
@@ -828,12 +905,23 @@
 
                 if (cond.requiredOs && p.os?.name !== cond.requiredOs) errors.push(`OS指定: ${cond.requiredOs}を選択してください`);
                 if (cond.requiredAppType && (!p.app || p.app.typeTag !== cond.requiredAppType)) errors.push("用途に合ったアプリがインストールされていません");
+                
+                // Special check for RAM size (hacky parsing but works for this data)
+                if (cond.minMemoryGb) {
+                    const memName = p.memory?.name || "";
+                    const match = memName.match(/(\d+)GB/);
+                    if (match) {
+                        const size = parseInt(match[1]);
+                        if (size < cond.minMemoryGb) errors.push(`必須: メモリ${cond.minMemoryGb}GB以上が必要です (現在: ${size}GB)`);
+                    } else {
+                         errors.push(`必須: メモリ${cond.minMemoryGb}GB以上が必要です`);
+                    }
+                }
 
-                const gameScore = (p.cpu?.scoreGame || 0) + (p.gpu?.scoreGame || 0) + (p.memory?.scoreGame || 0)/2; 
-                const workScore = (p.cpu?.scoreWork || 0) + (p.gpu?.scoreWork || 0) + (p.memory?.scoreWork || 0);
+                const specs = calculateSpecs(p);
 
-                if (cond.minGameScore && gameScore < cond.minGameScore) errors.push("ゲーム性能が目標に達していません");
-                if (cond.minWorkScore && workScore < cond.minWorkScore) errors.push("作業性能が目標に達していません");
+                if (cond.minGameScore && specs.gamePerformance < cond.minGameScore) errors.push("ゲーム性能が目標に達していません");
+                if (cond.minWorkScore && specs.workPerformance < cond.minWorkScore) errors.push("作業性能が目標に達していません");
 
                 if (errors.length > 0) {
                     setFailedAttempts(prev => prev + 1);
@@ -862,13 +950,17 @@
                         hasBooted={hasBooted}
                         onViewSpecs={handleViewSpecs}
                         failedAttempts={failedAttempts}
+                        currentCost={currentTotalCost}
                     />
 
                     {/* LEFT SIDEBAR */}
                     <div className="w-80 flex flex-col border-r border-slate-700 bg-slate-800 z-10 shadow-xl">
                         <div className="p-4 border-b border-slate-700 bg-slate-800">
-                            <button onClick={goHome} className="mb-4 text-xs flex items-center gap-1 text-slate-400 hover:text-white">
-                                ← メニューに戻る
+                            <button 
+                                onClick={goHome} 
+                                className="mb-4 w-full py-2 bg-slate-700 hover:bg-slate-600 text-slate-300 hover:text-white rounded flex items-center justify-center gap-2 text-sm font-bold transition-colors shadow-sm"
+                            >
+                                <Icons.ArrowLeft /> メニューに戻る
                             </button>
                             <h1 className="font-bold text-lg flex items-center gap-2 text-white">
                                 <div className="bg-blue-600 p-1 rounded"><Icons.Motherboard /></div>
@@ -920,7 +1012,7 @@
                                 <div>
                                     <div className="text-[10px] text-slate-500 uppercase font-bold">Total Cost</div>
                                     <div className="text-xl font-mono font-bold text-yellow-400">
-                                        ¥{Object.values(selectedParts).reduce((a, b) => a + (b?.price || 0), 0).toLocaleString()}
+                                        ¥{currentTotalCost.toLocaleString()}
                                     </div>
                                 </div>
                             </div>
