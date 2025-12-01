@@ -38,11 +38,16 @@
                         'spin-fast': 'spin 0.5s linear infinite', // For HDD
                         'pulse-fast': 'pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                         'slide-in': 'slide-in 0.3s ease-out forwards',
+                        'pulse-glow': 'pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                     },
                     keyframes: {
                         'slide-in': {
                             '0%': { transform: 'translateY(-20px)', opacity: '0' },
                             '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                        'pulse-glow': {
+                            '0%, 100%': { opacity: 1, borderColor: 'rgba(59, 130, 246, 0.5)' },
+                            '50%': { opacity: .7, borderColor: 'rgba(59, 130, 246, 1)', boxShadow: '0 0 10px rgba(59, 130, 246, 0.5)' },
                         }
                     }
                 }
@@ -123,6 +128,7 @@
                 { id: "in_2", type: "input", name: "無線静音セット", price: 6000, desc: "ケーブルがなく机がスッキリ。カチカチ音がしないのでオフィスに最適。", scoreGame: 10, scoreWork: 50 },
                 { id: "in_3", type: "input", name: "ゲーミングデバイスセット", price: 18000, desc: "反応速度が速く、耐久性が高い。LEDが光り、ゲームの操作性が向上します。", scoreGame: 50, scoreWork: 40, isRgb: true }
             ],
+            // Quizzes sorted by difficulty (Level 1 -> Level 3)
             quizzes: [
                 {
                     id: 1,
@@ -138,8 +144,20 @@
                 },
                 {
                     id: 2,
+                    level: "★☆☆",
+                    title: "2. 学生予算ゲーミング",
+                    desc: "予算13万円という厳しい条件で、なんとか3Dゲームが動く構成(スコア45以上)を作れ。",
+                    conditions: {
+                        maxPrice: 130000,
+                        requiredAppType: "game",
+                        minGameScore: 45,
+                        requiresDedicatedGpu: true
+                    }
+                },
+                {
+                    id: 3,
                     level: "★★☆",
-                    title: "2. ゲーミングPC入門",
+                    title: "3. ゲーミングPC入門",
                     desc: "予算22万円以内で、最新の3Dゲームが快適に動く構成。もちろんゲーミングデバイスも必須だ。",
                     conditions: { 
                         maxPrice: 220000, 
@@ -151,18 +169,6 @@
                     }
                 },
                 {
-                    id: 3,
-                    level: "★★★",
-                    title: "3. ハイエンド編集PC",
-                    desc: "予算45万円以内。動画編集もゲームも最高設定で動く、コスパも意識した最強マシンを構築せよ。",
-                    conditions: { 
-                        maxPrice: 450000, 
-                        requiredAppType: "creative",
-                        minGameScore: 85, 
-                        minWorkScore: 85
-                    }
-                },
-                {
                     id: 4,
                     level: "★★☆",
                     title: "4. サーバーエンジニア入門",
@@ -171,19 +177,19 @@
                         maxPrice: 150000,
                         requiredOs: "Linux (Ubuntu)",
                         requiredAppType: "dev",
-                        minMemoryGb: 32 // Logic needs to handle this
+                        minMemoryGb: 32
                     }
                 },
                 {
                     id: 5,
-                    level: "★☆☆",
-                    title: "5. 学生予算ゲーミング",
-                    desc: "予算13万円という厳しい条件で、なんとか3Dゲームが動く構成(スコア45以上)を作れ。",
-                    conditions: {
-                        maxPrice: 130000,
-                        requiredAppType: "game",
-                        minGameScore: 45,
-                        requiresDedicatedGpu: true
+                    level: "★★★",
+                    title: "5. ハイエンド編集PC",
+                    desc: "予算45万円以内。動画編集もゲームも最高設定で動く、コスパも意識した最強マシンを構築せよ。",
+                    conditions: { 
+                        maxPrice: 450000, 
+                        requiredAppType: "creative",
+                        minGameScore: 85, 
+                        minWorkScore: 85
                     }
                 }
             ]
@@ -216,7 +222,8 @@
             Print: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" /></svg>,
             Home: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>,
             Fan: () => <svg className="w-full h-full text-slate-600" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z"/></svg>,
-            ArrowLeft: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
+            ArrowLeft: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>,
+            Refresh: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
         };
 
         // Improved Fan Icon for animation
@@ -663,7 +670,7 @@
             );
         };
 
-        const DropZone = ({ type, part, onDrop, onRemove, isTarget, isValid, label, className, hasBooted }) => {
+        const DropZone = ({ type, part, onDrop, onRemove, isTarget, isValid, label, className, hasBooted, isActiveTab }) => {
             const cat = pcData.categories[type];
             if (!cat) return null;
 
@@ -673,6 +680,9 @@
             // RGB Logic
             const isRgb = hasBooted && part?.isRgb;
             const rgbStyle = isRgb ? 'animate-rgb border-transparent' : '';
+
+            // Active Tab Guidance (Pulse empty slots)
+            const activeGuidance = (!part && isActiveTab) ? 'animate-pulse-glow border-blue-500/50 bg-blue-500/10' : '';
 
             if (part) {
                 borderClass = isValid ? "border-green-500/50 border-solid" : "border-red-500/50 border-solid";
@@ -686,7 +696,7 @@
                 <div 
                     onDragOver={(e) => e.preventDefault()}
                     onDrop={() => onDrop(type)}
-                    className={`relative w-full h-full rounded-lg border-2 ${borderClass} ${bgClass} ${rgbStyle} transition-all duration-300 flex flex-col items-center justify-center p-2 group ${className || ''}`}
+                    className={`relative w-full h-full rounded-lg border-2 ${borderClass} ${bgClass} ${rgbStyle} ${activeGuidance} transition-all duration-300 flex flex-col items-center justify-center p-2 group ${className || ''}`}
                 >
                     {label && !part && (
                         <div className="absolute top-1 left-2 text-[10px] text-slate-500 uppercase tracking-wider pointer-events-none">{label}</div>
@@ -816,6 +826,14 @@
                 setView('specSheet');
             };
 
+            const handleClearAll = () => {
+                if(confirm("全てのパーツを取り外しますか？")) {
+                    setSelectedParts({});
+                    setHasBooted(false);
+                    setSubmissionResult(null);
+                }
+            };
+
             const validation = useMemo(() => {
                 const p = selectedParts;
                 const errs = [];
@@ -896,6 +914,7 @@
                 const p = selectedParts;
                 const cond = quizMode.conditions;
                 const errors = [];
+                const specs = calculateSpecs(p);
 
                 let totalCost = Object.values(p).reduce((a, b) => a + (b?.price || 0), 0);
                 if (totalCost > cond.maxPrice) errors.push(`予算オーバー: ¥${totalCost.toLocaleString()} > ¥${cond.maxPrice.toLocaleString()}`);
@@ -906,7 +925,7 @@
                 if (cond.requiredOs && p.os?.name !== cond.requiredOs) errors.push(`OS指定: ${cond.requiredOs}を選択してください`);
                 if (cond.requiredAppType && (!p.app || p.app.typeTag !== cond.requiredAppType)) errors.push("用途に合ったアプリがインストールされていません");
                 
-                // Special check for RAM size (hacky parsing but works for this data)
+                // Special check for RAM size
                 if (cond.minMemoryGb) {
                     const memName = p.memory?.name || "";
                     const match = memName.match(/(\d+)GB/);
@@ -918,10 +937,8 @@
                     }
                 }
 
-                const specs = calculateSpecs(p);
-
-                if (cond.minGameScore && specs.gamePerformance < cond.minGameScore) errors.push("ゲーム性能が目標に達していません");
-                if (cond.minWorkScore && specs.workPerformance < cond.minWorkScore) errors.push("作業性能が目標に達していません");
+                if (cond.minGameScore && specs.gamePerformance < cond.minGameScore) errors.push(`ゲーム性能不足 (現在: ${specs.gamePerformance} / 目標: ${cond.minGameScore})`);
+                if (cond.minWorkScore && specs.workPerformance < cond.minWorkScore) errors.push(`作業性能不足 (現在: ${specs.workPerformance} / 目標: ${cond.minWorkScore})`);
 
                 if (errors.length > 0) {
                     setFailedAttempts(prev => prev + 1);
@@ -996,6 +1013,16 @@
                                 />
                             ))}
                         </div>
+
+                        {/* Reset Button (Improved) */}
+                        <div className="p-3 border-t border-slate-700 bg-slate-800">
+                             <button 
+                                onClick={handleClearAll}
+                                className="w-full py-2 text-xs text-red-400 hover:text-white hover:bg-red-600/50 border border-slate-600 hover:border-red-500 rounded transition-all flex items-center justify-center gap-2"
+                            >
+                                <Icons.Refresh /> 構成をリセット
+                            </button>
+                        </div>
                     </div>
 
                     {/* MAIN AREA */}
@@ -1050,20 +1077,20 @@
                                         <div className="absolute inset-0 opacity-10 pointer-events-none" style={{backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`, backgroundSize: '40px 40px'}}></div>
                                         <div className="grid grid-cols-2 grid-rows-3 gap-6 h-full relative z-10">
                                             <div className="flex flex-col">
-                                                <DropZone type="cpu" label="LGA/AM5 SOCKET" part={selectedParts.cpu} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'cpu'} isValid={validation.checks.cpu} className="h-full" hasBooted={hasBooted} />
+                                                <DropZone type="cpu" label="LGA/AM5 SOCKET" part={selectedParts.cpu} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'cpu'} isValid={validation.checks.cpu} className="h-full" hasBooted={hasBooted} isActiveTab={activeTab === 'cpu'} />
                                                 {selectedParts.motherboard && (<div className="text-center text-[10px] text-green-400/50 mt-1">Auto-Matched: {selectedParts.motherboard.name}</div>)}
                                             </div>
                                             <div className="flex flex-col">
-                                                <DropZone type="memory" label="DIMM SLOTS" part={selectedParts.memory} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'memory'} isValid={validation.checks.memory} className="h-full" hasBooted={hasBooted} />
+                                                <DropZone type="memory" label="DIMM SLOTS" part={selectedParts.memory} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'memory'} isValid={validation.checks.memory} className="h-full" hasBooted={hasBooted} isActiveTab={activeTab === 'memory'} />
                                             </div>
                                             <div className="col-span-2 row-span-1">
-                                                 <DropZone type="gpu" label="PCIe x16 GRAPHICS" part={selectedParts.gpu} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'gpu'} isValid={validation.checks.gpu} className="h-full border-blue-500/20" hasBooted={hasBooted} />
+                                                 <DropZone type="gpu" label="PCIe x16 GRAPHICS" part={selectedParts.gpu} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'gpu'} isValid={validation.checks.gpu} className="h-full border-blue-500/20" hasBooted={hasBooted} isActiveTab={activeTab === 'gpu'} />
                                             </div>
                                             <div className="grid grid-cols-2 gap-2">
-                                                <DropZone type="storage" label="DRIVE BAY" part={selectedParts.storage} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'storage'} isValid={validation.checks.storage} hasBooted={hasBooted} />
+                                                <DropZone type="storage" label="DRIVE BAY" part={selectedParts.storage} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'storage'} isValid={validation.checks.storage} hasBooted={hasBooted} isActiveTab={activeTab === 'storage'} />
                                             </div>
                                             <div>
-                                                <DropZone type="psu" label="POWER SUPPLY" part={selectedParts.psu} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'psu'} isValid={validation.checks.psu} hasBooted={hasBooted} />
+                                                <DropZone type="psu" label="POWER SUPPLY" part={selectedParts.psu} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'psu'} isValid={validation.checks.psu} hasBooted={hasBooted} isActiveTab={activeTab === 'psu'} />
                                             </div>
                                         </div>
                                     </div>
@@ -1072,11 +1099,11 @@
                                     <div className="bg-slate-800 rounded-xl border border-slate-700 p-4 shadow-lg flex flex-col gap-2 h-1/3">
                                         <h3 className="text-xs font-bold text-slate-400 uppercase border-b border-slate-700 pb-1">Software & Peripherals</h3>
                                         <div className="grid grid-cols-2 gap-2 flex-1">
-                                            <DropZone type="os" label="OS" part={selectedParts.os} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'os'} isValid={true} />
-                                            <DropZone type="app" label="APP" part={selectedParts.app} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'app'} isValid={true} />
+                                            <DropZone type="os" label="OS" part={selectedParts.os} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'os'} isValid={true} isActiveTab={activeTab === 'os'} />
+                                            <DropZone type="app" label="APP" part={selectedParts.app} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'app'} isValid={true} isActiveTab={activeTab === 'app'} />
                                         </div>
                                         <div className="h-16">
-                                            <DropZone type="input" label="KEYBOARD & MOUSE" part={selectedParts.input} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'input'} isValid={true} hasBooted={hasBooted} />
+                                            <DropZone type="input" label="KEYBOARD & MOUSE" part={selectedParts.input} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'input'} isValid={true} hasBooted={hasBooted} isActiveTab={activeTab === 'input'} />
                                         </div>
                                     </div>
                                     <div className="bg-slate-800 rounded-xl border border-slate-700 p-4 flex-1 flex flex-col overflow-hidden relative">
