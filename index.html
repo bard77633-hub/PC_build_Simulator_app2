@@ -623,6 +623,13 @@
         const SpecSheetScreen = ({ parts, quizTitle, onGoHome }) => {
             const specs = calculateSpecs(parts);
             const date = new Date().toLocaleDateString('ja-JP');
+            const isFreeMode = quizTitle === '自由制作';
+
+            // Calculate Cost Performance logic (replicated from BenchmarkScreen for report display)
+            const performanceSum = specs.workPerformance + specs.gamePerformance;
+            const costPerf = specs.totalCost > 0 
+                ? Math.min(100, Math.round((performanceSum / (specs.totalCost / 5000)) * 10))
+                : 0;
 
             return (
                 <div className="absolute inset-0 z-50 bg-slate-900 flex items-center justify-center p-8 animate-fade-in overflow-y-auto">
@@ -685,6 +692,12 @@
                                         <span className="text-lg font-mono font-bold text-slate-900">{specs.workPerformance}/100</span>
                                     </div>
                                 </div>
+                                {isFreeMode && (
+                                    <div className="flex justify-between items-center mt-2 pt-2 border-t border-slate-300">
+                                        <span className="text-sm font-bold text-green-700">コストパフォーマンス (自由制作限定評価)</span>
+                                        <span className="text-lg font-mono font-bold text-slate-900">{costPerf}/100</span>
+                                    </div>
+                                )}
                             </div>
 
                             <div className="mt-8 flex justify-center print:hidden">
@@ -1155,13 +1168,13 @@
                         </div>
                         
                         {/* Category Description Header */}
-                        <div className="bg-slate-700/50 p-3 border-b border-slate-700 flex items-start gap-3">
-                            <div className={`p-2 rounded bg-opacity-20 mt-1 shrink-0 ${pcData.categories[activeTab].color.replace('text-', 'bg-').replace('400', '500')} ${pcData.categories[activeTab].color}`}>
-                                {React.createElement(Icons[pcData.categories[activeTab].icon], { className: "w-5 h-5" })}
+                        <div className="bg-slate-700/50 p-4 border-b border-slate-700 flex items-start gap-3 shadow-sm">
+                            <div className={`p-2.5 rounded-lg bg-opacity-20 mt-0.5 shrink-0 ${pcData.categories[activeTab].color.replace('text-', 'bg-').replace('400', '500')} ${pcData.categories[activeTab].color}`}>
+                                {React.createElement(Icons[pcData.categories[activeTab].icon], { className: "w-6 h-6" })}
                             </div>
-                            <div>
-                                <div className="text-xs font-bold text-slate-200 mb-1">{pcData.categories[activeTab].label}</div>
-                                <div className="text-[10px] text-slate-400 leading-relaxed">{pcData.categories[activeTab].desc}</div>
+                            <div className="flex-1">
+                                <div className="text-base font-bold text-white mb-1.5">{pcData.categories[activeTab].label}</div>
+                                <div className="text-sm text-slate-200 leading-relaxed font-medium">{pcData.categories[activeTab].desc}</div>
                             </div>
                         </div>
 
