@@ -233,28 +233,70 @@
             );
         };
 
-        // --- Independent Quiz Window ---
+        // --- Independent & Draggable Quiz Window ---
         const QuizWindow = ({ quiz, submissionResult, onSubmit, hasBooted }) => {
             const [minimized, setMinimized] = useState(false);
+            const [position, setPosition] = useState({ x: 20, y: 20 });
+            const [isDragging, setIsDragging] = useState(false);
+            const dragOffset = useRef({ x: 0, y: 0 });
+
+            useEffect(() => {
+                const handleMouseMove = (e) => {
+                    if (isDragging) {
+                        setPosition({
+                            x: e.clientX - dragOffset.current.x,
+                            y: e.clientY - dragOffset.current.y
+                        });
+                    }
+                };
+
+                const handleMouseUp = () => {
+                    setIsDragging(false);
+                };
+
+                if (isDragging) {
+                    window.addEventListener('mousemove', handleMouseMove);
+                    window.addEventListener('mouseup', handleMouseUp);
+                }
+
+                return () => {
+                    window.removeEventListener('mousemove', handleMouseMove);
+                    window.removeEventListener('mouseup', handleMouseUp);
+                };
+            }, [isDragging]);
+
+            const handleMouseDown = (e) => {
+                // Only allow dragging from the header area
+                setIsDragging(true);
+                dragOffset.current = {
+                    x: e.clientX - position.x,
+                    y: e.clientY - position.y
+                };
+            };
 
             if (!quiz) return null;
 
             return (
                 <div 
-                    className={`absolute z-40 bg-slate-800 border-2 border-yellow-600 rounded-xl shadow-[0_0_20px_rgba(0,0,0,0.5)] transition-all duration-300 ease-in-out ${
-                        minimized ? 'w-64 h-12 top-4 left-4' : 'w-80 top-4 left-4'
-                    }`}
+                    style={{ left: `${position.x}px`, top: `${position.y}px` }}
+                    className={`absolute z-40 bg-slate-800 border-2 border-yellow-600 rounded-xl shadow-[0_0_20px_rgba(0,0,0,0.5)] transition-shadow duration-300 ease-in-out ${
+                        minimized ? 'w-64 h-12' : 'w-80'
+                    } ${isDragging ? 'cursor-grabbing select-none' : ''}`}
                 >
-                    {/* Header */}
+                    {/* Header (Draggable) */}
                     <div 
-                        className="h-12 bg-yellow-700/20 flex items-center justify-between px-4 cursor-pointer hover:bg-yellow-700/30 transition"
-                        onClick={() => setMinimized(!minimized)}
+                        className="h-12 bg-yellow-700/20 flex items-center justify-between px-4 cursor-grab active:cursor-grabbing hover:bg-yellow-700/30 transition rounded-t-xl"
+                        onMouseDown={handleMouseDown}
                     >
-                        <div className="flex items-center gap-2 font-bold text-yellow-500">
+                        <div className="flex items-center gap-2 font-bold text-yellow-500 pointer-events-none">
                             <span className="text-lg">★</span>
                             <span className="truncate">{quiz.title}</span>
                         </div>
-                        <button className="text-yellow-500 hover:text-white">
+                        <button 
+                            className="text-yellow-500 hover:text-white p-1"
+                            onMouseDown={(e) => e.stopPropagation()} // Prevent dragging when clicking button
+                            onClick={() => setMinimized(!minimized)}
+                        >
                             {minimized ? <Icons.Plus /> : <Icons.Minus />}
                         </button>
                     </div>
@@ -262,11 +304,11 @@
                     {/* Content */}
                     {!minimized && (
                         <div className="p-4 bg-slate-800 rounded-b-xl">
-                            <div className="text-sm text-slate-300 mb-4 leading-relaxed border-b border-slate-700 pb-2">
+                            <div className="text-sm text-slate-300 mb-4 leading-relaxed border-b border-slate-700 pb-2 cursor-default">
                                 {quiz.desc}
                             </div>
                             
-                            <div className="space-y-2 mb-4">
+                            <div className="space-y-2 mb-4 cursor-default">
                                 <div className="text-xs font-bold text-slate-500 uppercase">条件</div>
                                 <div className="text-xs text-slate-400 grid grid-cols-1 gap-1">
                                     <div className="flex justify-between">
@@ -284,7 +326,7 @@
 
                             {/* Result Area */}
                             {submissionResult && (
-                                <div className={`mb-4 p-3 rounded border text-xs ${
+                                <div className={`mb-4 p-3 rounded border text-xs cursor-default ${
                                     submissionResult.success 
                                     ? 'bg-green-900/30 border-green-500/50 text-green-300' 
                                     : 'bg-red-900/30 border-red-500/50 text-red-300'
@@ -316,7 +358,7 @@
                                 
                                 {/* Tooltip for disabled state */}
                                 {!hasBooted && (
-                                    <div className="absolute bottom-full left-0 w-full mb-2 p-2 bg-black text-white text-xs rounded opacity-0 group-hover:opacity-100 transition pointer-events-none text-center">
+                                    <div className="absolute bottom-full left-0 w-full mb-2 p-2 bg-black text-white text-xs rounded opacity-0 group-hover:opacity-100 transition pointer-events-none text-center z-50">
                                         POWER ONして起動確認を行ってください
                                     </div>
                                 )}
@@ -823,39 +865,44 @@
                                             <span className="flex items-center gap-2"><Icons.Help /> Information</span>
                                         </h3>
                                         
-                                        <div className="flex-1 overflow-y-auto space-y-3 text-sm pr-1">
-                                            {/* Priority 1: Hovered Part Description */}
-                                            {hoveredPart ? (
-                                                <div className="animate-fade-in">
-                                                    <div className="font-bold text-blue-300 mb-1">{hoveredPart.name}</div>
-                                                    <div className="text-slate-300 leading-relaxed text-xs">{hoveredPart.desc}</div>
-                                                    <div className="mt-2 text-xs text-slate-500">価格: ¥{hoveredPart.price.toLocaleString()}</div>
+                                        <div className="flex-1 overflow-y-auto pr-1">
+                                            {/* Priority 1: Always Show Category Description */}
+                                            <div className="animate-fade-in mb-4 border-b border-slate-700 pb-2">
+                                                <div className="font-bold text-white mb-1 flex items-center gap-2">
+                                                    {React.createElement(Icons[pcData.categories[activeTab]?.icon] || Icons.Help, { className: "w-4 h-4 text-blue-400" })}
+                                                    {pcData.categories[activeTab]?.label}
                                                 </div>
-                                            ) : (
-                                                // Priority 2: Active Category Description
-                                                <div className="animate-fade-in">
-                                                    <div className="font-bold text-white mb-1">{pcData.categories[activeTab]?.label}</div>
-                                                    <div className="text-slate-400 text-xs leading-relaxed mb-4 border-b border-slate-700 pb-2">
-                                                        {pcData.categories[activeTab]?.desc}
-                                                    </div>
+                                                <div className="text-slate-400 text-xs leading-relaxed">
+                                                    {pcData.categories[activeTab]?.desc}
+                                                </div>
+                                            </div>
 
-                                                    {/* Priority 3: System Status / Errors */}
-                                                    <div className="space-y-1">
-                                                        <div className="text-[10px] font-bold text-slate-500 uppercase">SYSTEM ALERTS</div>
-                                                        {validation.errors.length > 0 ? (
-                                                            validation.errors.map((e, i) => (
-                                                                <div key={`err-${i}`} className="flex gap-2 text-xs text-red-300 bg-red-900/20 p-2 rounded items-start">
-                                                                    <Icons.Alert /> <span>{e}</span>
-                                                                </div>
-                                                            ))
-                                                        ) : (
-                                                            <div className="text-xs text-green-500 flex items-center gap-2">
-                                                                <Icons.Check /> システムは正常です
-                                                            </div>
-                                                        )}
+                                            {/* Priority 2: Hovered Part Description (Appends below) */}
+                                            {hoveredPart && (
+                                                <div className="animate-slide-in mb-4 bg-slate-700/50 p-2 rounded border border-slate-600">
+                                                    <div className="font-bold text-blue-300 mb-1 flex justify-between items-center border-b border-slate-600/50 pb-1">
+                                                        <span>{hoveredPart.name}</span>
+                                                        <span className="text-yellow-400">¥{hoveredPart.price.toLocaleString()}</span>
                                                     </div>
+                                                    <div className="text-slate-300 text-xs leading-relaxed mt-1">{hoveredPart.desc}</div>
                                                 </div>
                                             )}
+
+                                            {/* Priority 3: System Status / Errors */}
+                                            <div className="space-y-1">
+                                                <div className="text-[10px] font-bold text-slate-500 uppercase">SYSTEM ALERTS</div>
+                                                {validation.errors.length > 0 ? (
+                                                    validation.errors.map((e, i) => (
+                                                        <div key={`err-${i}`} className="flex gap-2 text-xs text-red-300 bg-red-900/20 p-2 rounded items-start">
+                                                            <Icons.Alert /> <span>{e}</span>
+                                                        </div>
+                                                    ))
+                                                ) : (
+                                                    <div className="text-xs text-green-500 flex items-center gap-2">
+                                                        <Icons.Check /> システムは正常です
+                                                    </div>
+                                                )}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
