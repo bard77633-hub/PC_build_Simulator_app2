@@ -71,7 +71,6 @@
                 memory: { label: "メモリ (記憶)", academic: "主記憶装置", icon: "Memory", color: "text-green-400", desc: "【主記憶装置】人間で言うと「机の広さ」。データの一時保管場所です。電源を切るとデータは消えます（揮発性）。" },
                 gpu: { label: "GPU (描画)", academic: "演算装置(画像)", icon: "Gpu", color: "text-purple-400", desc: "【画像処理装置】映像の計算を専門に行います。3Dゲームや動画編集には高性能なGPUが必須です。" },
                 storage: { label: "ストレージ", academic: "補助記憶装置", icon: "Storage", color: "text-yellow-400", desc: "【補助記憶装置】人間で言うと「本棚」。データを長期保存します。HDDは大容量で安価、SSDは高速です。" },
-                // PSU removed as requested
                 os: { label: "OS (基本ソフト)", academic: "基本ソフトウェア", icon: "Os", color: "text-indigo-400", desc: "【オペレーティングシステム】ハードウェアとアプリを仲介する土台となるソフトウェアです。" },
                 app: { label: "アプリ", academic: "応用ソフトウェア", icon: "App", color: "text-pink-400", desc: "【アプリケーション】特定の目的（文書作成、ゲームなど）のために作られたソフトウェアです。" },
                 input: { label: "入力デバイス", academic: "入力装置", icon: "Input", color: "text-cyan-400", desc: "【入力装置】人間がコンピュータに指示を送るための機器です。用途に合わせて選びます。" },
@@ -112,8 +111,6 @@
                 { id: "str_5", type: "storage", name: "NVMe SSD 2TB", price: 22000, scoreWork: 60, desc: "2TBの超高速SSD。たくさんのゲームや動画を保存できます。", point: "予算に余裕があるなら2TBあると安心です。" },
                 { id: "str_3", type: "storage", name: "3.5インチ HDD 4TB", price: 8500, scoreWork: 10, desc: "【注意】非常に安価で大容量ですが、物理的なディスクが回転するため遅く、OS起動に時間がかかります。", point: "動画倉庫には最適ですが、OSを入れるとイライラします。" },
                 
-                // PSU removed
-        
                 // OS
                 { id: "os_1", type: "os", name: "Windows 11 Home", price: 16000, desc: "世界で最も普及しているOS。ゲームや多くのアプリに対応しています。", isGaming: true, isOffice: true, point: "ほとんどの人はこれを選べば間違いありません。" },
                 { id: "os_2", type: "os", name: "Linux (Ubuntu)", price: 0, desc: "無料で使えるオープンソースOS。プログラミングやサーバー構築に向いています。", isGaming: false, isOffice: true, point: "コマンド操作が中心。開発者を目指す人向け。" },
@@ -129,7 +126,7 @@
                 { id: "in_2", type: "input", name: "無線静音セット", price: 6000, desc: "ケーブルがなく机がスッキリ。カチカチ音がしないのでオフィスに最適。", scoreGame: 10, scoreWork: 50, point: "配線を減らしたい人におすすめ。" },
                 { id: "in_3", type: "input", name: "ゲーミングデバイスセット", price: 18000, desc: "反応速度が速く、耐久性が高い。LEDが光り、ゲームの操作性が向上します。", scoreGame: 50, scoreWork: 40, isRgb: true, point: "ゲームの勝率を上げたいなら必須投資。" },
                 
-                // Displays (New)
+                // Displays
                 { id: "disp_1", type: "display", name: "21インチ FHD 60Hz", price: 12000, desc: "一般的な事務用モニター。動画や事務作業には十分です。", scoreWork: 30, scoreGame: 20, point: "レポート作成にはこれで十分。安価です。" },
                 { id: "disp_2", type: "display", name: "24インチ FHD 144Hz", price: 25000, desc: "滑らかな映像表示ができるゲーミングモニター。FPSゲームに最適。", scoreWork: 40, scoreGame: 60, point: "144Hzはヌルヌル動きます。FPSやるなら必須。" },
                 { id: "disp_3", type: "display", name: "27インチ 4K 60Hz", price: 45000, desc: "非常に高精細な画面。文字がくっきり見え、写真編集や動画鑑賞に最適。", scoreWork: 80, scoreGame: 40, point: "作業領域が広く、Excelの表示列数が増えます。" },
@@ -141,9 +138,9 @@
                     id: 1,
                     level: "★☆☆",
                     title: "1. 事務用レポートPC",
-                    desc: "予算12万円以内で、Officeソフトが動き、快適に文字入力ができる構成を作れ。",
+                    desc: "予算11万円以内で、Officeソフトが動き、快適に文字入力ができる構成を作れ。",
                     conditions: { 
-                        maxPrice: 120000, 
+                        maxPrice: 110000, 
                         requiredAppType: "work", 
                         requiredOs: "Windows 11 Home",
                         minWorkScore: 40 
@@ -153,9 +150,9 @@
                     id: 2,
                     level: "★☆☆",
                     title: "2. 学生予算ゲーミング",
-                    desc: "予算14万円という厳しい条件で、なんとか3Dゲームが動く構成(スコア45以上)を作れ。",
+                    desc: "予算12万5千円という厳しい条件で、なんとか3Dゲームが動く構成(スコア45以上)を作れ。",
                     conditions: {
-                        maxPrice: 140000,
+                        maxPrice: 125000,
                         requiredAppType: "game",
                         minGameScore: 45,
                         requiresDedicatedGpu: true
@@ -165,9 +162,9 @@
                     id: 3,
                     level: "★★☆",
                     title: "3. ゲーミングPC入門",
-                    desc: "予算24万円以内で、最新の3Dゲームが快適に動く構成。もちろんゲーミングデバイスも必須だ。",
+                    desc: "予算22万円以内で、最新の3Dゲームが快適に動く構成。もちろんゲーミングデバイスも必須だ。",
                     conditions: { 
-                        maxPrice: 240000, 
+                        maxPrice: 220000, 
                         requiredAppType: "game",
                         requiredOs: "Windows 11 Home",
                         minGameScore: 60,
@@ -179,9 +176,9 @@
                     id: 4,
                     level: "★★☆",
                     title: "4. サーバーエンジニア入門",
-                    desc: "予算16万円以内。OS代を節約し、プログラミング環境を整えよ。メモリは多め(32GB以上)が良い。",
+                    desc: "予算14万円以内。OS代を節約し、プログラミング環境を整えよ。メモリは多め(32GB以上)が良い。",
                     conditions: {
-                        maxPrice: 160000,
+                        maxPrice: 140000,
                         requiredOs: "Linux (Ubuntu)",
                         requiredAppType: "dev",
                         minMemoryGb: 32
@@ -191,9 +188,9 @@
                     id: 5,
                     level: "★★★",
                     title: "5. ハイエンド編集PC",
-                    desc: "予算48万円以内。動画編集もゲームも最高設定で動く、コスパも意識した最強マシンを構築せよ。",
+                    desc: "予算42万円以内。動画編集もゲームも最高設定で動く、コスパも意識した最強マシンを構築せよ。",
                     conditions: { 
-                        maxPrice: 480000, 
+                        maxPrice: 420000, 
                         requiredAppType: "creative",
                         minGameScore: 85, 
                         minWorkScore: 85
@@ -215,11 +212,10 @@
             Memory: () => <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" /></svg>,
             Storage: () => <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" /></svg>,
             Gpu: () => <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>,
-            Psu: () => <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>,
             Os: () => <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2zz" /></svg>,
             App: () => <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>,
             Input: () => <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" /></svg>,
-            Display: () => <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>, // Reused monitor-ish icon
+            Display: () => <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>,
             Trash: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>,
             Check: () => <svg className="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>,
             Alert: () => <svg className="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>,
@@ -277,7 +273,7 @@
                         
                         {/* Educational Label Overlay for Output Device */}
                         {showLabels && (
-                            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-40 bg-blue-600/90 text-white text-sm font-bold px-3 py-1 rounded shadow-lg border border-blue-400">
+                            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-40 bg-yellow-500/90 text-slate-900 text-sm font-bold px-3 py-1 rounded shadow-lg border border-yellow-300">
                                 出力装置 (Output)
                             </div>
                         )}
@@ -931,7 +927,7 @@
                         <div className="absolute top-1 left-2 text-[10px] text-slate-500 uppercase tracking-wider pointer-events-none">{label}</div>
                     )}
 
-                    {/* Educational Label Overlay - Now uniformly centered at bottom */}
+                    {/* Educational Label Overlay - Centered at bottom with safe positioning */}
                     {showLabels && (
                         <div className="absolute bottom-2 left-1/2 -translate-x-1/2 z-30 pointer-events-none flex items-center justify-center rounded-lg whitespace-nowrap">
                             <span className="bg-yellow-500/90 text-slate-900 text-xs font-bold px-2 py-0.5 rounded shadow-lg border border-yellow-300 transform scale-90 md:scale-100">
@@ -1117,14 +1113,16 @@
                 setDoubleClickCount(newCount);
 
                 if (newCount >= 3) {
-                     if (confirm("マウス操作の練習のため、原則はドラッグ＆ドロップを推奨しています。\nダブルクリックによる配置を有効にしますか？")) {
-                        setIsDoubleClickEnabled(true);
-                        handlePartSelect(part);
-                     } else {
-                        // User decided not to enable, keep counting or reset? 
-                        // Let's keep it disabled and reset count to avoid spamming the modal immediately again.
-                        setDoubleClickCount(0);
-                     }
+                     // Defer the confirm to avoid blocking the event loop improperly
+                     setTimeout(() => {
+                         if (window.confirm("マウス操作の練習のため、原則はドラッグ＆ドロップを推奨しています。\nダブルクリックによる配置を有効にしますか？")) {
+                            setIsDoubleClickEnabled(true);
+                            handlePartSelect(part);
+                            setDoubleClickCount(0);
+                         } else {
+                            setDoubleClickCount(0); // Reset if user cancels so they don't get prompted immediately again
+                         }
+                     }, 50);
                 }
             };
 
