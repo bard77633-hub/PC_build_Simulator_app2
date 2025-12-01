@@ -37,13 +37,18 @@
                         'spin-slow': 'spin 3s linear infinite', // For fans
                         'spin-fast': 'spin 0.5s linear infinite', // For HDD
                         'pulse-fast': 'pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'slide-in': 'slide-in 0.3s ease-out forwards',
+                        'slide-in': 'slide-in 0.2s ease-out forwards',
+                        'pop-in': 'pop-in 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards',
                         'pulse-glow': 'pulse-glow 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                     },
                     keyframes: {
                         'slide-in': {
-                            '0%': { transform: 'translateY(-20px)', opacity: '0' },
-                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                            '0%': { transform: 'translateX(-10px)', opacity: '0' },
+                            '100%': { transform: 'translateX(0)', opacity: '1' },
+                        },
+                        'pop-in': {
+                            '0%': { transform: 'scale(0.9)', opacity: '0' },
+                            '100%': { transform: 'scale(1)', opacity: '1' },
                         },
                         'pulse-glow': {
                             '0%, 100%': { opacity: 1, borderColor: 'rgba(59, 130, 246, 0.3)', backgroundColor: 'rgba(59, 130, 246, 0.05)' },
@@ -79,57 +84,57 @@
         
                 // CPU (5 types)
                 // Adjusted Core i3 scoreWork to 55 (from 40) to make Quiz 1 passable
-                { id: "cpu_1", type: "cpu", name: "Core i3-12100", price: 15000, watt: 60, scoreWork: 55, scoreGame: 25, socket: "LGA1700", defaultMb: "mb_1", desc: "4コア。事務作業やネットサーフィンには十分な性能です。" },
-                { id: "cpu_4", type: "cpu", name: "Ryzen 5 7600", price: 32000, watt: 65, scoreWork: 65, scoreGame: 65, socket: "AM5", defaultMb: "mb_3", desc: "6コア。価格と性能のバランスが良く、ゲーミングPC入門に最適。" },
-                { id: "cpu_2", type: "cpu", name: "Core i5-13600K", price: 48000, watt: 125, scoreWork: 85, scoreGame: 75, socket: "LGA1700", defaultMb: "mb_2", desc: "14コア。ゲームも動画編集も快適にこなせる高性能CPUです。" },
-                { id: "cpu_5", type: "cpu", name: "Core i7-13700", price: 60000, watt: 150, scoreWork: 95, scoreGame: 80, socket: "LGA1700", defaultMb: "mb_2", desc: "16コア。重い処理も難なくこなすパワーを持っています。" },
-                { id: "cpu_3", type: "cpu", name: "Ryzen 7 7800X3D", price: 62000, watt: 120, scoreWork: 70, scoreGame: 100, socket: "AM5", defaultMb: "mb_3", desc: "8コア。3Dキャッシュ技術により、最強クラスのゲーム性能を誇ります。" },
+                { id: "cpu_1", type: "cpu", name: "Core i3-12100", price: 15000, watt: 60, scoreWork: 55, scoreGame: 25, socket: "LGA1700", defaultMb: "mb_1", desc: "4コア。事務作業やネットサーフィンには十分な性能です。", point: "安くて省電力ですが、重いゲームは苦手です。" },
+                { id: "cpu_4", type: "cpu", name: "Ryzen 5 7600", price: 32000, watt: 65, scoreWork: 65, scoreGame: 65, socket: "AM5", defaultMb: "mb_3", desc: "6コア。価格と性能のバランスが良く、ゲーミングPC入門に最適。", point: "コスパ最強クラス。迷ったらこれを選びましょう。" },
+                { id: "cpu_2", type: "cpu", name: "Core i5-13600K", price: 48000, watt: 125, scoreWork: 85, scoreGame: 75, socket: "LGA1700", defaultMb: "mb_2", desc: "14コア。ゲームも動画編集も快適にこなせる高性能CPUです。", point: "何でもできる優等生。ただし発熱も増えます。" },
+                { id: "cpu_5", type: "cpu", name: "Core i7-13700", price: 60000, watt: 150, scoreWork: 95, scoreGame: 80, socket: "LGA1700", defaultMb: "mb_2", desc: "16コア。重い処理も難なくこなすパワーを持っています。", point: "プロ仕様に近い性能。動画編集を頻繁にするならコレ。" },
+                { id: "cpu_3", type: "cpu", name: "Ryzen 7 7800X3D", price: 62000, watt: 120, scoreWork: 70, scoreGame: 100, socket: "AM5", defaultMb: "mb_3", desc: "8コア。3Dキャッシュ技術により、最強クラスのゲーム性能を誇ります。", point: "ゲーム専用なら世界最強クラス。ゲーマーの憧れ。" },
         
                 // Memory (5 types)
                 // Adjusted 8GB scoreWork to 25 (from 10)
-                { id: "mem_1", type: "memory", name: "DDR4-3200 8GB", price: 4000, watt: 5, memoryType: "DDR4", scoreWork: 25, scoreGame: 10, desc: "8GB。事務用としては最低限ですが、ゲームや編集には不足気味です。" },
-                { id: "mem_4", type: "memory", name: "DDR4-3200 16GB", price: 8000, watt: 6, memoryType: "DDR4", scoreWork: 35, scoreGame: 25, desc: "16GB(DDR4)。一世代前ですが、コスパ良く容量を確保できます。" },
-                { id: "mem_2", type: "memory", name: "DDR5-5600 16GB", price: 13000, watt: 8, memoryType: "DDR5", scoreWork: 40, scoreGame: 30, desc: "16GB(DDR5)。現代のPCの標準的な容量です。多くの用途で快適です。" },
-                { id: "mem_3", type: "memory", name: "DDR5-6000 32GB", price: 26000, watt: 10, memoryType: "DDR5", scoreWork: 65, scoreGame: 50, desc: "32GB。動画編集や重いゲームの配信など、クリエイティブ用途向けです。", isRgb: true },
-                { id: "mem_5", type: "memory", name: "DDR5-6000 64GB", price: 50000, watt: 12, memoryType: "DDR5", scoreWork: 95, scoreGame: 60, desc: "64GB。プロ仕様。サーバー構築や大規模なCG制作に使われます。", isRgb: true },
+                { id: "mem_1", type: "memory", name: "DDR4-3200 8GB", price: 4000, watt: 5, memoryType: "DDR4", scoreWork: 25, scoreGame: 10, desc: "8GB。事務用としては最低限ですが、ゲームや編集には不足気味です。", point: "ブラウザを開きすぎると動作が重くなります。" },
+                { id: "mem_4", type: "memory", name: "DDR4-3200 16GB", price: 8000, watt: 6, memoryType: "DDR4", scoreWork: 35, scoreGame: 25, desc: "16GB(DDR4)。一世代前ですが、コスパ良く容量を確保できます。", point: "予算を抑えて16GB確保したいならこの選択肢。" },
+                { id: "mem_2", type: "memory", name: "DDR5-5600 16GB", price: 13000, watt: 8, memoryType: "DDR5", scoreWork: 40, scoreGame: 30, desc: "16GB(DDR5)。現代のPCの標準的な容量です。多くの用途で快適です。", point: "最新規格(DDR5)の標準。まずはここから。" },
+                { id: "mem_3", type: "memory", name: "DDR5-6000 32GB", price: 26000, watt: 10, memoryType: "DDR5", scoreWork: 65, scoreGame: 50, desc: "32GB。動画編集や重いゲームの配信など、クリエイティブ用途向けです。", isRgb: true, point: "編集ソフトとゲームを同時に開いても余裕です。" },
+                { id: "mem_5", type: "memory", name: "DDR5-6000 64GB", price: 50000, watt: 12, memoryType: "DDR5", scoreWork: 95, scoreGame: 60, desc: "64GB。プロ仕様。サーバー構築や大規模なCG制作に使われます。", isRgb: true, point: "一般用途では使い切れないほどの広大な机。" },
         
                 // GPU (6 types)
                 // Adjusted Integrated GPU scoreWork to 20 (from 10)
-                { id: "gpu_0", type: "gpu", name: "CPU内蔵 (なし)", price: 0, watt: 0, scoreGame: 5, scoreWork: 20, desc: "CPUに内蔵された機能で映像を出力します。3Dゲームは動きません。" },
-                { id: "gpu_1", type: "gpu", name: "GeForce GTX 1650", price: 22000, watt: 75, scoreGame: 40, scoreWork: 30, desc: "エントリー向けグラボ。軽いゲームなら設定を下げて動かせます。" },
-                { id: "gpu_4", type: "gpu", name: "Radeon RX 7600", price: 39000, watt: 165, scoreGame: 65, scoreWork: 50, desc: "AMD製のミドルレンジ。フルHDゲームが快適に動く高コスパモデル。" },
-                { id: "gpu_2", type: "gpu", name: "GeForce RTX 4060", price: 46000, watt: 115, scoreGame: 70, scoreWork: 60, desc: "ミドルレンジ。多くの最新ゲームがフルHD画質で快適に動作します。" },
-                { id: "gpu_5", type: "gpu", name: "GeForce RTX 4070 Ti", price: 120000, watt: 285, scoreGame: 90, scoreWork: 85, desc: "ハイエンド。WQHDや4K画質でのゲームプレイが可能です。", isRgb: true },
-                { id: "gpu_3", type: "gpu", name: "GeForce RTX 4090", price: 280000, watt: 450, scoreGame: 100, scoreWork: 100, desc: "現行最強のグラボ。4KゲームもAI生成も爆速ですが、非常に高価です。", isRgb: true },
+                { id: "gpu_0", type: "gpu", name: "CPU内蔵 (なし)", price: 0, watt: 0, scoreGame: 5, scoreWork: 20, desc: "CPUに内蔵された機能で映像を出力します。3Dゲームは動きません。", point: "事務用ならこれで十分。予算を大幅に節約できます。" },
+                { id: "gpu_1", type: "gpu", name: "GeForce GTX 1650", price: 22000, watt: 75, scoreGame: 40, scoreWork: 30, desc: "エントリー向けグラボ。軽いゲームなら設定を下げて動かせます。", point: "補助電源不要なモデルも多く、手軽に追加できます。" },
+                { id: "gpu_4", type: "gpu", name: "Radeon RX 7600", price: 39000, watt: 165, scoreGame: 65, scoreWork: 50, desc: "AMD製のミドルレンジ。フルHDゲームが快適に動く高コスパモデル。", point: "GeForceより安く、同等の性能が出せるコスパ機。" },
+                { id: "gpu_2", type: "gpu", name: "GeForce RTX 4060", price: 46000, watt: 115, scoreGame: 70, scoreWork: 60, desc: "ミドルレンジ。多くの最新ゲームがフルHD画質で快適に動作します。", point: "現在のゲーミングPCの標準。迷ったらコレ。" },
+                { id: "gpu_5", type: "gpu", name: "GeForce RTX 4070 Ti", price: 120000, watt: 285, scoreGame: 90, scoreWork: 85, desc: "ハイエンド。WQHDや4K画質でのゲームプレイが可能です。", isRgb: true, point: "高画質でゲームを楽しみたい人向け。電源容量に注意。" },
+                { id: "gpu_3", type: "gpu", name: "GeForce RTX 4090", price: 280000, watt: 450, scoreGame: 100, scoreWork: 100, desc: "現行最強のグラボ。4KゲームもAI生成も爆速ですが、非常に高価です。", isRgb: true, point: "「何でもできる」が、PC本体より高いことも。" },
         
                 // Storage (5 types)
-                { id: "str_1", type: "storage", name: "SATA SSD 500GB", price: 6000, watt: 3, scoreWork: 20, desc: "HDDより高速ですが、NVMeほどではありません。容量は控えめ。" },
-                { id: "str_4", type: "storage", name: "SATA SSD 1TB", price: 9000, watt: 3, scoreWork: 25, desc: "1TBの大容量SATA SSD。データ保存用に適しています。" },
-                { id: "str_2", type: "storage", name: "NVMe SSD 1TB", price: 12000, watt: 6, scoreWork: 50, desc: "基盤に直接挿す超高速SSD。OSの起動やゲームのロードが一瞬で終わります。" },
-                { id: "str_5", type: "storage", name: "NVMe SSD 2TB", price: 22000, watt: 7, scoreWork: 60, desc: "2TBの超高速SSD。たくさんのゲームや動画を保存できます。" },
-                { id: "str_3", type: "storage", name: "3.5インチ HDD 4TB", price: 8500, watt: 15, scoreWork: 10, desc: "【注意】非常に安価で大容量ですが、物理的なディスクが回転するため遅く、OS起動に時間がかかります。" },
+                { id: "str_1", type: "storage", name: "SATA SSD 500GB", price: 6000, watt: 3, scoreWork: 20, desc: "HDDより高速ですが、NVMeほどではありません。容量は控えめ。", point: "OSと少しのソフトを入れたら一杯になります。" },
+                { id: "str_4", type: "storage", name: "SATA SSD 1TB", price: 9000, watt: 3, scoreWork: 25, desc: "1TBの大容量SATA SSD。データ保存用に適しています。", point: "ゲームの保存先として優秀です。" },
+                { id: "str_2", type: "storage", name: "NVMe SSD 1TB", price: 12000, watt: 6, scoreWork: 50, desc: "基盤に直接挿す超高速SSD。OSの起動やゲームのロードが一瞬で終わります。", point: "今のPCの標準。ケーブル不要でスッキリ。" },
+                { id: "str_5", type: "storage", name: "NVMe SSD 2TB", price: 22000, watt: 7, scoreWork: 60, desc: "2TBの超高速SSD。たくさんのゲームや動画を保存できます。", point: "予算に余裕があるなら2TBあると安心です。" },
+                { id: "str_3", type: "storage", name: "3.5インチ HDD 4TB", price: 8500, watt: 15, scoreWork: 10, desc: "【注意】非常に安価で大容量ですが、物理的なディスクが回転するため遅く、OS起動に時間がかかります。", point: "動画倉庫には最適ですが、OSを入れるとイライラします。" },
                 
                 // PSU (5 types)
-                { id: "psu_1", type: "psu", name: "Standard 450W", price: 5000, maxWatt: 450, desc: "事務用PC向け。高性能なグラボを積むと電力が足りなくなります。" },
-                { id: "psu_4", type: "psu", name: "Bronze 650W", price: 9000, maxWatt: 650, desc: "ミドルレンジ向け。コストパフォーマンスが良いモデルです。" },
-                { id: "psu_2", type: "psu", name: "Gold 750W", price: 16000, maxWatt: 750, desc: "ゲーミングPCの標準。電力変換効率が良く（Gold）、発熱も少なめです。" },
-                { id: "psu_5", type: "psu", name: "Gold 850W", price: 20000, maxWatt: 850, desc: "余裕のある容量。将来的なパーツ増設にも対応できます。" },
-                { id: "psu_3", type: "psu", name: "Platinum 1000W", price: 32000, maxWatt: 1000, desc: "ハイエンド構成用。最高ランクの変換効率（Platinum）を持ちます。" },
+                { id: "psu_1", type: "psu", name: "Standard 450W", price: 5000, maxWatt: 450, desc: "事務用PC向け。高性能なグラボを積むと電力が足りなくなります。", point: "GPUなしの構成ならこれで十分。" },
+                { id: "psu_4", type: "psu", name: "Bronze 650W", price: 9000, maxWatt: 650, desc: "ミドルレンジ向け。コストパフォーマンスが良いモデルです。", point: "RTX 4060クラスならこの容量でOK。" },
+                { id: "psu_2", type: "psu", name: "Gold 750W", price: 16000, maxWatt: 750, desc: "ゲーミングPCの標準。電力変換効率が良く（Gold）、発熱も少なめです。", point: "将来パーツを交換しても使い続けられる安心容量。" },
+                { id: "psu_5", type: "psu", name: "Gold 850W", price: 20000, maxWatt: 850, desc: "余裕のある容量。将来的なパーツ増設にも対応できます。", point: "ハイスペックPCを作るならこれくらい欲しい。" },
+                { id: "psu_3", type: "psu", name: "Platinum 1000W", price: 32000, maxWatt: 1000, desc: "ハイエンド構成用。最高ランクの変換効率（Platinum）を持ちます。", point: "RTX 4090を使うなら必須級。" },
         
                 // OS
-                { id: "os_1", type: "os", name: "Windows 11 Home", price: 16000, desc: "世界で最も普及しているOS。ゲームや多くのアプリに対応しています。", isGaming: true, isOffice: true },
-                { id: "os_2", type: "os", name: "Linux (Ubuntu)", price: 0, desc: "無料で使えるオープンソースOS。プログラミングやサーバー構築に向いています。", isGaming: false, isOffice: true },
+                { id: "os_1", type: "os", name: "Windows 11 Home", price: 16000, desc: "世界で最も普及しているOS。ゲームや多くのアプリに対応しています。", isGaming: true, isOffice: true, point: "ほとんどの人はこれを選べば間違いありません。" },
+                { id: "os_2", type: "os", name: "Linux (Ubuntu)", price: 0, desc: "無料で使えるオープンソースOS。プログラミングやサーバー構築に向いています。", isGaming: false, isOffice: true, point: "コマンド操作が中心。開発者を目指す人向け。" },
 
                 // App
-                { id: "app_1", type: "app", name: "Office 2024", price: 35000, desc: "Word, Excelなど。レポート作成や事務仕事には欠かせないソフトです。", typeTag: "work" },
-                { id: "app_2", type: "app", name: "FPS Game Title", price: 8000, desc: "人気の対戦シューティングゲーム。高い反射神経とPC性能が求められます。", typeTag: "game" },
-                { id: "app_3", type: "app", name: "Video Studio Pro", price: 45000, desc: "プロ向けの動画編集ソフト。メモリとCPU/GPUの性能をフルに使います。", typeTag: "creative" },
-                { id: "app_4", type: "app", name: "VS Code & Python", price: 0, desc: "プログラミング開発環境。コードを書くためのツールです。", typeTag: "dev" },
+                { id: "app_1", type: "app", name: "Office 2024", price: 35000, desc: "Word, Excelなど。レポート作成や事務仕事には欠かせないソフトです。", typeTag: "work", point: "学生・社会人の必須ツール。" },
+                { id: "app_2", type: "app", name: "FPS Game Title", price: 8000, desc: "人気の対戦シューティングゲーム。高い反射神経とPC性能が求められます。", typeTag: "game", point: "勝つためには高いフレームレート(滑らかさ)が必要。" },
+                { id: "app_3", type: "app", name: "Video Studio Pro", price: 45000, desc: "プロ向けの動画編集ソフト。メモリとCPU/GPUの性能をフルに使います。", typeTag: "creative", point: "高画質動画を扱うならメモリ32GB推奨。" },
+                { id: "app_4", type: "app", name: "VS Code & Python", price: 0, desc: "プログラミング開発環境。コードを書くためのツールです。", typeTag: "dev", point: "これ自体は軽いが、動かすプログラム次第で重くなる。" },
 
                 // Input Devices
-                { id: "in_1", type: "input", name: "標準マウス＆キーボード", price: 2000, desc: "PC付属品レベル。とりあえず入力できれば良いという人向け。", scoreGame: 0, scoreWork: 20 },
-                { id: "in_2", type: "input", name: "無線静音セット", price: 6000, desc: "ケーブルがなく机がスッキリ。カチカチ音がしないのでオフィスに最適。", scoreGame: 10, scoreWork: 50 },
-                { id: "in_3", type: "input", name: "ゲーミングデバイスセット", price: 18000, desc: "反応速度が速く、耐久性が高い。LEDが光り、ゲームの操作性が向上します。", scoreGame: 50, scoreWork: 40, isRgb: true }
+                { id: "in_1", type: "input", name: "標準マウス＆キーボード", price: 2000, desc: "PC付属品レベル。とりあえず入力できれば良いという人向け。", scoreGame: 0, scoreWork: 20, point: "ゲームには向きませんが、事務なら十分。" },
+                { id: "in_2", type: "input", name: "無線静音セット", price: 6000, desc: "ケーブルがなく机がスッキリ。カチカチ音がしないのでオフィスに最適。", scoreGame: 10, scoreWork: 50, point: "配線を減らしたい人におすすめ。" },
+                { id: "in_3", type: "input", name: "ゲーミングデバイスセット", price: 18000, desc: "反応速度が速く、耐久性が高い。LEDが光り、ゲームの操作性が向上します。", scoreGame: 50, scoreWork: 40, isRgb: true, point: "ゲームの勝率を上げたいなら必須投資。" }
             ],
             // Quizzes sorted by difficulty (Level 1 -> Level 3)
             quizzes: [
@@ -222,11 +227,12 @@
             Minus: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" /></svg>,
             Plus: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" /></svg>,
             Help: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>,
-            Print: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" /></svg>,
+            Print: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" /></svg>,
             Home: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>,
             Fan: () => <svg className="w-full h-full text-slate-600" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z"/></svg>,
             ArrowLeft: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>,
-            Refresh: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
+            Refresh: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>,
+            Bulb: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
         };
 
         // Improved Fan Icon for animation
@@ -254,6 +260,60 @@
             const gamePerformance = Math.min(100, Math.round((gpuScoreG * 0.7 + cpuScoreG * 0.2 + memScore * 0.1)));
             
             return { totalCost, workPerformance, gamePerformance };
+        };
+
+        // --- Part Detail Overlay Component (New!) ---
+        const PartDetailOverlay = ({ part }) => {
+            if (!part) return null;
+
+            // Visual bar helper
+            const StatBar = ({ label, value, color }) => (
+                <div className="flex items-center gap-2 mb-1">
+                    <div className="text-[10px] w-12 font-bold text-slate-400">{label}</div>
+                    <div className="flex-1 h-1.5 bg-slate-700 rounded-full overflow-hidden">
+                        <div style={{width: `${value || 0}%`}} className={`h-full ${color}`}></div>
+                    </div>
+                </div>
+            );
+
+            return (
+                <div className="absolute left-80 top-4 ml-4 w-72 bg-slate-800/95 backdrop-blur-xl border border-blue-500/50 shadow-[0_0_30px_rgba(0,0,0,0.5)] p-4 rounded-xl z-50 animate-pop-in pointer-events-none">
+                    <div className="flex justify-between items-start mb-2 border-b border-slate-700 pb-2">
+                        <div>
+                            <div className="text-[10px] text-blue-400 font-bold uppercase tracking-wider">{pcData.categories[part.type]?.label}</div>
+                            <h3 className="font-bold text-lg leading-tight text-white">{part.name}</h3>
+                        </div>
+                        <div className="text-right">
+                            <div className="text-xl font-bold text-yellow-400">¥{part.price.toLocaleString()}</div>
+                        </div>
+                    </div>
+
+                    <div className="space-y-3">
+                        <div className="text-xs text-slate-300 leading-relaxed">
+                            {part.desc}
+                        </div>
+
+                        {/* Performance Bars */}
+                        {(part.scoreGame !== undefined || part.scoreWork !== undefined) && (
+                            <div className="bg-slate-900/50 p-2 rounded border border-slate-700">
+                                {part.scoreGame !== undefined && <StatBar label="ゲーム" value={part.scoreGame} color="bg-purple-500" />}
+                                {part.scoreWork !== undefined && <StatBar label="作業" value={part.scoreWork} color="bg-blue-500" />}
+                            </div>
+                        )}
+
+                        {/* Teacher's Point */}
+                        {part.point && (
+                            <div className="bg-yellow-900/20 border border-yellow-600/30 p-2 rounded flex gap-2 items-start">
+                                <div className="mt-0.5 text-yellow-400"><Icons.Bulb /></div>
+                                <div>
+                                    <div className="text-[10px] font-bold text-yellow-500 uppercase">One Point Advice</div>
+                                    <div className="text-xs text-yellow-100">{part.point}</div>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            );
         };
 
         // --- Start Screen ---
@@ -659,7 +719,7 @@
                     <div className={`p-2 rounded bg-opacity-20 ${cat.color.replace('text-', 'bg-').replace('400', '500')} ${cat.color}`}>
                         {Icons[cat.icon] && React.createElement(Icons[cat.icon])}
                     </div>
-                    <div className="flex-1 min-w-0">
+                    <div className="flex-1 min-w-0 pointer-events-none">
                         <div className="font-bold text-sm text-slate-100 truncate">{part.name}</div>
                         <div className="text-xs text-slate-400">¥{part.price.toLocaleString()}</div>
                     </div>
@@ -962,6 +1022,9 @@
 
             return (
                 <div className="flex h-screen bg-slate-900 text-slate-200 font-sans relative">
+                    {/* Hover Overlay */}
+                    {!draggedPart && <PartDetailOverlay part={hoveredPart} />}
+
                     {/* Floating Quiz Window */}
                     <QuizWindow 
                         quiz={quizMode} 
@@ -975,7 +1038,7 @@
 
                     {/* LEFT SIDEBAR */}
                     <div className="w-80 flex flex-col border-r border-slate-700 bg-slate-800 z-10 shadow-xl">
-                        <div className="p-4 border-b border-slate-700 bg-slate-800">
+                        <div className="p-4 border-b border-slate-700 bg-slate-800 z-20">
                             <button 
                                 onClick={goHome} 
                                 className="mb-4 w-full py-2 bg-slate-700 hover:bg-slate-600 text-slate-300 hover:text-white rounded flex items-center justify-center gap-2 text-sm font-bold transition-colors shadow-sm"
@@ -1012,7 +1075,18 @@
                             </div>
                         </div>
                         
-                        <div className="flex-1 overflow-y-auto p-3 space-y-2 bg-slate-900/50 scrollbar-hide">
+                        {/* Category Description Header */}
+                        <div className="bg-slate-700/50 p-3 border-b border-slate-700 flex items-start gap-3">
+                            <div className={`p-2 rounded bg-opacity-20 mt-1 shrink-0 ${pcData.categories[activeTab].color.replace('text-', 'bg-').replace('400', '500')} ${pcData.categories[activeTab].color}`}>
+                                {React.createElement(Icons[pcData.categories[activeTab].icon], { className: "w-5 h-5" })}
+                            </div>
+                            <div>
+                                <div className="text-xs font-bold text-slate-200 mb-1">{pcData.categories[activeTab].label}</div>
+                                <div className="text-[10px] text-slate-400 leading-relaxed">{pcData.categories[activeTab].desc}</div>
+                            </div>
+                        </div>
+
+                        <div className="flex-1 overflow-y-auto p-3 space-y-2 bg-slate-900/50 scrollbar-hide relative">
                             {pcData.parts.filter(p => p.type === activeTab).map(part => (
                                 <PartCard 
                                     key={part.id} 
@@ -1109,40 +1183,26 @@
                                         </div>
                                     </div>
                                     <div className="bg-slate-800 rounded-xl border border-slate-700 p-4 flex-1 flex flex-col overflow-hidden relative">
-                                        <h3 className="text-xs font-bold text-slate-400 uppercase mb-2 flex justify-between items-center"><span className="flex items-center gap-2"><Icons.Help /> Information</span></h3>
-                                        <div className="flex-1 overflow-y-auto pr-1">
-                                            <div className="animate-fade-in mb-4 border-b border-slate-700 pb-2">
-                                                <div className="font-bold text-white mb-1 flex items-center gap-2">
-                                                    {React.createElement(Icons[pcData.categories[activeTab]?.icon] || Icons.Help, { className: "w-4 h-4 text-blue-400" })}
-                                                    {pcData.categories[activeTab]?.label}
-                                                </div>
-                                                <div className="text-slate-400 text-xs leading-relaxed">{pcData.categories[activeTab]?.desc}</div>
-                                            </div>
-                                            {hoveredPart && (
-                                                <div className="animate-slide-in mb-4 bg-slate-700/50 p-2 rounded border border-slate-600">
-                                                    <div className="font-bold text-blue-300 mb-1 flex justify-between items-center border-b border-slate-600/50 pb-1">
-                                                        <span>{hoveredPart.name}</span>
-                                                        <span className="text-yellow-400">¥{hoveredPart.price.toLocaleString()}</span>
-                                                    </div>
-                                                    <div className="text-slate-300 text-xs leading-relaxed mt-1">{hoveredPart.desc}</div>
-                                                </div>
-                                            )}
+                                        <h3 className="text-xs font-bold text-slate-400 uppercase mb-2 flex justify-between items-center"><span className="flex items-center gap-2"><Icons.Alert /> System Log</span></h3>
+                                        <div className="flex-1 overflow-y-auto pr-1 font-mono text-xs">
+                                            {/* Simplified Bottom Panel - Just Logs */}
                                             <div className="space-y-1">
-                                                <div className="text-[10px] font-bold text-slate-500 uppercase">SYSTEM ALERTS</div>
-                                                
-                                                {/* Errors */}
                                                 {validation.errors.map((e, i) => (
-                                                    <div key={`err-${i}`} className="flex gap-2 text-xs text-red-300 bg-red-900/20 p-2 rounded items-start"><Icons.Alert /> <span>{e}</span></div>
+                                                    <div key={`err-${i}`} className="flex gap-2 text-red-300 bg-red-900/20 p-2 rounded items-start"><Icons.Alert /> <span>{e}</span></div>
                                                 ))}
 
-                                                {/* Warnings (Bottlenecks) */}
                                                 {validation.warnings.map((w, i) => (
-                                                    <div key={`warn-${i}`} className="flex gap-2 text-xs text-yellow-200 bg-yellow-900/20 p-2 rounded items-start"><Icons.Alert className="text-yellow-400" /> <span>{w}</span></div>
+                                                    <div key={`warn-${i}`} className="flex gap-2 text-yellow-200 bg-yellow-900/20 p-2 rounded items-start"><Icons.Alert className="text-yellow-400" /> <span>{w}</span></div>
                                                 ))}
 
                                                 {validation.errors.length === 0 && validation.warnings.length === 0 && (
-                                                    <div className="text-xs text-green-500 flex items-center gap-2"><Icons.Check /> システムは正常です</div>
+                                                    <div className="text-green-500 flex items-center gap-2 p-2 bg-green-900/10 rounded"><Icons.Check /> System check passed. No critical errors found.</div>
                                                 )}
+                                                
+                                                <div className="mt-4 text-slate-600 border-t border-slate-700 pt-2">
+                                                    <div>&gt; BIOS Check... OK</div>
+                                                    <div>&gt; Power Rail... {validation.totalWatt}W</div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
