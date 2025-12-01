@@ -45,6 +45,7 @@
                         'pop-in': 'pop-in 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards',
                         'pulse-glow': 'pulse-glow 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                         'dots': 'dots 1.5s infinite',
+                        'unlock': 'unlock 1s cubic-bezier(0.4, 0, 0.2, 1) forwards',
                     },
                     keyframes: {
                         'slide-in': {
@@ -63,6 +64,10 @@
                             '0%, 20%': { opacity: 0 },
                             '40%': { opacity: 1 },
                             '100%': { opacity: 0 }
+                        },
+                        'unlock': {
+                            '0%': { transform: 'scale(0.8) translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'scale(1) translateY(0)', opacity: '1' }
                         }
                     }
                 }
@@ -87,7 +92,7 @@
                 display: { label: "モニター", academic: "出力装置", icon: "Display", color: "text-orange-400", desc: "【出力装置】コンピュータの計算結果を表示する画面です。解像度やリフレッシュレートで性能が決まります。" }
             },
             parts: [
-                // Motherboards (Hidden)
+                // Motherboards (Hidden - Auto Selected)
                 { id: "mb_1", type: "motherboard", name: "Standard B660", price: 12000, socket: "LGA1700", memoryType: "DDR4", desc: "Intel用標準基盤" },
                 { id: "mb_2", type: "motherboard", name: "High-End Z790", price: 35000, socket: "LGA1700", memoryType: "DDR5", desc: "Intel用高性能基盤", isRgb: true },
                 { id: "mb_3", type: "motherboard", name: "Ryzen X670", price: 40000, socket: "AM5", memoryType: "DDR5", desc: "AMD用基盤", isRgb: true },
@@ -139,10 +144,10 @@
                 // Displays
                 { id: "disp_1", type: "display", name: "21インチ FHD 60Hz", price: 12000, desc: "一般的な事務用モニター。動画や事務作業には十分です。", scoreWork: 30, scoreGame: 20, point: "レポート作成にはこれで十分。安価です。" },
                 { id: "disp_2", type: "display", name: "24インチ FHD 144Hz", price: 25000, desc: "滑らかな映像表示ができるゲーミングモニター。FPSゲームに最適。", scoreWork: 40, scoreGame: 60, point: "144Hzはヌルヌル動きます。FPSやるなら必須。" },
-                { id: "disp_3", type: "display", name: "27インチ 4K 60Hz", price: 45000, desc: "非常に高精細な画面。文字がくっきり見え、写真編集や動画鑑賞に最適。", scoreWork: 80, scoreGame: 40, point: "作業領域が広く、Excelの表示列数が増えます。" },
+                { id: "disp_3", type: "display", name: "27インチ 4K 60Hz", price: 45000, desc: "高精細画面。文字がくっきり見え、写真編集や動画鑑賞に最適。", scoreWork: 80, scoreGame: 40, point: "作業領域が広く、Excelの表示列数が増えます。" },
                 { id: "disp_4", type: "display", name: "27インチ 4K 144Hz", price: 90000, desc: "高画質かつ滑らか。最強のモニターですが非常に高価です。", scoreWork: 90, scoreGame: 90, point: "この性能を活かすにはRTX 4090クラスが必要です。" }
             ],
-            // Quizzes sorted by difficulty (Level 1 -> Level 3)
+            // Quizzes sorted by difficulty
             quizzes: [
                 {
                     id: 1,
@@ -205,6 +210,47 @@
                         minGameScore: 85, 
                         minWorkScore: 85
                     }
+                },
+                // EXTRA STAGES (Unlocked after clearing 1-5)
+                {
+                    id: 6,
+                    isExtra: true,
+                    level: "★★★★",
+                    title: "EX1. 限界予算オフィス",
+                    desc: "【隠しミッション】予算10万2000円以内。この金額で「Office」搭載の作業用PCを構築できるか？1円の無駄も許されない。",
+                    conditions: {
+                        maxPrice: 102000,
+                        requiredAppType: "work",
+                        requiredOs: "Windows 11 Home",
+                        minWorkScore: 30
+                    }
+                },
+                {
+                    id: 7,
+                    isExtra: true,
+                    level: "★★★★",
+                    title: "EX2. 大容量メモリの極意",
+                    desc: "【隠しミッション】予算17万円以内。GPUなしで「メモリ64GB」と「高速SSD 2TB」を両立させ、サーバーを構築せよ。",
+                    conditions: {
+                        maxPrice: 170000,
+                        requiredOs: "Linux (Ubuntu)",
+                        minMemoryGb: 64,
+                        requiredStorageCapacity: "2TB"
+                    }
+                },
+                {
+                    id: 8,
+                    isExtra: true,
+                    level: "★★★★",
+                    title: "EX3. 究極のFPS体験",
+                    desc: "【隠しミッション】予算39万5000円以内。最強のゲームCPUと4070Ti、そして4K 144Hzモニターを含めよ。最適解は一つしかない。",
+                    conditions: {
+                        maxPrice: 395000,
+                        minGameScore: 100, // Requires 7800X3D + 4070Ti at least to hit high score calc
+                        requiresGamingInput: true,
+                        requiredDisplayType: "144Hz", // 4K 144Hz is implied by price and "Ultimate"
+                        requiredAppType: "game"
+                    }
                 }
             ]
         };
@@ -239,7 +285,10 @@
             ArrowLeft: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>,
             Refresh: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>,
             Bulb: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>,
-            Label: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" /></svg>
+            Label: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" /></svg>,
+            Star: () => <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>,
+            Lock: () => <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>,
+            Reset: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg> // Using Trash icon as base for reset for now, or just text
         };
 
         // Improved Fan Icon for animation
@@ -373,7 +422,12 @@
         };
 
         // --- Start Screen ---
-        const StartScreen = ({ onSelectMode }) => {
+        const StartScreen = ({ onSelectMode, clearedQuizzes, onResetProgress }) => {
+            const allNormalCleared = [1, 2, 3, 4, 5].every(id => clearedQuizzes.includes(id));
+            
+            const normalQuizzes = pcData.quizzes.filter(q => !q.isExtra);
+            const extraQuizzes = pcData.quizzes.filter(q => q.isExtra);
+
             return (
                 <div className="h-screen flex flex-col items-center justify-center bg-slate-900 text-white relative overflow-hidden">
                     <div className="absolute inset-0 z-0 opacity-20 bg-[url('https://images.unsplash.com/photo-1593640408182-31c70c8268f5?auto=format&fit=crop&w=1920&q=80')] bg-cover bg-center"></div>
@@ -398,28 +452,79 @@
                                 <p className="text-sm text-slate-400">予算や条件を気にせず、好きなパーツを組み合わせてPCを作成します。</p>
                             </button>
 
-                            <div className="flex-1 bg-slate-800/50 border border-slate-700 rounded-xl p-6 backdrop-blur flex flex-col min-h-0">
-                                <h3 className="text-xl font-bold mb-4 flex-none flex items-center gap-2">
-                                    <span className="text-yellow-400">★</span> クイズに挑戦
-                                </h3>
-                                <div className="flex-1 overflow-y-auto pr-1 space-y-2 scrollbar-hide">
-                                    {pcData.quizzes.map(q => (
-                                        <button 
-                                            key={q.id} 
-                                            onClick={() => onSelectMode(q)}
-                                            className="w-full text-left p-3 rounded-lg bg-slate-700 hover:bg-slate-600 border border-transparent hover:border-yellow-400 transition-all flex justify-between items-center group"
-                                        >
-                                            <div>
-                                                <div className="text-sm font-bold text-slate-200">{q.title}</div>
-                                                <div className="text-xs text-slate-400 line-clamp-1">{q.desc}</div>
-                                            </div>
-                                            <span className="text-xs font-mono text-yellow-500 bg-yellow-900/30 px-2 py-1 rounded min-w-[3em] text-center">{q.level}</span>
-                                        </button>
-                                    ))}
+                            <div className="flex-1 flex flex-col gap-4 min-h-0">
+                                {/* Standard Quizzes */}
+                                <div className="flex-1 bg-slate-800/50 border border-slate-700 rounded-xl p-6 backdrop-blur flex flex-col min-h-0">
+                                    <h3 className="text-xl font-bold mb-4 flex-none flex items-center gap-2">
+                                        <span className="text-yellow-400">★</span> クイズに挑戦
+                                    </h3>
+                                    <div className="flex-1 overflow-y-auto pr-1 space-y-2 scrollbar-hide">
+                                        {normalQuizzes.map(q => {
+                                            const isCleared = clearedQuizzes.includes(q.id);
+                                            return (
+                                                <button 
+                                                    key={q.id} 
+                                                    onClick={() => onSelectMode(q)}
+                                                    className={`w-full text-left p-3 rounded-lg border transition-all flex justify-between items-center group
+                                                        ${isCleared 
+                                                            ? 'bg-slate-800/80 border-yellow-500/50 hover:bg-slate-700' 
+                                                            : 'bg-slate-700 hover:bg-slate-600 border-transparent hover:border-yellow-400'
+                                                        }`}
+                                                >
+                                                    <div>
+                                                        <div className="text-sm font-bold text-slate-200 flex items-center gap-2">
+                                                            {q.title}
+                                                            {isCleared && <span className="text-[10px] bg-yellow-500 text-black px-1 rounded font-black">CLEAR!</span>}
+                                                        </div>
+                                                        <div className="text-xs text-slate-400 line-clamp-1">{q.desc}</div>
+                                                    </div>
+                                                    <span className="text-xs font-mono text-yellow-500 bg-yellow-900/30 px-2 py-1 rounded min-w-[3em] text-center">{q.level}</span>
+                                                </button>
+                                            );
+                                        })}
+                                    </div>
                                 </div>
+
+                                {/* Extra Quizzes (Hidden until clear) */}
+                                {allNormalCleared && (
+                                    <div className="bg-red-950/40 border border-red-900/50 rounded-xl p-4 animate-unlock">
+                                        <h3 className="text-lg font-bold mb-2 flex items-center gap-2 text-red-400">
+                                            <Icons.Lock /> EXTRA MISSION <span className="text-xs bg-red-600 text-white px-1 rounded">UNLOCKED</span>
+                                        </h3>
+                                        <div className="space-y-2">
+                                            {extraQuizzes.map(q => {
+                                                const isCleared = clearedQuizzes.includes(q.id);
+                                                return (
+                                                    <button 
+                                                        key={q.id} 
+                                                        onClick={() => onSelectMode(q)}
+                                                        className={`w-full text-left p-2 rounded-lg border transition-all flex justify-between items-center
+                                                            ${isCleared 
+                                                                ? 'bg-red-900/20 border-yellow-500/50 text-yellow-100' 
+                                                                : 'bg-red-900/20 hover:bg-red-900/40 border-red-800/30 hover:border-red-500 text-red-100'
+                                                            }`}
+                                                    >
+                                                        <div>
+                                                            <div className="text-xs font-bold flex items-center gap-2">
+                                                                {q.title}
+                                                                {isCleared && <span className="text-[10px] bg-yellow-500 text-black px-1 rounded font-black">CLEAR!</span>}
+                                                            </div>
+                                                        </div>
+                                                        <span className="text-[10px] font-mono text-red-400 border border-red-800 px-1 rounded">{q.level}</span>
+                                                    </button>
+                                                );
+                                            })}
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                         </div>
-                        <div className="flex-none mt-4 text-xs text-slate-500">© 2024 Information I Learning Tool</div>
+                        <div className="flex-none mt-4 flex justify-between items-center text-xs text-slate-500 w-full">
+                            <div>© 2024 Information I Learning Tool</div>
+                            <button onClick={onResetProgress} className="text-slate-600 hover:text-red-400 transition-colors flex items-center gap-1">
+                                進捗リセット
+                            </button>
+                        </div>
                     </div>
                 </div>
             );
@@ -479,25 +584,31 @@
                 if (priceRatio > 80) barColor = 'bg-yellow-500';
                 if (priceRatio > 100) barColor = 'bg-red-500';
             }
+            
+            // Extra Style for Extra Quizzes
+            const isExtra = quiz?.isExtra;
+            const headerColor = isExtra ? 'bg-red-900/60' : (isFreeMode ? 'bg-blue-900/40' : 'bg-yellow-700/20');
+            const borderColor = isExtra ? 'border-red-600' : (isFreeMode ? 'border-blue-500' : 'border-yellow-600');
+            const textColor = isExtra ? 'text-red-400' : (isFreeMode ? 'text-blue-400' : 'text-yellow-500');
 
             return (
                 <div 
                     style={{ left: `${position.x}px`, top: `${position.y}px` }}
-                    className={`absolute z-40 bg-slate-800 border-2 ${isFreeMode ? 'border-blue-500' : 'border-yellow-600'} rounded-xl shadow-[0_0_20px_rgba(0,0,0,0.5)] transition-shadow duration-300 ease-in-out ${
+                    className={`absolute z-40 bg-slate-800 border-2 ${borderColor} rounded-xl shadow-[0_0_20px_rgba(0,0,0,0.5)] transition-shadow duration-300 ease-in-out ${
                         minimized ? 'w-64 h-12' : 'w-80'
                     } ${isDragging ? 'cursor-grabbing select-none' : ''}`}
                 >
                     {/* Header */}
                     <div 
-                        className={`h-12 ${isFreeMode ? 'bg-blue-900/40' : 'bg-yellow-700/20'} flex items-center justify-between px-4 cursor-grab active:cursor-grabbing hover:bg-opacity-50 transition rounded-t-xl`}
+                        className={`h-12 ${headerColor} flex items-center justify-between px-4 cursor-grab active:cursor-grabbing hover:bg-opacity-50 transition rounded-t-xl`}
                         onMouseDown={handleMouseDown}
                     >
-                        <div className={`flex items-center gap-2 font-bold ${isFreeMode ? 'text-blue-400' : 'text-yellow-500'} pointer-events-none`}>
+                        <div className={`flex items-center gap-2 font-bold ${textColor} pointer-events-none`}>
                             <span className="text-lg">{isFreeMode ? <Icons.Motherboard /> : '★'}</span>
                             <span className="truncate max-w-[180px]">{title}</span>
                         </div>
                         <button 
-                            className={`${isFreeMode ? 'text-blue-400' : 'text-yellow-500'} hover:text-white p-1`}
+                            className={`${textColor} hover:text-white p-1`}
                             onMouseDown={(e) => e.stopPropagation()} 
                             onClick={() => setMinimized(!minimized)}
                         >
@@ -535,6 +646,8 @@
                                         {quiz.conditions.requiresDedicatedGpu && <div className="text-yellow-300">• 独立GPU必須</div>}
                                         {quiz.conditions.requiresGamingInput && <div className="text-yellow-300">• ゲーミングデバイス必須</div>}
                                         {quiz.conditions.minMemoryGb && <div className="text-yellow-300">• メモリ{quiz.conditions.minMemoryGb}GB以上</div>}
+                                        {quiz.conditions.requiredStorageCapacity && <div className="text-yellow-300">• ストレージ{quiz.conditions.requiredStorageCapacity}必須</div>}
+                                        {quiz.conditions.requiredDisplayType && <div className="text-yellow-300">• モニター要件: {quiz.conditions.requiredDisplayType}</div>}
                                     </div>
                                 </div>
                             )}
@@ -1027,6 +1140,7 @@
             const [hasBooted, setHasBooted] = useState(false);
             const [failedAttempts, setFailedAttempts] = useState(0);
             const [showEducationalLabels, setShowEducationalLabels] = useState(true); // Default ON
+            const [clearedQuizzes, setClearedQuizzes] = useState([]); // Track cleared quiz IDs
             
             // Double Click Control States
             const [doubleClickCount, setDoubleClickCount] = useState(0);
@@ -1043,6 +1157,7 @@
                             setQuizMode(parsed.quizMode);
                             setView('build');
                         }
+                        if (parsed.clearedQuizzes) setClearedQuizzes(parsed.clearedQuizzes);
                     } catch (e) {
                         console.error("Failed to load save data", e);
                     }
@@ -1050,14 +1165,13 @@
             }, []);
 
             useEffect(() => {
-                if (view === 'build' || view === 'benchmark') {
-                    const dataToSave = {
-                        selectedParts,
-                        quizMode
-                    };
-                    localStorage.setItem('pcSimData', JSON.stringify(dataToSave));
-                }
-            }, [selectedParts, quizMode, view]);
+                const dataToSave = {
+                    selectedParts: view === 'build' || view === 'benchmark' ? selectedParts : {},
+                    quizMode: view === 'build' || view === 'benchmark' ? quizMode : null,
+                    clearedQuizzes
+                };
+                localStorage.setItem('pcSimData', JSON.stringify(dataToSave));
+            }, [selectedParts, quizMode, view, clearedQuizzes]);
 
             const goHome = () => {
                 setSelectedParts({});
@@ -1066,7 +1180,6 @@
                 setHasBooted(false);
                 setFailedAttempts(0);
                 setView('menu');
-                localStorage.removeItem('pcSimData');
             };
 
             const startMode = (quiz) => {
@@ -1078,6 +1191,13 @@
                 setView('build');
             };
             
+            const handleResetProgress = () => {
+                if (window.confirm("これまでのクイズのクリア状況をすべてリセットしますか？")) {
+                    setClearedQuizzes([]);
+                    localStorage.removeItem('pcSimData'); // Also clears autosave
+                }
+            };
+
             const handleViewSpecs = () => {
                 setView('specSheet');
             };
@@ -1220,12 +1340,31 @@
                          errors.push(`必須: メモリ${cond.minMemoryGb}GB以上が必要です`);
                     }
                 }
+                
+                // Special check for Storage
+                if (cond.requiredStorageCapacity) {
+                    if (!p.storage || !p.storage.name.includes(cond.requiredStorageCapacity)) {
+                         errors.push(`必須: ストレージ${cond.requiredStorageCapacity}が必要です`);
+                    }
+                }
+
+                // Special check for Display
+                if (cond.requiredDisplayType) {
+                     if (!p.display || !p.display.name.includes(cond.requiredDisplayType)) {
+                         errors.push(`必須モニター要件: ${cond.requiredDisplayType}を含むモニターが必要です`);
+                     }
+                }
 
                 if (cond.minGameScore && specs.gamePerformance < cond.minGameScore) errors.push(`ゲーム性能不足 (現在: ${specs.gamePerformance} / 目標: ${cond.minGameScore})`);
                 if (cond.minWorkScore && specs.workPerformance < cond.minWorkScore) errors.push(`作業性能不足 (現在: ${specs.workPerformance} / 目標: ${cond.minWorkScore})`);
 
                 if (errors.length > 0) {
                     setFailedAttempts(prev => prev + 1);
+                } else {
+                    // Success Logic
+                    if (!clearedQuizzes.includes(quizMode.id)) {
+                        setClearedQuizzes(prev => [...prev, quizMode.id]);
+                    }
                 }
 
                 setSubmissionResult({ success: errors.length === 0, message: "課題クリア！完璧な構成です。", errors });
@@ -1236,7 +1375,7 @@
                 setView('benchmark');
             };
 
-            if (view === 'menu') return <StartScreen onSelectMode={startMode} />;
+            if (view === 'menu') return <StartScreen onSelectMode={startMode} clearedQuizzes={clearedQuizzes} onResetProgress={handleResetProgress} />;
             if (view === 'booting') return <BootScreen osName={selectedParts.os?.name} isHdd={selectedParts.storage?.name.includes('HDD')} onComplete={onBootComplete} />;
             if (view === 'benchmark') return <BenchmarkScreen parts={selectedParts} onBack={() => setView('build')} showLabels={showEducationalLabels} />;
             if (view === 'specSheet') return <SpecSheetScreen parts={selectedParts} quizTitle={quizMode?.title || '自由制作'} onGoHome={goHome} />;
