@@ -331,7 +331,7 @@
                     </div>
 
                     <div className="space-y-3">
-                        <div className="text-xs text-slate-300 leading-relaxed">
+                        <div className="text-sm text-slate-200 leading-relaxed font-medium">
                             {part.desc}
                         </div>
 
@@ -450,33 +450,39 @@
                 };
             };
 
-            if (!quiz) return null;
+            // Logic for Free Mode
+            const isFreeMode = !quiz;
+            const title = isFreeMode ? "自由制作モード" : quiz.title;
+            const desc = isFreeMode ? "好きなパーツを組み合わせて、オリジナルのPCを作成しましょう。起動テスト合格後にレポートを出力できます。" : quiz.desc;
+            const maxPrice = isFreeMode ? 0 : quiz.conditions.maxPrice;
 
-            // Budget Calculation for Progress Bar
-            const maxPrice = quiz.conditions.maxPrice;
-            const priceRatio = Math.min(100, (currentCost / maxPrice) * 100);
+            // Budget Bar logic (only for quiz)
+            let priceRatio = 0;
             let barColor = 'bg-green-500';
-            if (priceRatio > 80) barColor = 'bg-yellow-500';
-            if (priceRatio > 100) barColor = 'bg-red-500';
+            if (!isFreeMode) {
+                priceRatio = Math.min(100, (currentCost / maxPrice) * 100);
+                if (priceRatio > 80) barColor = 'bg-yellow-500';
+                if (priceRatio > 100) barColor = 'bg-red-500';
+            }
 
             return (
                 <div 
                     style={{ left: `${position.x}px`, top: `${position.y}px` }}
-                    className={`absolute z-40 bg-slate-800 border-2 border-yellow-600 rounded-xl shadow-[0_0_20px_rgba(0,0,0,0.5)] transition-shadow duration-300 ease-in-out ${
+                    className={`absolute z-40 bg-slate-800 border-2 ${isFreeMode ? 'border-blue-500' : 'border-yellow-600'} rounded-xl shadow-[0_0_20px_rgba(0,0,0,0.5)] transition-shadow duration-300 ease-in-out ${
                         minimized ? 'w-64 h-12' : 'w-80'
                     } ${isDragging ? 'cursor-grabbing select-none' : ''}`}
                 >
                     {/* Header */}
                     <div 
-                        className="h-12 bg-yellow-700/20 flex items-center justify-between px-4 cursor-grab active:cursor-grabbing hover:bg-yellow-700/30 transition rounded-t-xl"
+                        className={`h-12 ${isFreeMode ? 'bg-blue-900/40' : 'bg-yellow-700/20'} flex items-center justify-between px-4 cursor-grab active:cursor-grabbing hover:bg-opacity-50 transition rounded-t-xl`}
                         onMouseDown={handleMouseDown}
                     >
-                        <div className="flex items-center gap-2 font-bold text-yellow-500 pointer-events-none">
-                            <span className="text-lg">★</span>
-                            <span className="truncate max-w-[180px]">{quiz.title}</span>
+                        <div className={`flex items-center gap-2 font-bold ${isFreeMode ? 'text-blue-400' : 'text-yellow-500'} pointer-events-none`}>
+                            <span className="text-lg">{isFreeMode ? <Icons.Motherboard /> : '★'}</span>
+                            <span className="truncate max-w-[180px]">{title}</span>
                         </div>
                         <button 
-                            className="text-yellow-500 hover:text-white p-1"
+                            className={`${isFreeMode ? 'text-blue-400' : 'text-yellow-500'} hover:text-white p-1`}
                             onMouseDown={(e) => e.stopPropagation()} 
                             onClick={() => setMinimized(!minimized)}
                         >
@@ -488,33 +494,42 @@
                     {!minimized && (
                         <div className="p-4 bg-slate-800 rounded-b-xl">
                             <div className="text-sm text-slate-300 mb-4 leading-relaxed border-b border-slate-700 pb-2 cursor-default">
-                                {quiz.desc}
+                                {desc}
                             </div>
                             
-                            <div className="space-y-3 mb-4 cursor-default">
-                                {/* Budget Bar */}
-                                <div>
-                                    <div className="flex justify-between text-xs font-bold text-slate-400 mb-1">
-                                        <span>予算消費状況</span>
-                                        <span className={priceRatio > 100 ? "text-red-400" : "text-white"}>
-                                            ¥{currentCost.toLocaleString()} / ¥{maxPrice.toLocaleString()}
-                                        </span>
+                            {!isFreeMode && (
+                                <div className="space-y-3 mb-4 cursor-default">
+                                    {/* Budget Bar */}
+                                    <div>
+                                        <div className="flex justify-between text-xs font-bold text-slate-400 mb-1">
+                                            <span>予算消費状況</span>
+                                            <span className={priceRatio > 100 ? "text-red-400" : "text-white"}>
+                                                ¥{currentCost.toLocaleString()} / ¥{maxPrice.toLocaleString()}
+                                            </span>
+                                        </div>
+                                        <div className="h-2 bg-slate-700 rounded-full overflow-hidden">
+                                            <div style={{width: `${priceRatio}%`}} className={`h-full transition-all duration-500 ${barColor}`}></div>
+                                        </div>
                                     </div>
-                                    <div className="h-2 bg-slate-700 rounded-full overflow-hidden">
-                                        <div style={{width: `${priceRatio}%`}} className={`h-full transition-all duration-500 ${barColor}`}></div>
-                                    </div>
-                                </div>
 
-                                <div className="text-xs text-slate-400 grid grid-cols-1 gap-1">
-                                    <div className="flex justify-between">
-                                        <span>必須OS:</span>
-                                        <span className="text-white">{quiz.conditions.requiredOs || "なし"}</span>
+                                    <div className="text-xs text-slate-400 grid grid-cols-1 gap-1">
+                                        <div className="flex justify-between">
+                                            <span>必須OS:</span>
+                                            <span className="text-white">{quiz.conditions.requiredOs || "なし"}</span>
+                                        </div>
+                                        {quiz.conditions.requiresDedicatedGpu && <div className="text-yellow-300">• 独立GPU必須</div>}
+                                        {quiz.conditions.requiresGamingInput && <div className="text-yellow-300">• ゲーミングデバイス必須</div>}
+                                        {quiz.conditions.minMemoryGb && <div className="text-yellow-300">• メモリ{quiz.conditions.minMemoryGb}GB以上</div>}
                                     </div>
-                                    {quiz.conditions.requiresDedicatedGpu && <div className="text-yellow-300">• 独立GPU必須</div>}
-                                    {quiz.conditions.requiresGamingInput && <div className="text-yellow-300">• ゲーミングデバイス必須</div>}
-                                    {quiz.conditions.minMemoryGb && <div className="text-yellow-300">• メモリ{quiz.conditions.minMemoryGb}GB以上</div>}
                                 </div>
-                            </div>
+                            )}
+
+                            {isFreeMode && (
+                                <div className="mb-4">
+                                    <div className="text-xs font-bold text-slate-400 mb-1">現在の構成金額</div>
+                                    <div className="text-xl font-bold text-white">¥{currentCost.toLocaleString()}</div>
+                                </div>
+                            )}
 
                             {/* Result Area */}
                             {submissionResult && (
@@ -534,7 +549,7 @@
                             )}
 
                             {/* Hints for multiple failures */}
-                            {!submissionResult?.success && failedAttempts >= 3 && (
+                            {!isFreeMode && !submissionResult?.success && failedAttempts >= 3 && (
                                 <div className="mb-4 p-3 bg-blue-900/30 border border-blue-500/30 rounded text-xs text-blue-200 animate-slide-in">
                                     <div className="font-bold mb-1 flex items-center gap-1"><Icons.Help /> ヒント</div>
                                     <p>何度も失敗していますね。以下の点を確認しましょう：</p>
@@ -548,34 +563,55 @@
                             )}
 
                             {/* Actions */}
-                            {submissionResult?.success ? (
-                                <button 
-                                    onClick={onViewSpecs}
-                                    className="w-full py-3 bg-green-600 hover:bg-green-500 text-white font-bold rounded shadow-lg transition-all flex justify-center items-center gap-2 animate-pulse"
-                                >
-                                    <Icons.Print /> スペック表を表示して終了
-                                </button>
-                            ) : (
+                            {isFreeMode ? (
                                 <div className="relative group">
                                     <button 
-                                        onClick={onSubmit}
+                                        onClick={onViewSpecs}
                                         disabled={!hasBooted}
                                         className={`w-full py-3 font-bold rounded shadow-lg transition-all flex justify-center items-center gap-2
                                             ${hasBooted 
-                                                ? 'bg-yellow-600 hover:bg-yellow-500 text-white active:scale-95' 
+                                                ? 'bg-blue-600 hover:bg-blue-500 text-white active:scale-95 animate-pulse' 
                                                 : 'bg-slate-700 text-slate-500 cursor-not-allowed'
                                             }`}
                                     >
-                                        課題を提出する
-                                        {!hasBooted && <Icons.Alert />}
+                                        <Icons.Print /> レポートを作成する
                                     </button>
-                                    
-                                    {!hasBooted && (
+                                     {!hasBooted && (
                                         <div className="absolute bottom-full left-0 w-full mb-2 p-2 bg-black text-white text-xs rounded opacity-0 group-hover:opacity-100 transition pointer-events-none text-center z-50">
                                             POWER ONして起動確認を行ってください
                                         </div>
                                     )}
                                 </div>
+                            ) : (
+                                submissionResult?.success ? (
+                                    <button 
+                                        onClick={onViewSpecs}
+                                        className="w-full py-3 bg-green-600 hover:bg-green-500 text-white font-bold rounded shadow-lg transition-all flex justify-center items-center gap-2 animate-pulse"
+                                    >
+                                        <Icons.Print /> スペック表を表示して終了
+                                    </button>
+                                ) : (
+                                    <div className="relative group">
+                                        <button 
+                                            onClick={onSubmit}
+                                            disabled={!hasBooted}
+                                            className={`w-full py-3 font-bold rounded shadow-lg transition-all flex justify-center items-center gap-2
+                                                ${hasBooted 
+                                                    ? 'bg-yellow-600 hover:bg-yellow-500 text-white active:scale-95' 
+                                                    : 'bg-slate-700 text-slate-500 cursor-not-allowed'
+                                                }`}
+                                        >
+                                            課題を提出する
+                                            {!hasBooted && <Icons.Alert />}
+                                        </button>
+                                        
+                                        {!hasBooted && (
+                                            <div className="absolute bottom-full left-0 w-full mb-2 p-2 bg-black text-white text-xs rounded opacity-0 group-hover:opacity-100 transition pointer-events-none text-center z-50">
+                                                POWER ONして起動確認を行ってください
+                                            </div>
+                                        )}
+                                    </div>
+                                )
                             )}
                         </div>
                     )}
