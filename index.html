@@ -71,10 +71,11 @@
                 memory: { label: "メモリ (記憶)", academic: "主記憶装置", icon: "Memory", color: "text-green-400", desc: "【主記憶装置】人間で言うと「机の広さ」。データの一時保管場所です。電源を切るとデータは消えます（揮発性）。" },
                 gpu: { label: "GPU (描画)", academic: "演算装置(画像)", icon: "Gpu", color: "text-purple-400", desc: "【画像処理装置】映像の計算を専門に行います。3Dゲームや動画編集には高性能なGPUが必須です。" },
                 storage: { label: "ストレージ", academic: "補助記憶装置", icon: "Storage", color: "text-yellow-400", desc: "【補助記憶装置】人間で言うと「本棚」。データを長期保存します。HDDは大容量で安価、SSDは高速です。" },
-                psu: { label: "電源ユニット", academic: "電力供給", icon: "Psu", color: "text-red-400", desc: "【電力供給】コンセントからの交流(AC)を直流(DC)に変換し、各パーツに電力を送ります。" },
+                // PSU removed as requested
                 os: { label: "OS (基本ソフト)", academic: "基本ソフトウェア", icon: "Os", color: "text-indigo-400", desc: "【オペレーティングシステム】ハードウェアとアプリを仲介する土台となるソフトウェアです。" },
                 app: { label: "アプリ", academic: "応用ソフトウェア", icon: "App", color: "text-pink-400", desc: "【アプリケーション】特定の目的（文書作成、ゲームなど）のために作られたソフトウェアです。" },
-                input: { label: "入力デバイス", academic: "入力装置", icon: "Input", color: "text-cyan-400", desc: "【入力装置】人間がコンピュータに指示を送るための機器です。用途に合わせて選びます。" }
+                input: { label: "入力デバイス", academic: "入力装置", icon: "Input", color: "text-cyan-400", desc: "【入力装置】人間がコンピュータに指示を送るための機器です。用途に合わせて選びます。" },
+                display: { label: "モニター", academic: "出力装置", icon: "Display", color: "text-orange-400", desc: "【出力装置】コンピュータの計算結果を表示する画面です。解像度やリフレッシュレートで性能が決まります。" }
             },
             parts: [
                 // Motherboards (Hidden)
@@ -83,43 +84,35 @@
                 { id: "mb_3", type: "motherboard", name: "Ryzen X670", price: 40000, socket: "AM5", memoryType: "DDR5", desc: "AMD用基盤", isRgb: true },
         
                 // CPU (5 types)
-                // Adjusted Core i3 scoreWork to 55 (from 40) to make Quiz 1 passable
-                { id: "cpu_1", type: "cpu", name: "Core i3-12100", price: 15000, watt: 60, scoreWork: 55, scoreGame: 25, socket: "LGA1700", defaultMb: "mb_1", desc: "4コア。事務作業やネットサーフィンには十分な性能です。", point: "安くて省電力ですが、重いゲームは苦手です。" },
-                { id: "cpu_4", type: "cpu", name: "Ryzen 5 7600", price: 32000, watt: 65, scoreWork: 65, scoreGame: 65, socket: "AM5", defaultMb: "mb_3", desc: "6コア。価格と性能のバランスが良く、ゲーミングPC入門に最適。", point: "コスパ最強クラス。迷ったらこれを選びましょう。" },
-                { id: "cpu_2", type: "cpu", name: "Core i5-13600K", price: 48000, watt: 125, scoreWork: 85, scoreGame: 75, socket: "LGA1700", defaultMb: "mb_2", desc: "14コア。ゲームも動画編集も快適にこなせる高性能CPUです。", point: "何でもできる優等生。ただし発熱も増えます。" },
-                { id: "cpu_5", type: "cpu", name: "Core i7-13700", price: 60000, watt: 150, scoreWork: 95, scoreGame: 80, socket: "LGA1700", defaultMb: "mb_2", desc: "16コア。重い処理も難なくこなすパワーを持っています。", point: "プロ仕様に近い性能。動画編集を頻繁にするならコレ。" },
-                { id: "cpu_3", type: "cpu", name: "Ryzen 7 7800X3D", price: 62000, watt: 120, scoreWork: 70, scoreGame: 100, socket: "AM5", defaultMb: "mb_3", desc: "8コア。3Dキャッシュ技術により、最強クラスのゲーム性能を誇ります。", point: "ゲーム専用なら世界最強クラス。ゲーマーの憧れ。" },
+                { id: "cpu_1", type: "cpu", name: "Core i3-12100", price: 15000, scoreWork: 55, scoreGame: 25, socket: "LGA1700", defaultMb: "mb_1", desc: "4コア。事務作業やネットサーフィンには十分な性能です。", point: "安くて省電力ですが、重いゲームは苦手です。" },
+                { id: "cpu_4", type: "cpu", name: "Ryzen 5 7600", price: 32000, scoreWork: 65, scoreGame: 65, socket: "AM5", defaultMb: "mb_3", desc: "6コア。価格と性能のバランスが良く、ゲーミングPC入門に最適。", point: "コスパ最強クラス。迷ったらこれを選びましょう。" },
+                { id: "cpu_2", type: "cpu", name: "Core i5-13600K", price: 48000, scoreWork: 85, scoreGame: 75, socket: "LGA1700", defaultMb: "mb_2", desc: "14コア。ゲームも動画編集も快適にこなせる高性能CPUです。", point: "何でもできる優等生。ただし発熱も増えます。" },
+                { id: "cpu_5", type: "cpu", name: "Core i7-13700", price: 60000, scoreWork: 95, scoreGame: 80, socket: "LGA1700", defaultMb: "mb_2", desc: "16コア。重い処理も難なくこなすパワーを持っています。", point: "プロ仕様に近い性能。動画編集を頻繁にするならコレ。" },
+                { id: "cpu_3", type: "cpu", name: "Ryzen 7 7800X3D", price: 62000, scoreWork: 70, scoreGame: 100, socket: "AM5", defaultMb: "mb_3", desc: "8コア。3Dキャッシュ技術により、最強クラスのゲーム性能を誇ります。", point: "ゲーム専用なら世界最強クラス。ゲーマーの憧れ。" },
         
                 // Memory (5 types)
-                // Adjusted 8GB scoreWork to 25 (from 10)
-                { id: "mem_1", type: "memory", name: "DDR4-3200 8GB", price: 4000, watt: 5, memoryType: "DDR4", scoreWork: 25, scoreGame: 10, desc: "8GB。事務用としては最低限ですが、ゲームや編集には不足気味です。", point: "ブラウザを開きすぎると動作が重くなります。" },
-                { id: "mem_4", type: "memory", name: "DDR4-3200 16GB", price: 8000, watt: 6, memoryType: "DDR4", scoreWork: 35, scoreGame: 25, desc: "16GB(DDR4)。一世代前ですが、コスパ良く容量を確保できます。", point: "予算を抑えて16GB確保したいならこの選択肢。" },
-                { id: "mem_2", type: "memory", name: "DDR5-5600 16GB", price: 13000, watt: 8, memoryType: "DDR5", scoreWork: 40, scoreGame: 30, desc: "16GB(DDR5)。現代のPCの標準的な容量です。多くの用途で快適です。", point: "最新規格(DDR5)の標準。まずはここから。" },
-                { id: "mem_3", type: "memory", name: "DDR5-6000 32GB", price: 26000, watt: 10, memoryType: "DDR5", scoreWork: 65, scoreGame: 50, desc: "32GB。動画編集や重いゲームの配信など、クリエイティブ用途向けです。", isRgb: true, point: "編集ソフトとゲームを同時に開いても余裕です。" },
-                { id: "mem_5", type: "memory", name: "DDR5-6000 64GB", price: 50000, watt: 12, memoryType: "DDR5", scoreWork: 95, scoreGame: 60, desc: "64GB。プロ仕様。サーバー構築や大規模なCG制作に使われます。", isRgb: true, point: "一般用途では使い切れないほどの広大な机。" },
+                { id: "mem_1", type: "memory", name: "DDR4-3200 8GB", price: 4000, memoryType: "DDR4", scoreWork: 25, scoreGame: 10, desc: "8GB。事務用としては最低限ですが、ゲームや編集には不足気味です。", point: "ブラウザを開きすぎると動作が重くなります。" },
+                { id: "mem_4", type: "memory", name: "DDR4-3200 16GB", price: 8000, memoryType: "DDR4", scoreWork: 35, scoreGame: 25, desc: "16GB(DDR4)。一世代前ですが、コスパ良く容量を確保できます。", point: "予算を抑えて16GB確保したいならこの選択肢。" },
+                { id: "mem_2", type: "memory", name: "DDR5-5600 16GB", price: 13000, memoryType: "DDR5", scoreWork: 40, scoreGame: 30, desc: "16GB(DDR5)。現代のPCの標準的な容量です。多くの用途で快適です。", point: "最新規格(DDR5)の標準。まずはここから。" },
+                { id: "mem_3", type: "memory", name: "DDR5-6000 32GB", price: 26000, memoryType: "DDR5", scoreWork: 65, scoreGame: 50, desc: "32GB。動画編集や重いゲームの配信など、クリエイティブ用途向けです。", isRgb: true, point: "編集ソフトとゲームを同時に開いても余裕です。" },
+                { id: "mem_5", type: "memory", name: "DDR5-6000 64GB", price: 50000, memoryType: "DDR5", scoreWork: 95, scoreGame: 60, desc: "64GB。プロ仕様。サーバー構築や大規模なCG制作に使われます。", isRgb: true, point: "一般用途では使い切れないほどの広大な机。" },
         
                 // GPU (6 types)
-                // Adjusted Integrated GPU scoreWork to 20 (from 10)
-                { id: "gpu_0", type: "gpu", name: "CPU内蔵 (なし)", price: 0, watt: 0, scoreGame: 5, scoreWork: 20, desc: "CPUに内蔵された機能で映像を出力します。3Dゲームは動きません。", point: "事務用ならこれで十分。予算を大幅に節約できます。" },
-                { id: "gpu_1", type: "gpu", name: "GeForce GTX 1650", price: 22000, watt: 75, scoreGame: 40, scoreWork: 30, desc: "エントリー向けグラボ。軽いゲームなら設定を下げて動かせます。", point: "補助電源不要なモデルも多く、手軽に追加できます。" },
-                { id: "gpu_4", type: "gpu", name: "Radeon RX 7600", price: 39000, watt: 165, scoreGame: 65, scoreWork: 50, desc: "AMD製のミドルレンジ。フルHDゲームが快適に動く高コスパモデル。", point: "GeForceより安く、同等の性能が出せるコスパ機。" },
-                { id: "gpu_2", type: "gpu", name: "GeForce RTX 4060", price: 46000, watt: 115, scoreGame: 70, scoreWork: 60, desc: "ミドルレンジ。多くの最新ゲームがフルHD画質で快適に動作します。", point: "現在のゲーミングPCの標準。迷ったらコレ。" },
-                { id: "gpu_5", type: "gpu", name: "GeForce RTX 4070 Ti", price: 120000, watt: 285, scoreGame: 90, scoreWork: 85, desc: "ハイエンド。WQHDや4K画質でのゲームプレイが可能です。", isRgb: true, point: "高画質でゲームを楽しみたい人向け。電源容量に注意。" },
-                { id: "gpu_3", type: "gpu", name: "GeForce RTX 4090", price: 280000, watt: 450, scoreGame: 100, scoreWork: 100, desc: "現行最強のグラボ。4KゲームもAI生成も爆速ですが、非常に高価です。", isRgb: true, point: "「何でもできる」が、PC本体より高いことも。" },
+                { id: "gpu_0", type: "gpu", name: "CPU内蔵 (なし)", price: 0, scoreGame: 5, scoreWork: 20, desc: "CPUに内蔵された機能で映像を出力します。3Dゲームは動きません。", point: "事務用ならこれで十分。予算を大幅に節約できます。" },
+                { id: "gpu_1", type: "gpu", name: "GeForce GTX 1650", price: 22000, scoreGame: 40, scoreWork: 30, desc: "エントリー向けグラボ。軽いゲームなら設定を下げて動かせます。", point: "補助電源不要なモデルも多く、手軽に追加できます。" },
+                { id: "gpu_4", type: "gpu", name: "Radeon RX 7600", price: 39000, scoreGame: 65, scoreWork: 50, desc: "AMD製のミドルレンジ。フルHDゲームが快適に動く高コスパモデル。", point: "GeForceより安く、同等の性能が出せるコスパ機。" },
+                { id: "gpu_2", type: "gpu", name: "GeForce RTX 4060", price: 46000, scoreGame: 70, scoreWork: 60, desc: "ミドルレンジ。多くの最新ゲームがフルHD画質で快適に動作します。", point: "現在のゲーミングPCの標準。迷ったらコレ。" },
+                { id: "gpu_5", type: "gpu", name: "GeForce RTX 4070 Ti", price: 120000, scoreGame: 90, scoreWork: 85, desc: "ハイエンド。WQHDや4K画質でのゲームプレイが可能です。", isRgb: true, point: "高画質でゲームを楽しみたい人向け。" },
+                { id: "gpu_3", type: "gpu", name: "GeForce RTX 4090", price: 280000, scoreGame: 100, scoreWork: 100, desc: "現行最強のグラボ。4KゲームもAI生成も爆速ですが、非常に高価です。", isRgb: true, point: "「何でもできる」が、PC本体より高いことも。" },
         
                 // Storage (5 types)
-                { id: "str_1", type: "storage", name: "SATA SSD 500GB", price: 6000, watt: 3, scoreWork: 20, desc: "HDDより高速ですが、NVMeほどではありません。容量は控えめ。", point: "OSと少しのソフトを入れたら一杯になります。" },
-                { id: "str_4", type: "storage", name: "SATA SSD 1TB", price: 9000, watt: 3, scoreWork: 25, desc: "1TBの大容量SATA SSD。データ保存用に適しています。", point: "ゲームの保存先として優秀です。" },
-                { id: "str_2", type: "storage", name: "NVMe SSD 1TB", price: 12000, watt: 6, scoreWork: 50, desc: "基盤に直接挿す超高速SSD。OSの起動やゲームのロードが一瞬で終わります。", point: "今のPCの標準。ケーブル不要でスッキリ。" },
-                { id: "str_5", type: "storage", name: "NVMe SSD 2TB", price: 22000, watt: 7, scoreWork: 60, desc: "2TBの超高速SSD。たくさんのゲームや動画を保存できます。", point: "予算に余裕があるなら2TBあると安心です。" },
-                { id: "str_3", type: "storage", name: "3.5インチ HDD 4TB", price: 8500, watt: 15, scoreWork: 10, desc: "【注意】非常に安価で大容量ですが、物理的なディスクが回転するため遅く、OS起動に時間がかかります。", point: "動画倉庫には最適ですが、OSを入れるとイライラします。" },
+                { id: "str_1", type: "storage", name: "SATA SSD 500GB", price: 6000, scoreWork: 20, desc: "HDDより高速ですが、NVMeほどではありません。容量は控えめ。", point: "OSと少しのソフトを入れたら一杯になります。" },
+                { id: "str_4", type: "storage", name: "SATA SSD 1TB", price: 9000, scoreWork: 25, desc: "1TBの大容量SATA SSD。データ保存用に適しています。", point: "ゲームの保存先として優秀です。" },
+                { id: "str_2", type: "storage", name: "NVMe SSD 1TB", price: 12000, scoreWork: 50, desc: "基盤に直接挿す超高速SSD。OSの起動やゲームのロードが一瞬で終わります。", point: "今のPCの標準。ケーブル不要でスッキリ。" },
+                { id: "str_5", type: "storage", name: "NVMe SSD 2TB", price: 22000, scoreWork: 60, desc: "2TBの超高速SSD。たくさんのゲームや動画を保存できます。", point: "予算に余裕があるなら2TBあると安心です。" },
+                { id: "str_3", type: "storage", name: "3.5インチ HDD 4TB", price: 8500, scoreWork: 10, desc: "【注意】非常に安価で大容量ですが、物理的なディスクが回転するため遅く、OS起動に時間がかかります。", point: "動画倉庫には最適ですが、OSを入れるとイライラします。" },
                 
-                // PSU (5 types)
-                { id: "psu_1", type: "psu", name: "Standard 450W", price: 5000, maxWatt: 450, desc: "事務用PC向け。高性能なグラボを積むと電力が足りなくなります。", point: "GPUなしの構成ならこれで十分。" },
-                { id: "psu_4", type: "psu", name: "Bronze 650W", price: 9000, maxWatt: 650, desc: "ミドルレンジ向け。コストパフォーマンスが良いモデルです。", point: "RTX 4060クラスならこの容量でOK。" },
-                { id: "psu_2", type: "psu", name: "Gold 750W", price: 16000, maxWatt: 750, desc: "ゲーミングPCの標準。電力変換効率が良く（Gold）、発熱も少なめです。", point: "将来パーツを交換しても使い続けられる安心容量。" },
-                { id: "psu_5", type: "psu", name: "Gold 850W", price: 20000, maxWatt: 850, desc: "余裕のある容量。将来的なパーツ増設にも対応できます。", point: "ハイスペックPCを作るならこれくらい欲しい。" },
-                { id: "psu_3", type: "psu", name: "Platinum 1000W", price: 32000, maxWatt: 1000, desc: "ハイエンド構成用。最高ランクの変換効率（Platinum）を持ちます。", point: "RTX 4090を使うなら必須級。" },
+                // PSU removed
         
                 // OS
                 { id: "os_1", type: "os", name: "Windows 11 Home", price: 16000, desc: "世界で最も普及しているOS。ゲームや多くのアプリに対応しています。", isGaming: true, isOffice: true, point: "ほとんどの人はこれを選べば間違いありません。" },
@@ -134,7 +127,13 @@
                 // Input Devices
                 { id: "in_1", type: "input", name: "標準マウス＆キーボード", price: 2000, desc: "PC付属品レベル。とりあえず入力できれば良いという人向け。", scoreGame: 0, scoreWork: 20, point: "ゲームには向きませんが、事務なら十分。" },
                 { id: "in_2", type: "input", name: "無線静音セット", price: 6000, desc: "ケーブルがなく机がスッキリ。カチカチ音がしないのでオフィスに最適。", scoreGame: 10, scoreWork: 50, point: "配線を減らしたい人におすすめ。" },
-                { id: "in_3", type: "input", name: "ゲーミングデバイスセット", price: 18000, desc: "反応速度が速く、耐久性が高い。LEDが光り、ゲームの操作性が向上します。", scoreGame: 50, scoreWork: 40, isRgb: true, point: "ゲームの勝率を上げたいなら必須投資。" }
+                { id: "in_3", type: "input", name: "ゲーミングデバイスセット", price: 18000, desc: "反応速度が速く、耐久性が高い。LEDが光り、ゲームの操作性が向上します。", scoreGame: 50, scoreWork: 40, isRgb: true, point: "ゲームの勝率を上げたいなら必須投資。" },
+                
+                // Displays (New)
+                { id: "disp_1", type: "display", name: "21インチ FHD 60Hz", price: 12000, desc: "一般的な事務用モニター。動画や事務作業には十分です。", scoreWork: 30, scoreGame: 20, point: "レポート作成にはこれで十分。安価です。" },
+                { id: "disp_2", type: "display", name: "24インチ FHD 144Hz", price: 25000, desc: "滑らかな映像表示ができるゲーミングモニター。FPSゲームに最適。", scoreWork: 40, scoreGame: 60, point: "144Hzはヌルヌル動きます。FPSやるなら必須。" },
+                { id: "disp_3", type: "display", name: "27インチ 4K 60Hz", price: 45000, desc: "非常に高精細な画面。文字がくっきり見え、写真編集や動画鑑賞に最適。", scoreWork: 80, scoreGame: 40, point: "作業領域が広く、Excelの表示列数が増えます。" },
+                { id: "disp_4", type: "display", name: "27インチ 4K 144Hz", price: 90000, desc: "高画質かつ滑らか。最強のモニターですが非常に高価です。", scoreWork: 90, scoreGame: 90, point: "この性能を活かすにはRTX 4090クラスが必要です。" }
             ],
             // Quizzes sorted by difficulty (Level 1 -> Level 3)
             quizzes: [
@@ -142,9 +141,9 @@
                     id: 1,
                     level: "★☆☆",
                     title: "1. 事務用レポートPC",
-                    desc: "予算10万円以内で、Officeソフトが動き、快適に文字入力ができる構成を作れ。",
+                    desc: "予算12万円以内で、Officeソフトが動き、快適に文字入力ができる構成を作れ。",
                     conditions: { 
-                        maxPrice: 100000, 
+                        maxPrice: 120000, 
                         requiredAppType: "work", 
                         requiredOs: "Windows 11 Home",
                         minWorkScore: 40 
@@ -154,9 +153,9 @@
                     id: 2,
                     level: "★☆☆",
                     title: "2. 学生予算ゲーミング",
-                    desc: "予算13万円という厳しい条件で、なんとか3Dゲームが動く構成(スコア45以上)を作れ。",
+                    desc: "予算14万円という厳しい条件で、なんとか3Dゲームが動く構成(スコア45以上)を作れ。",
                     conditions: {
-                        maxPrice: 130000,
+                        maxPrice: 140000,
                         requiredAppType: "game",
                         minGameScore: 45,
                         requiresDedicatedGpu: true
@@ -166,9 +165,9 @@
                     id: 3,
                     level: "★★☆",
                     title: "3. ゲーミングPC入門",
-                    desc: "予算22万円以内で、最新の3Dゲームが快適に動く構成。もちろんゲーミングデバイスも必須だ。",
+                    desc: "予算24万円以内で、最新の3Dゲームが快適に動く構成。もちろんゲーミングデバイスも必須だ。",
                     conditions: { 
-                        maxPrice: 220000, 
+                        maxPrice: 240000, 
                         requiredAppType: "game",
                         requiredOs: "Windows 11 Home",
                         minGameScore: 60,
@@ -180,9 +179,9 @@
                     id: 4,
                     level: "★★☆",
                     title: "4. サーバーエンジニア入門",
-                    desc: "予算15万円以内。OS代を節約し、プログラミング環境を整えよ。メモリは多め(32GB以上)が良い。",
+                    desc: "予算16万円以内。OS代を節約し、プログラミング環境を整えよ。メモリは多め(32GB以上)が良い。",
                     conditions: {
-                        maxPrice: 150000,
+                        maxPrice: 160000,
                         requiredOs: "Linux (Ubuntu)",
                         requiredAppType: "dev",
                         minMemoryGb: 32
@@ -192,9 +191,9 @@
                     id: 5,
                     level: "★★★",
                     title: "5. ハイエンド編集PC",
-                    desc: "予算45万円以内。動画編集もゲームも最高設定で動く、コスパも意識した最強マシンを構築せよ。",
+                    desc: "予算48万円以内。動画編集もゲームも最高設定で動く、コスパも意識した最強マシンを構築せよ。",
                     conditions: { 
-                        maxPrice: 450000, 
+                        maxPrice: 480000, 
                         requiredAppType: "creative",
                         minGameScore: 85, 
                         minWorkScore: 85
@@ -220,6 +219,7 @@
             Os: () => <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2zz" /></svg>,
             App: () => <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>,
             Input: () => <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" /></svg>,
+            Display: () => <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>, // Reused monitor-ish icon
             Trash: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>,
             Check: () => <svg className="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>,
             Alert: () => <svg className="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>,
@@ -277,7 +277,7 @@
                         
                         {/* Educational Label Overlay for Output Device */}
                         {showLabels && (
-                            <div className="absolute top-4 left-4 z-40 bg-blue-600/90 text-white text-sm font-bold px-3 py-1 rounded shadow-lg border border-blue-400">
+                            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-40 bg-blue-600/90 text-white text-sm font-bold px-3 py-1 rounded shadow-lg border border-blue-400">
                                 出力装置 (Output)
                             </div>
                         )}
@@ -773,6 +773,7 @@
                             <p>GPU Initializing... <span className="text-green-500">PASS</span></p>
                             <p>Storage Mount... {isHdd ? "SPINNING UP..." : <span className="text-green-500">READY</span>}</p>
                             <p>Input Devices... <span className="text-green-500">DETECTED</span></p>
+                            <p>Display Output... <span className="text-green-500">CONNECTED</span></p>
                             <p className="text-blue-400 mt-4">Loading {osName}...</p>
                             {isHdd && <p className="text-xs text-yellow-600 mt-2">Loading is slow due to HDD...</p>}
                         </div>
@@ -930,9 +931,9 @@
                         <div className="absolute top-1 left-2 text-[10px] text-slate-500 uppercase tracking-wider pointer-events-none">{label}</div>
                     )}
 
-                    {/* Educational Label Overlay */}
+                    {/* Educational Label Overlay - Now uniformly centered at bottom */}
                     {showLabels && (
-                        <div className="absolute inset-0 z-30 pointer-events-none flex items-center justify-center bg-black/40 rounded-lg">
+                        <div className="absolute bottom-2 left-1/2 -translate-x-1/2 z-30 pointer-events-none flex items-center justify-center rounded-lg whitespace-nowrap">
                             <span className="bg-yellow-500/90 text-slate-900 text-xs font-bold px-2 py-0.5 rounded shadow-lg border border-yellow-300 transform scale-90 md:scale-100">
                                 {cat.academic}
                             </span>
@@ -944,7 +945,7 @@
                             <div className={`p-2 rounded-full mb-1 ${cat.color.replace('text-', 'bg-').replace('400', '900')} bg-opacity-30`}>
                                 {React.createElement(Icons[cat.icon])}
                             </div>
-                            <div className="text-center w-full overflow-hidden">
+                            <div className="text-center w-full overflow-hidden z-10 pb-4">
                                 <div className="text-xs font-bold text-slate-200 truncate px-1">{part.name}</div>
                                 {isValid ? 
                                     <div className="text-[10px] text-green-400">配置OK</div> : 
@@ -953,13 +954,13 @@
                             </div>
                             <button 
                                 onClick={(e) => { e.stopPropagation(); onRemove(type); }}
-                                className="absolute top-1 right-1 p-1 text-slate-500 hover:text-red-400 hover:bg-slate-700/50 rounded-full transition-colors opacity-0 group-hover:opacity-100 z-10"
+                                className="absolute top-1 right-1 p-1 text-slate-500 hover:text-red-400 hover:bg-slate-700/50 rounded-full transition-colors opacity-0 group-hover:opacity-100 z-20"
                             >
                                 <Icons.Trash />
                             </button>
                         </>
                     ) : (
-                        <div className="text-center opacity-40 pointer-events-none flex flex-col items-center justify-center h-full">
+                        <div className="text-center opacity-40 pointer-events-none flex flex-col items-center justify-center h-full pb-2">
                             <div className="mb-1 transform scale-90">{React.createElement(Icons[cat.icon])}</div>
                             <span className="text-[10px] font-mono leading-tight">{cat.label}</span>
                         </div>
@@ -978,7 +979,11 @@
             const [hoveredPart, setHoveredPart] = useState(null);
             const [hasBooted, setHasBooted] = useState(false);
             const [failedAttempts, setFailedAttempts] = useState(0);
-            const [showEducationalLabels, setShowEducationalLabels] = useState(false);
+            const [showEducationalLabels, setShowEducationalLabels] = useState(true); // Default ON
+            
+            // Double Click Control States
+            const [doubleClickCount, setDoubleClickCount] = useState(0);
+            const [isDoubleClickEnabled, setIsDoubleClickEnabled] = useState(false);
 
             // LocalStorage Auto-Save & Load
             useEffect(() => {
@@ -1042,7 +1047,7 @@
                 const p = selectedParts;
                 const errs = [];
                 const warnings = [];
-                const checks = { cpu: true, memory: true, gpu: true, storage: true, psu: true, motherboard: true, os: true, app: true, input: true };
+                const checks = { cpu: true, memory: true, gpu: true, storage: true, motherboard: true, os: true, app: true, input: true, display: true };
                 
                 // Compatibility Checks
                 if (p.memory && p.motherboard) {
@@ -1052,21 +1057,14 @@
                     }
                 }
 
-                // Power Check
-                let totalWatt = 0;
-                Object.values(p).forEach(part => {
-                    if (part) totalWatt += (part.watt || 0);
-                });
-                if (p.psu) {
-                    if (totalWatt > p.psu.maxWatt) {
-                        errs.push(`電力不足: 消費${totalWatt}W > 供給${p.psu.maxWatt}W`);
-                        checks.psu = false;
-                    }
-                }
-
                 // Educational OS Check
                 if (!p.os) {
                     errs.push("【重要】OS未搭載: 基本ソフトウェアがないため、ハードウェアを制御できません。");
+                }
+                
+                // Display Check
+                if (!p.display) {
+                    errs.push("モニター未選択: 画面を表示するための出力装置が必要です。");
                 }
 
                 // Bottleneck Logic
@@ -1084,13 +1082,11 @@
                     }
                 }
 
-                const essentials = ['cpu', 'memory', 'storage', 'psu', 'input'];
+                const essentials = ['cpu', 'memory', 'storage', 'input', 'display'];
                 const missing = essentials.filter(t => !p[t]);
-                // Removed explicit missing check for boot flag since errs check covers OS and other critical errors if added
-                // However, we still need to ensure essentials are present for "missing" logic visual feedback
                 const canBoot = missing.length === 0 && errs.length === 0 && p.os;
 
-                return { errors: errs, warnings, checks, totalWatt, canBoot };
+                return { errors: errs, warnings, checks, canBoot };
             }, [selectedParts, quizMode]);
 
             const currentTotalCost = useMemo(() => Object.values(selectedParts).reduce((a, b) => a + (b?.price || 0), 0), [selectedParts]);
@@ -1109,6 +1105,27 @@
                 }
                 setDraggedPart(null);
                 if (submissionResult) setSubmissionResult(null);
+            };
+
+            const handlePartDoubleClick = (part) => {
+                if (isDoubleClickEnabled) {
+                    handlePartSelect(part);
+                    return;
+                }
+
+                const newCount = doubleClickCount + 1;
+                setDoubleClickCount(newCount);
+
+                if (newCount >= 3) {
+                     if (confirm("マウス操作の練習のため、原則はドラッグ＆ドロップを推奨しています。\nダブルクリックによる配置を有効にしますか？")) {
+                        setIsDoubleClickEnabled(true);
+                        handlePartSelect(part);
+                     } else {
+                        // User decided not to enable, keep counting or reset? 
+                        // Let's keep it disabled and reset count to avoid spamming the modal immediately again.
+                        setDoubleClickCount(0);
+                     }
+                }
             };
 
             const handleRemovePart = (type) => {
@@ -1255,7 +1272,7 @@
                                     part={part} 
                                     isSelected={isPartSelected(part.id)}
                                     onDragStart={setDraggedPart}
-                                    onDoubleClick={handlePartSelect}
+                                    onDoubleClick={handlePartDoubleClick}
                                     onHover={setHoveredPart}
                                     detailed={false}
                                 />
@@ -1268,12 +1285,6 @@
                         {/* Status Bar */}
                         <div className="h-16 border-b border-slate-800 bg-slate-900/90 backdrop-blur flex items-center justify-between px-8 z-20">
                             <div className="flex items-center gap-8">
-                                <div>
-                                    <div className="text-[10px] text-slate-500 uppercase font-bold">Total Power</div>
-                                    <div className={`text-xl font-mono font-bold ${validation.checks.psu ? 'text-blue-400' : 'text-red-500'}`}>
-                                        {validation.totalWatt}W <span className="text-sm text-slate-600">/ {selectedParts.psu?.maxWatt || 0}W</span>
-                                    </div>
-                                </div>
                                 <div>
                                     <div className="text-[10px] text-slate-500 uppercase font-bold">Total Cost</div>
                                     <div className="text-xl font-mono font-bold text-yellow-400">
@@ -1300,54 +1311,64 @@
 
                         {/* WORKSPACE */}
                         <div className="flex-1 overflow-y-auto p-4 flex justify-center items-center">
-                            <div className="w-full max-w-7xl grid grid-cols-12 gap-6 h-[650px]">
-                                <div className="col-span-8 bg-slate-900 rounded-2xl border-2 border-slate-700 p-2 relative shadow-2xl flex flex-col">
-                                    <div className="absolute top-0 left-8 -mt-3 bg-slate-700 text-slate-300 px-4 py-0.5 text-xs font-bold rounded shadow z-10">CASE INTERIOR</div>
-                                    
-                                    {/* Visual Fan */}
-                                    <div className="absolute top-8 right-8 w-24 h-24 text-slate-700 z-0 opacity-50">
-                                        <div className={hasBooted ? 'animate-spin-slow' : ''}>
-                                            <FanIcon />
+                            <div className="w-full max-w-7xl grid grid-cols-12 gap-6 h-[700px]">
+                                {/* LEFT COLUMN (Main Hardware) */}
+                                <div className="col-span-9 flex flex-col gap-4 h-full">
+                                    {/* Top: Case Interior */}
+                                    <div className="bg-slate-900 rounded-2xl border-2 border-slate-700 p-2 relative shadow-2xl flex flex-col h-2/3">
+                                        <div className="absolute top-0 left-8 -mt-3 bg-slate-700 text-slate-300 px-4 py-0.5 text-xs font-bold rounded shadow z-10">CASE INTERIOR</div>
+                                        
+                                        {/* Visual Fan */}
+                                        <div className="absolute top-8 right-8 w-24 h-24 text-slate-700 z-0 opacity-50">
+                                            <div className={hasBooted ? 'animate-spin-slow' : ''}>
+                                                <FanIcon />
+                                            </div>
+                                        </div>
+
+                                        <div className="flex-1 bg-pc-pcb rounded-xl relative overflow-hidden border border-slate-600 m-2 p-6 z-10">
+                                            <div className="absolute inset-0 opacity-10 pointer-events-none" style={{backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`, backgroundSize: '40px 40px'}}></div>
+                                            <div className="grid grid-cols-2 grid-rows-3 gap-6 h-full relative z-10">
+                                                <div className="flex flex-col">
+                                                    <DropZone type="cpu" label="LGA/AM5 SOCKET" part={selectedParts.cpu} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'cpu'} isValid={validation.checks.cpu} className="h-full" hasBooted={hasBooted} isActiveTab={activeTab === 'cpu'} showLabels={showEducationalLabels} />
+                                                    {selectedParts.motherboard && (<div className="text-center text-[10px] text-green-400/50 mt-1">Auto-Matched: {selectedParts.motherboard.name}</div>)}
+                                                </div>
+                                                <div className="flex flex-col">
+                                                    <DropZone type="memory" label="DIMM SLOTS" part={selectedParts.memory} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'memory'} isValid={validation.checks.memory} className="h-full" hasBooted={hasBooted} isActiveTab={activeTab === 'memory'} showLabels={showEducationalLabels} />
+                                                </div>
+                                                <div className="col-span-2 row-span-1">
+                                                     <DropZone type="gpu" label="PCIe x16 GRAPHICS" part={selectedParts.gpu} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'gpu'} isValid={validation.checks.gpu} className="h-full border-blue-500/20" hasBooted={hasBooted} isActiveTab={activeTab === 'gpu'} showLabels={showEducationalLabels} />
+                                                </div>
+                                                <div className="col-span-2">
+                                                    <DropZone type="storage" label="DRIVE BAY" part={selectedParts.storage} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'storage'} isValid={validation.checks.storage} hasBooted={hasBooted} isActiveTab={activeTab === 'storage'} showLabels={showEducationalLabels} />
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-
-                                    <div className="flex-1 bg-pc-pcb rounded-xl relative overflow-hidden border border-slate-600 m-2 p-6 z-10">
-                                        <div className="absolute inset-0 opacity-10 pointer-events-none" style={{backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`, backgroundSize: '40px 40px'}}></div>
-                                        <div className="grid grid-cols-2 grid-rows-3 gap-6 h-full relative z-10">
-                                            <div className="flex flex-col">
-                                                <DropZone type="cpu" label="LGA/AM5 SOCKET" part={selectedParts.cpu} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'cpu'} isValid={validation.checks.cpu} className="h-full" hasBooted={hasBooted} isActiveTab={activeTab === 'cpu'} showLabels={showEducationalLabels} />
-                                                {selectedParts.motherboard && (<div className="text-center text-[10px] text-green-400/50 mt-1">Auto-Matched: {selectedParts.motherboard.name}</div>)}
-                                            </div>
-                                            <div className="flex flex-col">
-                                                <DropZone type="memory" label="DIMM SLOTS" part={selectedParts.memory} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'memory'} isValid={validation.checks.memory} className="h-full" hasBooted={hasBooted} isActiveTab={activeTab === 'memory'} showLabels={showEducationalLabels} />
-                                            </div>
-                                            <div className="col-span-2 row-span-1">
-                                                 <DropZone type="gpu" label="PCIe x16 GRAPHICS" part={selectedParts.gpu} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'gpu'} isValid={validation.checks.gpu} className="h-full border-blue-500/20" hasBooted={hasBooted} isActiveTab={activeTab === 'gpu'} showLabels={showEducationalLabels} />
-                                            </div>
-                                            <div className="grid grid-cols-2 gap-2">
-                                                <DropZone type="storage" label="DRIVE BAY" part={selectedParts.storage} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'storage'} isValid={validation.checks.storage} hasBooted={hasBooted} isActiveTab={activeTab === 'storage'} showLabels={showEducationalLabels} />
-                                            </div>
-                                            <div>
-                                                <DropZone type="psu" label="POWER SUPPLY" part={selectedParts.psu} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'psu'} isValid={validation.checks.psu} hasBooted={hasBooted} isActiveTab={activeTab === 'psu'} showLabels={showEducationalLabels} />
-                                            </div>
+                                    {/* Bottom: Peripherals */}
+                                    <div className="bg-slate-800 rounded-xl border border-slate-700 p-4 shadow-lg flex-1 relative">
+                                        <div className="absolute top-0 left-8 -mt-3 bg-slate-700 text-slate-300 px-4 py-0.5 text-xs font-bold rounded shadow z-10">PERIPHERALS</div>
+                                        <div className="h-full pt-2 grid grid-cols-2 gap-4">
+                                            <DropZone type="input" label="KEYBOARD & MOUSE" part={selectedParts.input} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'input'} isValid={true} hasBooted={hasBooted} isActiveTab={activeTab === 'input'} showLabels={showEducationalLabels} />
+                                            <DropZone type="display" label="DISPLAY" part={selectedParts.display} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'display'} isValid={true} hasBooted={hasBooted} isActiveTab={activeTab === 'display'} showLabels={showEducationalLabels} />
                                         </div>
                                     </div>
                                 </div>
-                                <div className="col-span-4 flex flex-col gap-4 h-full">
-                                    <div className="bg-slate-800 rounded-xl border border-slate-700 p-4 shadow-lg flex flex-col gap-2 h-1/3">
-                                        <h3 className="text-xs font-bold text-slate-400 uppercase border-b border-slate-700 pb-1">Software & Peripherals</h3>
-                                        <div className="grid grid-cols-2 gap-2 flex-1">
+                                
+                                {/* RIGHT COLUMN (Software & Logs) */}
+                                <div className="col-span-3 flex flex-col gap-4 h-full">
+                                    {/* Software */}
+                                    <div className="bg-slate-800 rounded-xl border border-slate-700 p-4 shadow-lg flex flex-col gap-2 h-1/3 relative">
+                                        <div className="absolute top-0 left-4 -mt-3 bg-slate-700 text-slate-300 px-4 py-0.5 text-xs font-bold rounded shadow z-10">SOFTWARE</div>
+                                        <div className="grid grid-rows-2 gap-2 flex-1 pt-2">
                                             <DropZone type="os" label="OS" part={selectedParts.os} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'os'} isValid={true} isActiveTab={activeTab === 'os'} showLabels={showEducationalLabels} />
                                             <DropZone type="app" label="APP" part={selectedParts.app} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'app'} isValid={true} isActiveTab={activeTab === 'app'} showLabels={showEducationalLabels} />
                                         </div>
-                                        <div className="h-16">
-                                            <DropZone type="input" label="KEYBOARD & MOUSE" part={selectedParts.input} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'input'} isValid={true} hasBooted={hasBooted} isActiveTab={activeTab === 'input'} showLabels={showEducationalLabels} />
-                                        </div>
                                     </div>
+
+                                    {/* System Log */}
                                     <div className="bg-slate-800 rounded-xl border border-slate-700 p-4 flex-1 flex flex-col overflow-hidden relative">
                                         <h3 className="text-xs font-bold text-slate-400 uppercase mb-2 flex justify-between items-center"><span className="flex items-center gap-2"><Icons.Alert /> System Log</span></h3>
                                         <div className="flex-1 overflow-y-auto pr-1 font-mono text-xs">
-                                            {/* Simplified Bottom Panel - Just Logs */}
                                             <div className="space-y-1">
                                                 {validation.errors.map((e, i) => (
                                                     <div key={`err-${i}`} className="flex gap-2 text-red-300 bg-red-900/20 p-2 rounded items-start"><Icons.Alert /> <span>{e}</span></div>
@@ -1363,7 +1384,6 @@
                                                 
                                                 <div className="mt-4 text-slate-600 border-t border-slate-700 pt-2">
                                                     <div>&gt; BIOS Check... OK</div>
-                                                    <div>&gt; Power Rail... {validation.totalWatt}W</div>
                                                 </div>
                                             </div>
                                         </div>
