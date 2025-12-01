@@ -30,6 +30,10 @@
                             slot: '#2d3748',
                             gold: '#d69e2e',
                             silver: '#a0aec0'
+                        },
+                        ubuntu: {
+                            bg: '#2c001e',
+                            accent: '#dd4814'
                         }
                     },
                     animation: {
@@ -40,6 +44,7 @@
                         'slide-in': 'slide-in 0.2s ease-out forwards',
                         'pop-in': 'pop-in 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards',
                         'pulse-glow': 'pulse-glow 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'dots': 'dots 1.5s infinite',
                     },
                     keyframes: {
                         'slide-in': {
@@ -53,6 +58,11 @@
                         'pulse-glow': {
                             '0%, 100%': { opacity: 1, borderColor: 'rgba(59, 130, 246, 0.3)', backgroundColor: 'rgba(59, 130, 246, 0.05)' },
                             '50%': { opacity: 1, borderColor: 'rgba(59, 130, 246, 1)', backgroundColor: 'rgba(59, 130, 246, 0.2)', boxShadow: '0 0 15px rgba(59, 130, 246, 0.6)' },
+                        },
+                        'dots': {
+                            '0%, 20%': { opacity: 0 },
+                            '40%': { opacity: 1 },
+                            '100%': { opacity: 0 }
                         }
                     }
                 }
@@ -138,9 +148,9 @@
                     id: 1,
                     level: "★☆☆",
                     title: "1. 事務用レポートPC",
-                    desc: "予算11万円以内で、Officeソフトが動き、快適に文字入力ができる構成を作れ。",
+                    desc: "予算12万円以内で、Officeソフトが動き、快適に文字入力ができる構成を作れ。",
                     conditions: { 
-                        maxPrice: 110000, 
+                        maxPrice: 120000, 
                         requiredAppType: "work", 
                         requiredOs: "Windows 11 Home",
                         minWorkScore: 40 
@@ -150,9 +160,9 @@
                     id: 2,
                     level: "★☆☆",
                     title: "2. 学生予算ゲーミング",
-                    desc: "予算12万5千円という厳しい条件で、なんとか3Dゲームが動く構成(スコア45以上)を作れ。",
+                    desc: "予算14万円という厳しい条件で、なんとか3Dゲームが動く構成(スコア45以上)を作れ。",
                     conditions: {
-                        maxPrice: 125000,
+                        maxPrice: 140000,
                         requiredAppType: "game",
                         minGameScore: 45,
                         requiresDedicatedGpu: true
@@ -162,9 +172,9 @@
                     id: 3,
                     level: "★★☆",
                     title: "3. ゲーミングPC入門",
-                    desc: "予算22万円以内で、最新の3Dゲームが快適に動く構成。もちろんゲーミングデバイスも必須だ。",
+                    desc: "予算24万円以内で、最新の3Dゲームが快適に動く構成。もちろんゲーミングデバイスも必須だ。",
                     conditions: { 
-                        maxPrice: 220000, 
+                        maxPrice: 240000, 
                         requiredAppType: "game",
                         requiredOs: "Windows 11 Home",
                         minGameScore: 60,
@@ -176,9 +186,9 @@
                     id: 4,
                     level: "★★☆",
                     title: "4. サーバーエンジニア入門",
-                    desc: "予算14万円以内。OS代を節約し、プログラミング環境を整えよ。メモリは多め(32GB以上)が良い。",
+                    desc: "予算15万円以内。OS代を節約し、プログラミング環境を整えよ。メモリは多め(32GB以上)が良い。",
                     conditions: {
-                        maxPrice: 140000,
+                        maxPrice: 150000,
                         requiredOs: "Linux (Ubuntu)",
                         requiredAppType: "dev",
                         minMemoryGb: 32
@@ -188,9 +198,9 @@
                     id: 5,
                     level: "★★★",
                     title: "5. ハイエンド編集PC",
-                    desc: "予算42万円以内。動画編集もゲームも最高設定で動く、コスパも意識した最強マシンを構築せよ。",
+                    desc: "予算48万円以内。動画編集もゲームも最高設定で動く、コスパも意識した最強マシンを構築せよ。",
                     conditions: { 
-                        maxPrice: 420000, 
+                        maxPrice: 480000, 
                         requiredAppType: "creative",
                         minGameScore: 85, 
                         minWorkScore: 85
@@ -365,10 +375,10 @@
         // --- Start Screen ---
         const StartScreen = ({ onSelectMode }) => {
             return (
-                <div className="h-full flex flex-col items-center justify-center bg-slate-900 text-white relative overflow-hidden">
+                <div className="h-screen flex flex-col items-center justify-center bg-slate-900 text-white relative overflow-hidden">
                     <div className="absolute inset-0 z-0 opacity-20 bg-[url('https://images.unsplash.com/photo-1593640408182-31c70c8268f5?auto=format&fit=crop&w=1920&q=80')] bg-cover bg-center"></div>
-                    <div className="z-10 text-center max-w-4xl w-full p-8 animate-slide-in">
-                        <div className="mb-8">
+                    <div className="z-10 text-center max-w-5xl w-full p-8 flex flex-col h-full animate-slide-in">
+                        <div className="flex-none mb-6">
                             <div className="flex justify-center mb-4">
                                 <div className="p-4 bg-blue-600 rounded-2xl shadow-lg shadow-blue-500/50">
                                     <Icons.Motherboard />
@@ -378,21 +388,21 @@
                             <p className="text-xl text-slate-400">ハードウェア & ソフトウェア 構成シミュレータ</p>
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full text-left">
+                        <div className="flex-1 min-h-0 flex flex-col md:flex-row gap-6 w-full text-left">
                             <button 
                                 onClick={() => onSelectMode(null)}
-                                className="group relative p-6 bg-slate-800 border border-slate-700 rounded-xl hover:border-blue-500 hover:bg-slate-700 transition-all shadow-xl hover:-translate-y-1"
+                                className="group relative p-6 bg-slate-800 border border-slate-700 rounded-xl hover:border-blue-500 hover:bg-slate-700 transition-all shadow-xl hover:-translate-y-1 flex flex-col justify-center items-center text-center md:w-1/3"
                             >
                                 <div className="absolute top-4 right-4 bg-blue-500/20 text-blue-400 px-2 py-1 text-xs rounded font-bold">Free Mode</div>
                                 <h3 className="text-2xl font-bold mb-2 group-hover:text-blue-400">自由制作モード</h3>
                                 <p className="text-sm text-slate-400">予算や条件を気にせず、好きなパーツを組み合わせてPCを作成します。</p>
                             </button>
 
-                            <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-6 backdrop-blur flex flex-col h-80">
-                                <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
+                            <div className="flex-1 bg-slate-800/50 border border-slate-700 rounded-xl p-6 backdrop-blur flex flex-col min-h-0">
+                                <h3 className="text-xl font-bold mb-4 flex-none flex items-center gap-2">
                                     <span className="text-yellow-400">★</span> クイズに挑戦
                                 </h3>
-                                <div className="space-y-2 overflow-y-auto pr-1 flex-1 scrollbar-hide">
+                                <div className="flex-1 overflow-y-auto pr-1 space-y-2 scrollbar-hide">
                                     {pcData.quizzes.map(q => (
                                         <button 
                                             key={q.id} 
@@ -409,6 +419,7 @@
                                 </div>
                             </div>
                         </div>
+                        <div className="flex-none mt-4 text-xs text-slate-500">© 2024 Information I Learning Tool</div>
                     </div>
                 </div>
             );
@@ -756,31 +767,55 @@
                 return () => clearTimeout(timer);
             }, [onComplete, isHdd]);
 
+            const isUbuntu = osName && osName.includes('Ubuntu');
+
             return (
                 <MonitorFrame>
-                    <div className="flex-1 flex flex-col items-center justify-center text-white font-mono animate-boot-screen bg-black w-full h-full">
-                        <div className="mb-8">
-                            <Icons.Power /> 
-                        </div>
-                        <div className="text-2xl mb-4 font-bold tracking-widest">BIOS INITIALIZED</div>
-                        <div className="space-y-2 text-sm text-slate-400 text-left w-64">
-                            <p>CPU Check... <span className="text-green-500">PASS</span></p>
-                            <p>RAM Check... <span className="text-green-500">PASS</span></p>
-                            <p>GPU Initializing... <span className="text-green-500">PASS</span></p>
-                            <p>Storage Mount... {isHdd ? "SPINNING UP..." : <span className="text-green-500">READY</span>}</p>
-                            <p>Input Devices... <span className="text-green-500">DETECTED</span></p>
-                            <p>Display Output... <span className="text-green-500">CONNECTED</span></p>
-                            <p className="text-blue-400 mt-4">Loading {osName}...</p>
-                            {isHdd && <p className="text-xs text-yellow-600 mt-2">Loading is slow due to HDD...</p>}
-                        </div>
-                        <div className="mt-8 w-64 h-1 bg-slate-800 rounded overflow-hidden">
-                            <div 
-                                className="h-full bg-blue-500 animate-pulse w-full origin-left transform transition-all"
-                                style={{ 
-                                    animationDuration: isHdd ? '6s' : '3s'
-                                }}
-                            ></div>
-                        </div>
+                    <div className={`flex-1 flex flex-col items-center justify-center font-mono animate-boot-screen w-full h-full relative ${
+                        isUbuntu ? 'bg-ubuntu-bg text-white' : 'bg-black text-white'
+                    }`}>
+                        {/* Windows Style */}
+                        {!isUbuntu && (
+                            <>
+                                <div className="mb-12 scale-150 text-blue-500">
+                                    <Icons.Motherboard /> {/* Placeholder for Win Logo */}
+                                </div>
+                                <div className="w-12 h-12 border-4 border-t-blue-500 border-slate-700 rounded-full animate-spin"></div>
+                                <div className="mt-8 text-sm font-bold tracking-widest opacity-70">
+                                    {isHdd ? "STARTING WINDOWS (HDD MODE)..." : "STARTING WINDOWS..."}
+                                </div>
+                            </>
+                        )}
+
+                        {/* Ubuntu Style */}
+                        {isUbuntu && (
+                            <div className="flex flex-col items-start w-full max-w-lg p-8">
+                                <div className="text-ubuntu-accent font-bold text-4xl mb-6 self-center">ubuntu</div>
+                                <div className="space-y-2 text-sm w-full font-mono">
+                                    <div className="flex gap-2 items-center"><span className="text-green-500">[  OK  ]</span> Started User Manager for UID 1000.</div>
+                                    <div className="flex gap-2 items-center"><span className="text-green-500">[  OK  ]</span> Started Session 1 of user.</div>
+                                    <div className="flex gap-2 items-center"><span className="text-green-500">[  OK  ]</span> Mounted /home.</div>
+                                    <div className="flex gap-2 items-center"><span className="text-green-500">[  OK  ]</span> Started Network Manager.</div>
+                                    <div className="flex gap-2 items-center"><span className="text-green-500">[  OK  ]</span> Reached target Graphical Interface.</div>
+                                    <div className="animate-pulse mt-4 text-ubuntu-accent">_</div>
+                                </div>
+                                <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex gap-2">
+                                    <div className="w-2 h-2 bg-white rounded-full animate-dots" style={{animationDelay: '0s'}}></div>
+                                    <div className="w-2 h-2 bg-white rounded-full animate-dots" style={{animationDelay: '0.2s'}}></div>
+                                    <div className="w-2 h-2 bg-white rounded-full animate-dots" style={{animationDelay: '0.4s'}}></div>
+                                    <div className="w-2 h-2 bg-white rounded-full animate-dots" style={{animationDelay: '0.6s'}}></div>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* BIOS Overlay (Common) - Fades out */}
+                        {!isUbuntu && (
+                            <div className="absolute top-4 left-4 text-xs text-slate-500 text-left w-64 opacity-50">
+                                <p>CPU Check... OK</p>
+                                <p>RAM Check... OK</p>
+                                <p>Storage... {isHdd ? "SPINNING UP" : "SSD READY"}</p>
+                            </div>
+                        )}
                     </div>
                 </MonitorFrame>
             );
@@ -860,9 +895,30 @@
             );
         };
 
-        const PartCard = ({ part, onDragStart, onDoubleClick, onHover, isSelected, detailed }) => {
+        const PartCard = ({ part, onDragStart, onDoubleClick, onHover, isSelected, detailed, categoryMaxPrice }) => {
             const cat = pcData.categories[part.type];
             if (!cat) return null; 
+
+            // Price Tier Logic
+            let priceStyle = "border-slate-700 bg-slate-800 hover:border-blue-500 hover:bg-slate-700"; // default
+            let selectionBadge = <span className="text-[10px] font-bold bg-blue-500 text-white px-1.5 py-0.5 rounded">選択中</span>;
+            
+            if (isSelected) {
+                const ratio = categoryMaxPrice > 0 ? part.price / categoryMaxPrice : 0;
+                
+                if (ratio >= 0.8) {
+                    // High End
+                    priceStyle = "border-pc-gold bg-pc-gold/10 shadow-[0_0_10px_rgba(214,158,46,0.2)]";
+                    selectionBadge = <span className="text-[10px] font-bold bg-pc-gold text-slate-900 px-1.5 py-0.5 rounded">High End</span>;
+                } else if (ratio <= 0.3 && part.price > 0) {
+                    // Budget
+                    priceStyle = "border-green-500 bg-green-500/10 shadow-[0_0_10px_rgba(34,197,94,0.2)]";
+                    selectionBadge = <span className="text-[10px] font-bold bg-green-500 text-slate-900 px-1.5 py-0.5 rounded">Budget</span>;
+                } else {
+                    // Standard
+                    priceStyle = "border-blue-400 bg-blue-900/20 shadow-[0_0_10px_rgba(59,130,246,0.2)]";
+                }
+            }
             
             return (
                 <div 
@@ -871,12 +927,7 @@
                     onDoubleClick={() => onDoubleClick(part)}
                     onMouseEnter={() => onHover(part)}
                     onMouseLeave={() => onHover(null)}
-                    className={`group border p-3 rounded-lg cursor-pointer transition-all shadow-sm flex items-start gap-3 relative
-                        ${isSelected 
-                            ? 'bg-blue-900/20 border-blue-400 shadow-[0_0_10px_rgba(59,130,246,0.2)]' 
-                            : 'bg-slate-800 border-slate-700 hover:bg-slate-700 hover:border-blue-500'
-                        }
-                    `}
+                    className={`group border p-3 rounded-lg cursor-pointer transition-all shadow-sm flex items-start gap-3 relative ${priceStyle}`}
                 >
                     <div className={`p-2 rounded bg-opacity-20 ${cat.color.replace('text-', 'bg-').replace('400', '500')} ${cat.color}`}>
                         {Icons[cat.icon] && React.createElement(Icons[cat.icon])}
@@ -888,7 +939,7 @@
                     
                     {isSelected && (
                         <div className="absolute right-2 top-2">
-                            <span className="text-[10px] font-bold bg-blue-500 text-white px-1.5 py-0.5 rounded">選択中</span>
+                            {selectionBadge}
                         </div>
                     )}
                 </div>
@@ -1086,6 +1137,13 @@
             }, [selectedParts, quizMode]);
 
             const currentTotalCost = useMemo(() => Object.values(selectedParts).reduce((a, b) => a + (b?.price || 0), 0), [selectedParts]);
+            
+            // Calculate max price for the current active category to determine price tiers
+            const categoryMaxPrice = useMemo(() => {
+                const parts = pcData.parts.filter(p => p.type === activeTab);
+                if (!parts.length) return 0;
+                return Math.max(...parts.map(p => p.price));
+            }, [activeTab]);
 
             const handlePartSelect = (part) => {
                 setHasBooted(false);
@@ -1272,6 +1330,7 @@
                                     onDragStart={setDraggedPart}
                                     onDoubleClick={handlePartDoubleClick}
                                     onHover={setHoveredPart}
+                                    categoryMaxPrice={categoryMaxPrice}
                                     detailed={false}
                                 />
                             ))}
