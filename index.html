@@ -38,7 +38,7 @@
                         'spin-fast': 'spin 0.5s linear infinite', // For HDD
                         'pulse-fast': 'pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                         'slide-in': 'slide-in 0.3s ease-out forwards',
-                        'pulse-glow': 'pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'pulse-glow': 'pulse-glow 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                     },
                     keyframes: {
                         'slide-in': {
@@ -46,8 +46,8 @@
                             '100%': { transform: 'translateY(0)', opacity: '1' },
                         },
                         'pulse-glow': {
-                            '0%, 100%': { opacity: 1, borderColor: 'rgba(59, 130, 246, 0.5)' },
-                            '50%': { opacity: .7, borderColor: 'rgba(59, 130, 246, 1)', boxShadow: '0 0 10px rgba(59, 130, 246, 0.5)' },
+                            '0%, 100%': { opacity: 1, borderColor: 'rgba(59, 130, 246, 0.3)', backgroundColor: 'rgba(59, 130, 246, 0.05)' },
+                            '50%': { opacity: 1, borderColor: 'rgba(59, 130, 246, 1)', backgroundColor: 'rgba(59, 130, 246, 0.2)', boxShadow: '0 0 15px rgba(59, 130, 246, 0.6)' },
                         }
                     }
                 }
@@ -78,21 +78,24 @@
                 { id: "mb_3", type: "motherboard", name: "Ryzen X670", price: 40000, socket: "AM5", memoryType: "DDR5", desc: "AMD用基盤", isRgb: true },
         
                 // CPU (5 types)
-                { id: "cpu_1", type: "cpu", name: "Core i3-12100", price: 15000, watt: 60, scoreWork: 40, scoreGame: 25, socket: "LGA1700", defaultMb: "mb_1", desc: "4コア。事務作業やネットサーフィンには十分な性能です。" },
-                { id: "cpu_4", type: "cpu", name: "Ryzen 5 7600", price: 32000, watt: 65, scoreWork: 60, scoreGame: 65, socket: "AM5", defaultMb: "mb_3", desc: "6コア。価格と性能のバランスが良く、ゲーミングPC入門に最適。" },
+                // Adjusted Core i3 scoreWork to 55 (from 40) to make Quiz 1 passable
+                { id: "cpu_1", type: "cpu", name: "Core i3-12100", price: 15000, watt: 60, scoreWork: 55, scoreGame: 25, socket: "LGA1700", defaultMb: "mb_1", desc: "4コア。事務作業やネットサーフィンには十分な性能です。" },
+                { id: "cpu_4", type: "cpu", name: "Ryzen 5 7600", price: 32000, watt: 65, scoreWork: 65, scoreGame: 65, socket: "AM5", defaultMb: "mb_3", desc: "6コア。価格と性能のバランスが良く、ゲーミングPC入門に最適。" },
                 { id: "cpu_2", type: "cpu", name: "Core i5-13600K", price: 48000, watt: 125, scoreWork: 85, scoreGame: 75, socket: "LGA1700", defaultMb: "mb_2", desc: "14コア。ゲームも動画編集も快適にこなせる高性能CPUです。" },
                 { id: "cpu_5", type: "cpu", name: "Core i7-13700", price: 60000, watt: 150, scoreWork: 95, scoreGame: 80, socket: "LGA1700", defaultMb: "mb_2", desc: "16コア。重い処理も難なくこなすパワーを持っています。" },
                 { id: "cpu_3", type: "cpu", name: "Ryzen 7 7800X3D", price: 62000, watt: 120, scoreWork: 70, scoreGame: 100, socket: "AM5", defaultMb: "mb_3", desc: "8コア。3Dキャッシュ技術により、最強クラスのゲーム性能を誇ります。" },
         
                 // Memory (5 types)
-                { id: "mem_1", type: "memory", name: "DDR4-3200 8GB", price: 4000, watt: 5, memoryType: "DDR4", scoreWork: 10, scoreGame: 10, desc: "8GB。事務用としては最低限ですが、ゲームや編集には不足気味です。" },
-                { id: "mem_4", type: "memory", name: "DDR4-3200 16GB", price: 8000, watt: 6, memoryType: "DDR4", scoreWork: 25, scoreGame: 25, desc: "16GB(DDR4)。一世代前ですが、コスパ良く容量を確保できます。" },
-                { id: "mem_2", type: "memory", name: "DDR5-5600 16GB", price: 13000, watt: 8, memoryType: "DDR5", scoreWork: 30, scoreGame: 30, desc: "16GB(DDR5)。現代のPCの標準的な容量です。多くの用途で快適です。" },
-                { id: "mem_3", type: "memory", name: "DDR5-6000 32GB", price: 26000, watt: 10, memoryType: "DDR5", scoreWork: 60, scoreGame: 50, desc: "32GB。動画編集や重いゲームの配信など、クリエイティブ用途向けです。", isRgb: true },
-                { id: "mem_5", type: "memory", name: "DDR5-6000 64GB", price: 50000, watt: 12, memoryType: "DDR5", scoreWork: 90, scoreGame: 60, desc: "64GB。プロ仕様。サーバー構築や大規模なCG制作に使われます。", isRgb: true },
+                // Adjusted 8GB scoreWork to 25 (from 10)
+                { id: "mem_1", type: "memory", name: "DDR4-3200 8GB", price: 4000, watt: 5, memoryType: "DDR4", scoreWork: 25, scoreGame: 10, desc: "8GB。事務用としては最低限ですが、ゲームや編集には不足気味です。" },
+                { id: "mem_4", type: "memory", name: "DDR4-3200 16GB", price: 8000, watt: 6, memoryType: "DDR4", scoreWork: 35, scoreGame: 25, desc: "16GB(DDR4)。一世代前ですが、コスパ良く容量を確保できます。" },
+                { id: "mem_2", type: "memory", name: "DDR5-5600 16GB", price: 13000, watt: 8, memoryType: "DDR5", scoreWork: 40, scoreGame: 30, desc: "16GB(DDR5)。現代のPCの標準的な容量です。多くの用途で快適です。" },
+                { id: "mem_3", type: "memory", name: "DDR5-6000 32GB", price: 26000, watt: 10, memoryType: "DDR5", scoreWork: 65, scoreGame: 50, desc: "32GB。動画編集や重いゲームの配信など、クリエイティブ用途向けです。", isRgb: true },
+                { id: "mem_5", type: "memory", name: "DDR5-6000 64GB", price: 50000, watt: 12, memoryType: "DDR5", scoreWork: 95, scoreGame: 60, desc: "64GB。プロ仕様。サーバー構築や大規模なCG制作に使われます。", isRgb: true },
         
                 // GPU (6 types)
-                { id: "gpu_0", type: "gpu", name: "CPU内蔵 (なし)", price: 0, watt: 0, scoreGame: 5, scoreWork: 10, desc: "CPUに内蔵された機能で映像を出力します。3Dゲームは動きません。" },
+                // Adjusted Integrated GPU scoreWork to 20 (from 10)
+                { id: "gpu_0", type: "gpu", name: "CPU内蔵 (なし)", price: 0, watt: 0, scoreGame: 5, scoreWork: 20, desc: "CPUに内蔵された機能で映像を出力します。3Dゲームは動きません。" },
                 { id: "gpu_1", type: "gpu", name: "GeForce GTX 1650", price: 22000, watt: 75, scoreGame: 40, scoreWork: 30, desc: "エントリー向けグラボ。軽いゲームなら設定を下げて動かせます。" },
                 { id: "gpu_4", type: "gpu", name: "Radeon RX 7600", price: 39000, watt: 165, scoreGame: 65, scoreWork: 50, desc: "AMD製のミドルレンジ。フルHDゲームが快適に動く高コスパモデル。" },
                 { id: "gpu_2", type: "gpu", name: "GeForce RTX 4060", price: 46000, watt: 115, scoreGame: 70, scoreWork: 60, desc: "ミドルレンジ。多くの最新ゲームがフルHD画質で快適に動作します。" },
@@ -209,7 +212,7 @@
             Storage: () => <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" /></svg>,
             Gpu: () => <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>,
             Psu: () => <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>,
-            Os: () => <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg>,
+            Os: () => <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2zz" /></svg>,
             App: () => <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>,
             Input: () => <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" /></svg>,
             Trash: () => <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>,
@@ -979,11 +982,20 @@
                             >
                                 <Icons.ArrowLeft /> メニューに戻る
                             </button>
-                            <h1 className="font-bold text-lg flex items-center gap-2 text-white">
-                                <div className="bg-blue-600 p-1 rounded"><Icons.Motherboard /></div>
-                                PC Simulator
-                            </h1>
-                            <div className="mt-4 grid grid-cols-4 gap-2">
+                            <div className="flex justify-between items-center mb-4">
+                                <h1 className="font-bold text-lg flex items-center gap-2 text-white">
+                                    <div className="bg-blue-600 p-1 rounded"><Icons.Motherboard /></div>
+                                    PC Simulator
+                                </h1>
+                                <button 
+                                    onClick={handleClearAll}
+                                    title="構成をリセット"
+                                    className="text-xs bg-red-900/50 hover:bg-red-600 text-red-200 hover:text-white px-2 py-1 rounded transition flex items-center gap-1 border border-red-800/50"
+                                >
+                                    <Icons.Refresh /> Reset
+                                </button>
+                            </div>
+                            <div className="grid grid-cols-4 gap-2">
                                 {Object.keys(pcData.categories).map(key => (
                                     <button 
                                         key={key}
@@ -1012,16 +1024,6 @@
                                     detailed={false}
                                 />
                             ))}
-                        </div>
-
-                        {/* Reset Button (Improved) */}
-                        <div className="p-3 border-t border-slate-700 bg-slate-800">
-                             <button 
-                                onClick={handleClearAll}
-                                className="w-full py-2 text-xs text-red-400 hover:text-white hover:bg-red-600/50 border border-slate-600 hover:border-red-500 rounded transition-all flex items-center justify-center gap-2"
-                            >
-                                <Icons.Refresh /> 構成をリセット
-                            </button>
                         </div>
                     </div>
 
