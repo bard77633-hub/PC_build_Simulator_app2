@@ -1,9 +1,8 @@
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>情報Ⅰ ハードウェア＆ソフトウェア構成シミュレータ</title>
     
     <!-- Tailwind CSS -->
@@ -75,7 +74,7 @@
         }
     </script>
 </head>
-<body class="bg-slate-900 text-slate-100 h-screen overflow-hidden select-none font-sans">
+<body class="bg-slate-900 text-slate-100 h-screen overflow-hidden select-none font-sans touch-none">
     <div id="root"></div>
 
     <!-- Application Data -->
@@ -83,6 +82,7 @@
         window.PC_DATA = {
             categories: {
                 cpu: { label: "CPU (演算)", academic: "演算・制御装置", icon: "Cpu", color: "text-blue-400", desc: "【中央演算処理装置】人間で言うと「脳」。プログラムの命令を実行・処理します。コア数が多いほど同時に多くの作業ができます。" },
+                motherboard: { label: "マザーボード", academic: "主基盤", icon: "Motherboard", color: "text-slate-400", desc: "【メイン基盤】各パーツをつなぐ土台です。CPUに合わせて自動選択されます。" },
                 memory: { label: "メモリ (記憶)", academic: "主記憶装置", icon: "Memory", color: "text-green-400", desc: "【主記憶装置】人間で言うと「机の広さ」。データの一時保管場所です。電源を切るとデータは消えます（揮発性）。" },
                 gpu: { label: "GPU (描画)", academic: "演算装置(画像)", icon: "Gpu", color: "text-purple-400", desc: "【画像処理装置】映像の計算を専門に行います。3Dゲームや動画編集には高性能なGPUが必須です。" },
                 storage: { label: "ストレージ", academic: "補助記憶装置", icon: "Storage", color: "text-yellow-400", desc: "【補助記憶装置】人間で言うと「本棚」。データを長期保存します。HDDは大容量で安価、SSDは高速です。" },
@@ -116,7 +116,7 @@
                 { id: "gpu_1", type: "gpu", name: "GeForce GTX 1650", price: 22000, scoreGame: 40, scoreWork: 30, desc: "エントリー向けグラボ。軽いゲームなら設定を下げて動かせます。", point: "補助電源不要なモデルも多く、手軽に追加できます。" },
                 { id: "gpu_4", type: "gpu", name: "Radeon RX 7600", price: 39000, scoreGame: 65, scoreWork: 50, desc: "AMD製のミドルレンジ。フルHDゲームが快適に動く高コスパモデル。", point: "GeForceより安く、同等の性能が出せるコスパ機。" },
                 { id: "gpu_2", type: "gpu", name: "GeForce RTX 4060", price: 46000, scoreGame: 70, scoreWork: 60, desc: "ミドルレンジ。多くの最新ゲームがフルHD画質で快適に動作します。", point: "現在のゲーミングPCの標準。迷ったらコレ。" },
-                { id: "gpu_5", type: "gpu", name: "GeForce RTX 4070 Ti", price: 120000, scoreGame: 90, scoreWork: 85, desc: "ハイエンド。WQHDや4K画質でのゲームプレイが可能です。", isRgb: true, point: "高画質でゲームを楽しみたい人向け。" },
+                { id: "gpu_5", type: "gpu", name: "GeForce RTX 4070 Ti", price: 120000, scoreGame: 95, scoreWork: 85, desc: "ハイエンド。WQHDや4K画質でのゲームプレイが可能です。", isRgb: true, point: "高画質でゲームを楽しみたい人向け。" },
                 { id: "gpu_3", type: "gpu", name: "GeForce RTX 4090", price: 280000, scoreGame: 100, scoreWork: 100, desc: "現行最強のグラボ。4KゲームもAI生成も爆速ですが、非常に高価です。", isRgb: true, point: "「何でもできる」が、PC本体より高いことも。" },
         
                 // Storage (5 types)
@@ -147,15 +147,15 @@
                 { id: "disp_3", type: "display", name: "27インチ 4K 60Hz", price: 45000, desc: "高精細画面。文字がくっきり見え、写真編集や動画鑑賞に最適。", scoreWork: 80, scoreGame: 40, point: "作業領域が広く、Excelの表示列数が増えます。" },
                 { id: "disp_4", type: "display", name: "27インチ 4K 144Hz", price: 90000, desc: "高画質かつ滑らか。最強のモニターですが非常に高価です。", scoreWork: 90, scoreGame: 90, point: "この性能を活かすにはRTX 4090クラスが必要です。" }
             ],
-            // Quizzes sorted by difficulty
+            // Quizzes sorted by difficulty (Budgets optimized for No PSU, Added Monitor)
             quizzes: [
                 {
                     id: 1,
                     level: "★☆☆",
                     title: "1. 事務用レポートPC",
-                    desc: "予算12万円以内で、Officeソフトが動き、快適に文字入力ができる構成を作れ。",
+                    desc: "予算10万5000円以内で、Officeソフトが動き、快適に文字入力ができる構成を作れ。",
                     conditions: { 
-                        maxPrice: 120000, 
+                        maxPrice: 105000, 
                         requiredAppType: "work", 
                         requiredOs: "Windows 11 Home",
                         minWorkScore: 40 
@@ -165,9 +165,9 @@
                     id: 2,
                     level: "★☆☆",
                     title: "2. 学生予算ゲーミング",
-                    desc: "予算14万円という厳しい条件で、なんとか3Dゲームが動く構成(スコア45以上)を作れ。",
+                    desc: "予算13万円という厳しい条件で、なんとか3Dゲームが動く構成(スコア45以上)を作れ。",
                     conditions: {
-                        maxPrice: 140000,
+                        maxPrice: 130000,
                         requiredAppType: "game",
                         minGameScore: 45,
                         requiresDedicatedGpu: true
@@ -177,9 +177,9 @@
                     id: 3,
                     level: "★★☆",
                     title: "3. ゲーミングPC入門",
-                    desc: "予算24万円以内で、最新の3Dゲームが快適に動く構成。もちろんゲーミングデバイスも必須だ。",
+                    desc: "予算21万5000円以内で、最新の3Dゲームが快適に動く構成。もちろんゲーミングデバイスも必須だ。",
                     conditions: { 
-                        maxPrice: 240000, 
+                        maxPrice: 215000, 
                         requiredAppType: "game",
                         requiredOs: "Windows 11 Home",
                         minGameScore: 60,
@@ -191,9 +191,9 @@
                     id: 4,
                     level: "★★☆",
                     title: "4. サーバーエンジニア入門",
-                    desc: "予算15万円以内。OS代を節約し、プログラミング環境を整えよ。メモリは多め(32GB以上)が良い。",
+                    desc: "予算13万円以内。OS代を節約し、プログラミング環境を整えよ。メモリは多め(32GB以上)が良い。",
                     conditions: {
-                        maxPrice: 150000,
+                        maxPrice: 130000,
                         requiredOs: "Linux (Ubuntu)",
                         requiredAppType: "dev",
                         minMemoryGb: 32
@@ -203,9 +203,9 @@
                     id: 5,
                     level: "★★★",
                     title: "5. ハイエンド編集PC",
-                    desc: "予算48万円以内。動画編集もゲームも最高設定で動く、コスパも意識した最強マシンを構築せよ。",
+                    desc: "予算41万円以内。動画編集もゲームも最高設定で動く、コスパも意識した最強マシンを構築せよ。",
                     conditions: { 
-                        maxPrice: 480000, 
+                        maxPrice: 410000, 
                         requiredAppType: "creative",
                         minGameScore: 85, 
                         minWorkScore: 85
@@ -230,9 +230,9 @@
                     isExtra: true,
                     level: "★★★★",
                     title: "EX2. 大容量メモリの極意",
-                    desc: "【隠しミッション】予算17万円以内。GPUなしで「メモリ64GB」と「高速SSD 2TB」を両立させ、サーバーを構築せよ。",
+                    desc: "【隠しミッション】予算16万円以内。GPUなしで「メモリ64GB」と「高速SSD 2TB」を両立させ、サーバーを構築せよ。",
                     conditions: {
-                        maxPrice: 170000,
+                        maxPrice: 160000,
                         requiredOs: "Linux (Ubuntu)",
                         minMemoryGb: 64,
                         requiredStorageCapacity: "2TB"
@@ -246,7 +246,7 @@
                     desc: "【隠しミッション】予算39万5000円以内。最強のゲームCPUと4070Ti、そして4K 144Hzモニターを含めよ。",
                     conditions: {
                         maxPrice: 395000,
-                        minGameScore: 90, // Changed from 100 to 90
+                        minGameScore: 90,
                         requiresGamingInput: true,
                         requiredDisplayType: "144Hz",
                         requiredAppType: "game"
@@ -809,7 +809,7 @@
                                 <tbody>
                                     {Object.entries(pcData.categories).map(([key, cat]) => {
                                         const part = parts[key] || parts[key === 'mb' ? 'motherboard' : '']; 
-                                        const displayPart = parts[key === 'input' ? 'input' : key];
+                                        const displayPart = parts[key === 'input' ? 'input' : key] || part;
                                         if(!displayPart) return null;
 
                                         return (
@@ -1008,7 +1008,7 @@
             );
         };
 
-        const PartCard = ({ part, onDragStart, onDoubleClick, onHover, isSelected, detailed, categoryMaxPrice }) => {
+        const PartCard = ({ part, onDragStart, onTouchStart, onDoubleClick, onHover, isSelected, detailed, categoryMaxPrice }) => {
             const cat = pcData.categories[part.type];
             if (!cat) return null; 
 
@@ -1037,10 +1037,11 @@
                 <div 
                     draggable 
                     onDragStart={() => onDragStart(part)}
+                    onTouchStart={(e) => onTouchStart(e, part)}
                     onDoubleClick={() => onDoubleClick(part)}
                     onMouseEnter={() => onHover(part)}
                     onMouseLeave={() => onHover(null)}
-                    className={`group border p-3 rounded-lg cursor-pointer transition-all shadow-sm flex items-start gap-3 relative ${priceStyle}`}
+                    className={`group border p-3 rounded-lg cursor-pointer transition-all shadow-sm flex items-start gap-3 relative select-none ${priceStyle}`}
                 >
                     <div className={`p-2 rounded bg-opacity-20 ${cat.color.replace('text-', 'bg-').replace('400', '500')} ${cat.color}`}>
                         {Icons[cat.icon] && React.createElement(Icons[cat.icon])}
@@ -1083,6 +1084,7 @@
 
             return (
                 <div 
+                    data-drop-type={type}
                     onDragOver={(e) => e.preventDefault()}
                     onDrop={() => onDrop(type)}
                     className={`relative w-full h-full rounded-lg border-2 ${borderClass} ${bgClass} ${rgbStyle} ${activeGuidance} transition-all duration-300 flex flex-col items-center justify-center p-2 group ${className || ''}`}
@@ -1093,7 +1095,7 @@
 
                     {/* Educational Label Overlay - Centered at bottom with safe positioning */}
                     {showLabels && (
-                        <div className="absolute bottom-2 left-1/2 -translate-x-1/2 z-30 pointer-events-none flex items-center justify-center rounded-lg whitespace-nowrap">
+                        <div className="absolute bottom-1 left-1/2 -translate-x-1/2 z-30 pointer-events-none flex items-center justify-center rounded-lg whitespace-nowrap">
                             <span className="bg-yellow-500/90 text-slate-900 text-xs font-bold px-2 py-0.5 rounded shadow-lg border border-yellow-300 transform scale-90 md:scale-100">
                                 {cat.academic}
                             </span>
@@ -1143,8 +1145,12 @@
             const [clearedQuizzes, setClearedQuizzes] = useState([]); // Track cleared quiz IDs
             
             // Double Click Control States
-            const [doubleClickCount, setDoubleClickCount] = useState(0);
+            const [doubleClickAttempts, setDoubleClickAttempts] = useState(0);
             const [isDoubleClickEnabled, setIsDoubleClickEnabled] = useState(false);
+
+            // Touch Drag State
+            const [touchDragPart, setTouchDragPart] = useState(null);
+            const [touchPos, setTouchPos] = useState({ x: 0, y: 0 });
 
             // LocalStorage Auto-Save & Load
             useEffect(() => {
@@ -1172,6 +1178,59 @@
                 };
                 localStorage.setItem('pcSimData', JSON.stringify(dataToSave));
             }, [selectedParts, quizMode, view, clearedQuizzes]);
+
+            // Reset double click attempts if inactive for 2 seconds
+            useEffect(() => {
+                if (doubleClickAttempts > 0) {
+                    const timer = setTimeout(() => setDoubleClickAttempts(0), 2000);
+                    return () => clearTimeout(timer);
+                }
+            }, [doubleClickAttempts]);
+
+            // Touch Events Logic
+            useEffect(() => {
+                const handleTouchMove = (e) => {
+                    if (touchDragPart) {
+                        const touch = e.touches[0];
+                        setTouchPos({ x: touch.clientX, y: touch.clientY });
+                    }
+                };
+                
+                const handleTouchEnd = (e) => {
+                    if (touchDragPart) {
+                        const touch = e.changedTouches[0];
+                        const element = document.elementFromPoint(touch.clientX, touch.clientY);
+                        if (element) {
+                            const dropZone = element.closest('[data-drop-type]');
+                            if (dropZone) {
+                                const dropType = dropZone.getAttribute('data-drop-type');
+                                if (dropType === touchDragPart.type) {
+                                    handlePartSelect(touchDragPart);
+                                }
+                            }
+                        }
+                        setTouchDragPart(null);
+                    }
+                };
+
+                if (touchDragPart) {
+                    window.addEventListener('touchmove', handleTouchMove, { passive: false });
+                    window.addEventListener('touchend', handleTouchEnd);
+                }
+                
+                return () => {
+                    window.removeEventListener('touchmove', handleTouchMove);
+                    window.removeEventListener('touchend', handleTouchEnd);
+                };
+            }, [touchDragPart]);
+
+            const handleTouchStart = (e, part) => {
+                // e.preventDefault(); // Sometimes prevents scrolling too aggressively
+                const touch = e.touches[0];
+                setTouchDragPart(part);
+                setTouchPos({ x: touch.clientX, y: touch.clientY });
+            };
+
 
             const goHome = () => {
                 setSelectedParts({});
@@ -1287,21 +1346,23 @@
                     return;
                 }
 
-                const newCount = doubleClickCount + 1;
-                setDoubleClickCount(newCount);
-
-                if (newCount >= 3) {
-                     // Defer the confirm to avoid blocking the event loop improperly
-                     setTimeout(() => {
-                         if (window.confirm("マウス操作の練習のため、原則はドラッグ＆ドロップを推奨しています。\nダブルクリックによる配置を有効にしますか？")) {
-                            setIsDoubleClickEnabled(true);
-                            handlePartSelect(part);
-                            setDoubleClickCount(0);
-                         } else {
-                            setDoubleClickCount(0); // Reset if user cancels so they don't get prompted immediately again
-                         }
-                     }, 50);
-                }
+                setDoubleClickAttempts(prev => {
+                    const newCount = prev + 1;
+                    if (newCount >= 3) {
+                         // Use setTimeout to ensure state update completes and confirm dialog doesn't block improperly
+                         setTimeout(() => {
+                             if (window.confirm("マウス操作の練習のため、原則はドラッグ＆ドロップを推奨しています。\nダブルクリックによる配置を有効にしますか？")) {
+                                setIsDoubleClickEnabled(true);
+                                handlePartSelect(part);
+                                setDoubleClickAttempts(0);
+                             } else {
+                                setDoubleClickAttempts(0);
+                             }
+                         }, 10);
+                         return 0; // Reset immediately to prevent multiple prompts
+                    }
+                    return newCount;
+                });
             };
 
             const handleRemovePart = (type) => {
@@ -1383,7 +1444,17 @@
             return (
                 <div className="flex h-screen bg-slate-900 text-slate-200 font-sans relative">
                     {/* Hover Overlay */}
-                    {!draggedPart && <PartDetailOverlay part={hoveredPart} />}
+                    {!draggedPart && !touchDragPart && <PartDetailOverlay part={hoveredPart} />}
+
+                    {/* Touch Drag Ghost */}
+                    {touchDragPart && (
+                        <div 
+                            className="fixed z-50 pointer-events-none p-3 bg-blue-600 text-white rounded shadow-2xl opacity-80 border-2 border-white transform -translate-x-1/2 -translate-y-1/2"
+                            style={{ left: touchPos.x, top: touchPos.y }}
+                        >
+                            <div className="text-xs font-bold">{touchDragPart.name}</div>
+                        </div>
+                    )}
 
                     {/* Floating Quiz Window */}
                     <QuizWindow 
@@ -1433,7 +1504,7 @@
                             </button>
 
                             <div className="grid grid-cols-4 gap-2">
-                                {Object.keys(pcData.categories).map(key => (
+                                {Object.keys(pcData.categories).filter(key => key !== 'motherboard').map(key => (
                                     <button 
                                         key={key}
                                         onClick={() => setActiveTab(key)}
@@ -1467,6 +1538,7 @@
                                     part={part} 
                                     isSelected={isPartSelected(part.id)}
                                     onDragStart={setDraggedPart}
+                                    onTouchStart={handleTouchStart}
                                     onDoubleClick={handlePartDoubleClick}
                                     onHover={setHoveredPart}
                                     categoryMaxPrice={categoryMaxPrice}
@@ -1525,17 +1597,17 @@
                                             <div className="absolute inset-0 opacity-10 pointer-events-none" style={{backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`, backgroundSize: '40px 40px'}}></div>
                                             <div className="grid grid-cols-2 grid-rows-3 gap-6 h-full relative z-10">
                                                 <div className="flex flex-col">
-                                                    <DropZone type="cpu" label="LGA/AM5 SOCKET" part={selectedParts.cpu} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'cpu'} isValid={validation.checks.cpu} className="h-full" hasBooted={hasBooted} isActiveTab={activeTab === 'cpu'} showLabels={showEducationalLabels} />
+                                                    <DropZone type="cpu" label="LGA/AM5 SOCKET" part={selectedParts.cpu} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'cpu' || touchDragPart?.type === 'cpu'} isValid={validation.checks.cpu} className="h-full" hasBooted={hasBooted} isActiveTab={activeTab === 'cpu'} showLabels={showEducationalLabels} />
                                                     {selectedParts.motherboard && (<div className="text-center text-[10px] text-green-400/50 mt-1">Auto-Matched: {selectedParts.motherboard.name}</div>)}
                                                 </div>
                                                 <div className="flex flex-col">
-                                                    <DropZone type="memory" label="DIMM SLOTS" part={selectedParts.memory} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'memory'} isValid={validation.checks.memory} className="h-full" hasBooted={hasBooted} isActiveTab={activeTab === 'memory'} showLabels={showEducationalLabels} />
+                                                    <DropZone type="memory" label="DIMM SLOTS" part={selectedParts.memory} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'memory' || touchDragPart?.type === 'memory'} isValid={validation.checks.memory} className="h-full" hasBooted={hasBooted} isActiveTab={activeTab === 'memory'} showLabels={showEducationalLabels} />
                                                 </div>
                                                 <div className="col-span-2 row-span-1">
-                                                     <DropZone type="gpu" label="PCIe x16 GRAPHICS" part={selectedParts.gpu} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'gpu'} isValid={validation.checks.gpu} className="h-full border-blue-500/20" hasBooted={hasBooted} isActiveTab={activeTab === 'gpu'} showLabels={showEducationalLabels} />
+                                                     <DropZone type="gpu" label="PCIe x16 GRAPHICS" part={selectedParts.gpu} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'gpu' || touchDragPart?.type === 'gpu'} isValid={validation.checks.gpu} className="h-full border-blue-500/20" hasBooted={hasBooted} isActiveTab={activeTab === 'gpu'} showLabels={showEducationalLabels} />
                                                 </div>
                                                 <div className="col-span-2">
-                                                    <DropZone type="storage" label="DRIVE BAY" part={selectedParts.storage} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'storage'} isValid={validation.checks.storage} hasBooted={hasBooted} isActiveTab={activeTab === 'storage'} showLabels={showEducationalLabels} />
+                                                    <DropZone type="storage" label="DRIVE BAY" part={selectedParts.storage} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'storage' || touchDragPart?.type === 'storage'} isValid={validation.checks.storage} hasBooted={hasBooted} isActiveTab={activeTab === 'storage'} showLabels={showEducationalLabels} />
                                                 </div>
                                             </div>
                                         </div>
@@ -1544,8 +1616,8 @@
                                     <div className="bg-slate-800 rounded-xl border border-slate-700 p-4 shadow-lg flex-1 relative">
                                         <div className="absolute top-0 left-8 -mt-3 bg-slate-700 text-slate-300 px-4 py-0.5 text-xs font-bold rounded shadow z-10">PERIPHERALS</div>
                                         <div className="h-full pt-2 grid grid-cols-2 gap-4">
-                                            <DropZone type="input" label="KEYBOARD & MOUSE" part={selectedParts.input} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'input'} isValid={true} hasBooted={hasBooted} isActiveTab={activeTab === 'input'} showLabels={showEducationalLabels} />
-                                            <DropZone type="display" label="DISPLAY" part={selectedParts.display} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'display'} isValid={true} hasBooted={hasBooted} isActiveTab={activeTab === 'display'} showLabels={showEducationalLabels} />
+                                            <DropZone type="input" label="KEYBOARD & MOUSE" part={selectedParts.input} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'input' || touchDragPart?.type === 'input'} isValid={true} hasBooted={hasBooted} isActiveTab={activeTab === 'input'} showLabels={showEducationalLabels} />
+                                            <DropZone type="display" label="DISPLAY" part={selectedParts.display} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'display' || touchDragPart?.type === 'display'} isValid={true} hasBooted={hasBooted} isActiveTab={activeTab === 'display'} showLabels={showEducationalLabels} />
                                         </div>
                                     </div>
                                 </div>
@@ -1556,8 +1628,8 @@
                                     <div className="bg-slate-800 rounded-xl border border-slate-700 p-4 shadow-lg flex flex-col gap-2 h-1/3 relative">
                                         <div className="absolute top-0 left-4 -mt-3 bg-slate-700 text-slate-300 px-4 py-0.5 text-xs font-bold rounded shadow z-10">SOFTWARE</div>
                                         <div className="grid grid-rows-2 gap-2 flex-1 pt-2">
-                                            <DropZone type="os" label="OS" part={selectedParts.os} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'os'} isValid={true} isActiveTab={activeTab === 'os'} showLabels={showEducationalLabels} />
-                                            <DropZone type="app" label="APP" part={selectedParts.app} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'app'} isValid={true} isActiveTab={activeTab === 'app'} showLabels={showEducationalLabels} />
+                                            <DropZone type="os" label="OS" part={selectedParts.os} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'os' || touchDragPart?.type === 'os'} isValid={true} isActiveTab={activeTab === 'os'} showLabels={showEducationalLabels} />
+                                            <DropZone type="app" label="APP" part={selectedParts.app} onDrop={() => handlePartSelect(draggedPart)} onRemove={handleRemovePart} isTarget={draggedPart?.type === 'app' || touchDragPart?.type === 'app'} isValid={true} isActiveTab={activeTab === 'app'} showLabels={showEducationalLabels} />
                                         </div>
                                     </div>
 
