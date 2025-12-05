@@ -547,18 +547,32 @@
                     }
                 };
 
-                const handleMouseUp = () => {
+                const handleTouchMove = (e) => {
+                    if (isDragging) {
+                        const touch = e.touches[0];
+                        setPosition({
+                            x: touch.clientX - dragOffset.current.x,
+                            y: touch.clientY - dragOffset.current.y
+                        });
+                    }
+                };
+
+                const handleEnd = () => {
                     setIsDragging(false);
                 };
 
                 if (isDragging) {
                     window.addEventListener('mousemove', handleMouseMove);
-                    window.addEventListener('mouseup', handleMouseUp);
+                    window.addEventListener('mouseup', handleEnd);
+                    window.addEventListener('touchmove', handleTouchMove, { passive: false });
+                    window.addEventListener('touchend', handleEnd);
                 }
 
                 return () => {
                     window.removeEventListener('mousemove', handleMouseMove);
-                    window.removeEventListener('mouseup', handleMouseUp);
+                    window.removeEventListener('mouseup', handleEnd);
+                    window.removeEventListener('touchmove', handleTouchMove);
+                    window.removeEventListener('touchend', handleEnd);
                 };
             }, [isDragging]);
 
@@ -567,6 +581,15 @@
                 dragOffset.current = {
                     x: e.clientX - position.x,
                     y: e.clientY - position.y
+                };
+            };
+
+            const handleTouchStart = (e) => {
+                const touch = e.touches[0];
+                setIsDragging(true);
+                dragOffset.current = {
+                    x: touch.clientX - position.x,
+                    y: touch.clientY - position.y
                 };
             };
 
@@ -600,8 +623,9 @@
                 >
                     {/* Header */}
                     <div 
-                        className={`h-12 ${headerColor} flex items-center justify-between px-4 cursor-grab active:cursor-grabbing hover:bg-opacity-50 transition rounded-t-xl`}
+                        className={`h-12 ${headerColor} flex items-center justify-between px-4 cursor-grab active:cursor-grabbing hover:bg-opacity-50 transition rounded-t-xl touch-none`}
                         onMouseDown={handleMouseDown}
+                        onTouchStart={handleTouchStart}
                     >
                         <div className={`flex items-center gap-2 font-bold ${textColor} pointer-events-none`}>
                             <span className="text-lg">{isFreeMode ? <Icons.Motherboard /> : '★'}</span>
@@ -609,7 +633,8 @@
                         </div>
                         <button 
                             className={`${textColor} hover:text-white p-1`}
-                            onMouseDown={(e) => e.stopPropagation()} 
+                            onMouseDown={(e) => e.stopPropagation()}
+                            onTouchStart={(e) => e.stopPropagation()}
                             onClick={() => setMinimized(!minimized)}
                         >
                             {minimized ? <Icons.Plus /> : <Icons.Minus />}
